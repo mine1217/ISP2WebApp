@@ -1,2 +1,8 @@
 simplechat
 .DS_Store
+bin
+lib
+*.class
+classes
+*.war
+doc
