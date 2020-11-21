@@ -8,6 +8,10 @@ import org.junit.*;
 
 import project.arzeit.*;
 
+/**
+ * DB接続確認テスト　要実行！！
+ * @author Minoru Makino
+ */
 public class DataSourceTest {
     @Test
     public void DB接続テスト() throws Exception {
@@ -16,6 +20,8 @@ public class DataSourceTest {
         ResultSet result;
 
         Connection con = DS.getConnection();
+
+        //set　入れて get 取って fin 消す
         PreparedStatement set = con.prepareStatement("INSERT INTO login VALUES ('test', 'pass');");
         PreparedStatement get = con.prepareStatement("SELECT * FROM login");
         PreparedStatement fin = con.prepareStatement("DELETE FROM login");
