@@ -14,9 +14,9 @@ public class HikariCPDataSource {
     }
 
     public HikariCPDataSource(){
-        config.setJdbcUrl("jdbc:mysql://119.25.128.10/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
-        config.setUsername("online");
-        config.setPassword("password");
+        config.setJdbcUrl("jdbc:mysql://IPアドレス/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+        config.setUsername("ユーザー");
+        config.setPassword("パスワ");
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
