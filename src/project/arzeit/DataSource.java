@@ -26,9 +26,9 @@ public class DataSource {
      * 主に初期設定
      */
     public DataSource() {
-        config.setJdbcUrl("jdbc:mysql://119.25.128.10/arzeit_1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
-        config.setUsername("online"); //ユーザ　変えない
-        config.setPassword("password"); //パス　変えない
+        config.setJdbcUrl("jdbc:mysql://IPアドレス/arzeit_1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+        config.setUsername("ユーザーID"); //ユーザ　変えない
+        config.setPassword("パスワード"); //パス　変えない
 
         config.addDataSourceProperty("cachePrepStmts", "true");       //ステートメント(SQLの命令)をキャッシュするか
         config.addDataSourceProperty("prepStmtCacheSize", "250");     //キャッシュの確保数
