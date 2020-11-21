@@ -1,4 +1,4 @@
-package project.arzeit;
+package project.arzeit.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
