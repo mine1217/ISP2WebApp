@@ -10,7 +10,7 @@ public class InitializationListener implements ServletContextListener{
   
   public void contextInitialized(ServletContextEvent event){
     ServletContext context=event.getServletContext();
-    context.setAttribute("dataSource", new HikariCPDataSource()); // 登録処理
+    context.setAttribute("dataSource", new DataSource()); // 登録処理
   }
    
   public void contextDestroyed(ServletContextEvent event){
