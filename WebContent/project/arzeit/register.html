@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>ArZeit初期登録</title>
+	<link rel="stylesheet" type="text/css" href="login_register.css"/>
+	<script type="text/javascript" src="register.js"></script>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <a href="index.html">TOPページ</a>
+          </li>
+        <li>
+          <a href="login.html">ログイン</a>
+          </li>
+        <li class = "current">
+          <a href="register.html">初期登録</a>
+        </li>
+      </ul>
+  </nav>
+</header>
+<h1>ArZeit初期登録</h1>
+<p>以下のフォームにユーザ名とパスワードを入力して初期登録してください</p>
+<div id="form">
+    <p class="form-title">初期登録</p>
+    <form action="POST">
+        <p>IDを入力してください</p>
+        <p class="id"><input type="userid" name="id" maxlength = "12" /></p>
+        <p>Passwordを入力してください</p>
+        <p class="pass1"><input type="password" name="pass1" maxlength = "24"/></p>
+        <p>誤入力防止のためもう一度Passwordを入力してください</p>
+        <p class="pass2"><input type="password" name="pass2" maxlength = "24"/></p>
+				<p>Usernameを入力してください</p>
+				<p class="name"><input type="username" name="name" maxlength = "12"/></p>
+        <!--<p class="check"><input type="checkbox" name="checkbox" />パスワードを保存</p>-->
+        <p id = "Register_noRegister">既に登録している方は<a href = "register.html">コチラ</a>でログインをしてください</p>
+        <p class="submit" id = "submit"><input type="submit" value="初期登録" /></p>
+    </form>
+</div>
+
+<footer>
+	<nav>
+		<ul>
+			<li class="current"><!--今どこのページにいるか cssの方でどこのページにいるか下線を引いている-->
+				<a href="index.html">TOPページ</a>
+				</li>
+			<li>
+				<a href="login.html">ログイン</a>
+				</li>
+			<li>
+				<a href="register.html">初期登録</a>
+			</li>
+		</ul>
+		</nav>
+	<p>ArZeit</p>
+</footer>
+
+</body>
