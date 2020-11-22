@@ -122,20 +122,21 @@ public class DBController {
         try {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
-            PreparedStatement pstm = con.prepareStatement("SELECT pass FROM login WHEN id=" + id); //id指定でパスを取ってくる
+            PreparedStatement pstm = con.prepareStatement(String.format("SELECT pass FROM login WHERE id='%s'", id)); //id指定でパスを取ってくる
             result = pstm.executeQuery(); // 送信
             result.next();
             pass = result.getString("pass");
             
         } catch (SQLException e) {
 
+            System.out.println(e);
             code = e.getErrorCode(); // エラーコード取ってくる
 
         } finally {
 
             try { // 後処理
                 if (con != null) con.close();
-                result.close();
+                if (result != null)result.close();
             } catch (SQLException e) {
                 code = e.getErrorCode();
             }

@@ -20,7 +20,7 @@ public class DBControllerTest {
         DataSource ds = new DataSource();
         DBController  dcon = new DBController(ds);
 
-        String expected = "pass";
+        String expected = "password";
         String id = "test";
 
         SimpleEntry<String, Integer> result;
@@ -29,7 +29,7 @@ public class DBControllerTest {
             System.out.println("error code = " + result.getValue());
         } else {
             System.out.println(result.getKey());
-            assertEquals(expected, result.getKey());
         }
+        assertEquals(expected, result.getKey());
     }
 }
