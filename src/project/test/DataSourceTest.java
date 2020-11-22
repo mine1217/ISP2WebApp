@@ -6,7 +6,7 @@ import java.sql.*;
 
 import org.junit.*;
 
-import project.arzeit.*;
+import project.arzeit.database.DataSource;
 
 /**
  * DB接続確認テスト　要実行！！
