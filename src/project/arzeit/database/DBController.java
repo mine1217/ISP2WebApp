@@ -33,7 +33,7 @@ public class DBController {
     public int update(String message) {
 
         Connection con = null; // SQLのコネクタ
-        int code = 0;
+        int code = 0; //エラーコード入る
 
         try {
 
@@ -42,22 +42,21 @@ public class DBController {
             PreparedStatement pstm = con.prepareStatement(message); // 引数から命令のステートメント生成
             pstm.executeUpdate(); // 送信
 
-        } catch (SQLException e) {
+        } catch (SQLException e) { 
 
             code = e.getErrorCode(); // エラーコード取ってくる
 
         } finally {
 
             try { // 後処理
-                if (con != null)
-                    con.close();
+                if (con != null) con.close(); //nullになる時があるので
             } catch (SQLException e) {
-                code = e.getErrorCode();
+                code = e.getErrorCode(); //エラーコード上書き
             }
 
         }
 
-        return code;
+        return code; 
     }
 
 
@@ -187,7 +186,7 @@ public class DBController {
         
     }
 
-        /**
+    /**
      * 月指定で予定取ってくる
      * @param id
      * @return 結果とエラーコードのマップ
@@ -205,8 +204,9 @@ public class DBController {
             PreparedStatement pstm = con.prepareStatement
                 (String.format("SELECT s_id, start, end, saraly FROM schedule WHERE id='%s' AND start BETWEEN '%s' AND (SELECT LAST_DAY('%s'));" , id, month, month)); //id,月指定で予定一式を取ってくる
             result = pstm.executeQuery(); // 送信
-            while(result.next()) {
-                schedules.add(result.getString("s_id")+","+result.getString("start")+","+result.getString("end")+","+result.getString("saraly"));
+            
+            while(result.next()) {//複数行帰ってくる可能性があるのでぐるぐる回す
+                schedules.add(result.getString("s_id")+","+result.getString("start")+","+result.getString("end")+","+result.getString("saraly")); //今のところcsv形式でStringにして返す
             }
             
         } catch (SQLException e) {
@@ -218,7 +218,7 @@ public class DBController {
 
             try { // 後処理
                 if (con != null) con.close();
-                if (result != null)result.close();
+                if (result != null)result.close(); 
             } catch (SQLException e) {
                 code = e.getErrorCode();
             }
