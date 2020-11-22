@@ -144,6 +144,88 @@ public class DBController {
         }
 
         return new SimpleEntry<String, Integer>(pass, code);
+
+    }
+
+    /**
+     * 名前取ってくる
+     * @param id
+     * @return 結果とエラーコードのマップ
+     */
+    public SimpleEntry<String, Integer> getName(String id) {
+
+        Connection con = null; // SQLのコネクタ
+        ResultSet result = null;
+        String pass = null;
+        int code = 0;
+
+        try {
+
+            con = dataSource.getConnection(); // コネクションをプールから取ってくる
+            PreparedStatement pstm = con.prepareStatement(String.format("SELECT name FROM profile WHERE id='%s'", id)); //id指定でパスを取ってくる
+            result = pstm.executeQuery(); // 送信
+            result.next();
+            pass = result.getString("pass");
+            
+        } catch (SQLException e) {
+
+            System.out.println(e);
+            code = e.getErrorCode(); // エラーコード取ってくる
+
+        } finally {
+
+            try { // 後処理
+                if (con != null) con.close();
+                if (result != null)result.close();
+            } catch (SQLException e) {
+                code = e.getErrorCode();
+            }
+
+        }
+
+        return new SimpleEntry<String, Integer>(pass, code);
+        
+    }
+
+        /**
+     * 月指定で予定取ってくる
+     * @param id
+     * @return 結果とエラーコードのマップ
+     */
+    public SimpleEntry<ArrayList<String>, Integer> getScheduleAtMonth(String id, String month) {
+
+        Connection con = null; // SQLのコネクタ
+        ResultSet result = null;
+        ArrayList<String> schedules = new ArrayList<>();
+        int code = 0;
+
+        try {
+
+            con = dataSource.getConnection(); // コネクションをプールから取ってくる
+            PreparedStatement pstm = con.prepareStatement
+                (String.format("SELECT s_id, start, end, saraly FROM schedule WHERE id='%s' AND start BETWEEN '%s' AND (SELECT LAST_DAY('%s'));" , id, month, month)); //id,月指定で予定一式を取ってくる
+            result = pstm.executeQuery(); // 送信
+            while(result.next()) {
+                schedules.add(result.getString("s_id")+","+result.getString("start")+","+result.getString("end")+","+result.getString("saraly"));
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println(e);
+            code = e.getErrorCode(); // エラーコード取ってくる
+
+        } finally {
+
+            try { // 後処理
+                if (con != null) con.close();
+                if (result != null)result.close();
+            } catch (SQLException e) {
+                code = e.getErrorCode();
+            }
+
+        }
+
+        return new SimpleEntry<>(schedules, code);
         
     }
 
