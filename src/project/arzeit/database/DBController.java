@@ -156,7 +156,7 @@ public class DBController {
 
         Connection con = null; // SQLのコネクタ
         ResultSet result = null;
-        String pass = null;
+        String name = null;
         int code = 0;
 
         try {
@@ -165,7 +165,7 @@ public class DBController {
             PreparedStatement pstm = con.prepareStatement(String.format("SELECT name FROM profile WHERE id='%s'", id)); //id指定でパスを取ってくる
             result = pstm.executeQuery(); // 送信
             result.next();
-            pass = result.getString("pass");
+            name = result.getString("name");
             
         } catch (SQLException e) {
 
@@ -183,7 +183,7 @@ public class DBController {
 
         }
 
-        return new SimpleEntry<String, Integer>(pass, code);
+        return new SimpleEntry<String, Integer>(name, code);
         
     }
 

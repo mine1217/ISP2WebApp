@@ -35,6 +35,25 @@ public class DBControllerTest {
     }
 
     @Test
+    public void ニックネームゲッターテスト() throws Exception {
+
+        DataSource ds = new DataSource();
+        DBController  dcon = new DBController(ds);
+
+        String expected = "namae";
+        String id = "test";
+
+        SimpleEntry<String, Integer> result;
+        result = dcon.getName(id);
+        if(result.getValue() != 0) {
+            System.out.println("error code = " + result.getValue());
+        } else {
+            System.out.println(result.getKey());
+        }
+        assertEquals(expected, result.getKey());
+    }
+
+    @Test
     public void スケジュールゲッターテスト() throws Exception {
 
         DataSource ds = new DataSource();
