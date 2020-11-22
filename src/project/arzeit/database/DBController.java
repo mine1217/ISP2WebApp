@@ -55,9 +55,9 @@ public class DBController {
                 code = e.getErrorCode();
             }
 
-            return code;
-
         }
+
+        return code;
     }
 
 
@@ -141,9 +141,10 @@ public class DBController {
                 code = e.getErrorCode();
             }
 
-            return new SimpleEntry<String, Integer>(pass, code);
-
         }
+
+        return new SimpleEntry<String, Integer>(pass, code);
+        
     }
 
 }
