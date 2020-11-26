@@ -80,4 +80,35 @@ public class DBControllerTest {
         }
         
     }
+
+    @Test
+    public void アカウントセット削除テスト() throws Exception {
+
+        DataSource ds = new DataSource();
+        DBController  dcon = new DBController(ds);
+
+        String id = "testAccount";
+        String pass = "testPass";
+        String result;
+
+        ArrayList<String> expected = new ArrayList<>();
+        expected.add("testAccount");
+        expected.add("testPass");
+
+        int code = dcon.setAccount(id, pass);
+        if(code != 0) {
+            System.out.println("error code = " + code);
+        } else {
+            result = dcon.getPass(id).getKey();
+            System.out.println(result);
+            assertEquals(expected.get(1), result);
+        }
+
+        code = dcon.deleteAccount(id);
+        if(code != 0) {
+            System.out.println("error code = " + code);
+        } else {
+            assertEquals(null, dcon.getPass(id).getKey());
+        }
+    }
 }
