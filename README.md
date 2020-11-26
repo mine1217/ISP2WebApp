@@ -29,6 +29,7 @@ https://drive.google.com/drive/folders/1TAU93sqZTfIVcwoLsuC8S6YEtXHrIs_b?usp=sha
 # Note
 
 ### テストファイルのコンパイルについて
+https://kindai-s.slack.com/archives/G01F998QA7M/p1606317107001600
 
 # Author
 
