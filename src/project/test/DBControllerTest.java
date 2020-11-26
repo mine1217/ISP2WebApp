@@ -105,10 +105,15 @@ public class DBControllerTest {
         }
 
         code = dcon.deleteAccount(id);
-        if(code != 0) {
-            System.out.println("error code = " + code);
-        } else {
-            assertEquals(null, dcon.getPass(id).getKey());
-        }
+
+        SimpleEntry<String, Integer> result2 = dcon.getPass(id);
+        assertEquals(null, result2.getKey());
+        System.out.println(result2.getKey());
     }
+
+    @Test
+    public void スケジュールセット削除テスト() throws Exception {
+    }
+
+    
 }

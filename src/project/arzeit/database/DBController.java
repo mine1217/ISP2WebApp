@@ -86,6 +86,16 @@ public class DBController {
     }
 
     /**
+     * scheduleのs_idのAUTOINCREMENTを欠番を詰めて最大値にリセットする
+     * @return エラーコード
+     */
+    public int resetAutoincrement() {
+        String message = "CALL reset_schedule_autoincrement;//";
+        int code = update(message);
+        return code;
+    }
+
+    /**
      * 予定の設定
      * @param id 
      * @param time :HashMap<開始時間: String, 終了時間: String> 一個でもいいし複数でもいい
@@ -104,6 +114,7 @@ public class DBController {
         int code = update(sBuilder.toString());//命令送る
         return code;
     }
+
 
     /**
      * indexで予定を消す
@@ -132,7 +143,7 @@ public class DBController {
      */
     public int deleteAccount(String id) {
 
-        int code = update("DELETE from login WHERE id=" + id);//命令送る
+        int code = update("DELETE from login WHERE id='" + id + "'");//命令送る
         return code;
     }
 
@@ -153,8 +164,8 @@ public class DBController {
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
             PreparedStatement pstm = con.prepareStatement(String.format("SELECT pass FROM login WHERE id='%s'", id)); //id指定でパスを取ってくる
             result = pstm.executeQuery(); // 送信
-            result.next();
-            pass = result.getString("pass");
+            if(result.next()) pass = result.getString("pass");
+            else code = 1;
             
         } catch (SQLException e) {
 
