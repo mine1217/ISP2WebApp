@@ -59,7 +59,6 @@ public class DBController {
         return code; 
     }
 
-
     /**
      * アカウントを登録する
      * 
@@ -103,6 +102,37 @@ public class DBController {
         sBuilder.setLength(sBuilder.length() - 1); //最後にカンマを消す
 
         int code = update(sBuilder.toString());//命令送る
+        return code;
+    }
+
+    /**
+     * indexで予定を消す
+     * @param indexList indexのリスト
+     * @return エラーコード
+     */
+    public int deleteSchedule(ArrayList<String> indexList) {
+        StringBuilder sBuilder = new StringBuilder("DELETE FROM schedule WHERE s_id IN (");
+
+        for (String s : indexList) {
+            sBuilder.append(" ");
+            sBuilder.append(s); //複数予定があればどんどん追加
+            sBuilder.append(",");
+        }
+
+        sBuilder.setLength(sBuilder.length() - 1); //最後にカンマを消す
+
+        int code = update(sBuilder.toString());//命令送る
+        return code;
+    }
+
+    /**
+     * id指定でアカウントを消す
+     * @param id 
+     * @return エラーコード
+     */
+    public int deleteAccount(String id) {
+
+        int code = update("DELETE from login WHERE id=" + id);//命令送る
         return code;
     }
 
@@ -226,6 +256,91 @@ public class DBController {
         }
 
         return new SimpleEntry<>(schedules, code);
+        
+    }
+
+    /**
+     * indexで予定取ってくる
+     * @param index
+     * @return 結果とエラーコードのマップ
+     */
+    public SimpleEntry<String, Integer> getScheduleAtIndex(String index) {
+
+        Connection con = null; // SQLのコネクタ
+        ResultSet result = null;
+        String schedule = null;
+        int code = 0;
+
+        try {
+
+            con = dataSource.getConnection(); // コネクションをプールから取ってくる
+            PreparedStatement pstm = con.prepareStatement
+                (String.format("SELECT s_id, start, end, saraly FROM schedule WHERE s_id=%s;" , index)); //id,月指定で予定一式を取ってくる
+            result = pstm.executeQuery(); // 送信
+            
+            result.next();
+            schedule = result.getString("s_id")+","+result.getString("start")+","+result.getString("end")+","+result.getString("saraly"); //今のところcsv形式でStringにして返す
+            
+            
+        } catch (SQLException e) {
+
+            System.out.println(e);
+            code = e.getErrorCode(); // エラーコード取ってくる
+
+        } finally {
+
+            try { // 後処理
+                if (con != null) con.close();
+                if (result != null)result.close(); 
+            } catch (SQLException e) {
+                code = e.getErrorCode();
+            }
+
+        }
+
+        return new SimpleEntry<>(schedule, code);
+        
+    }
+
+    /**
+     * idの重複を見る
+     * @param index
+     * @return 結果とエラーコードのマップ
+     */
+    public int checkDuplicate(String id) {
+
+        Connection con = null; // SQLのコネクタ
+        ResultSet result = null;
+        int code = 0;
+
+        try {
+
+            con = dataSource.getConnection(); // コネクションをプールから取ってくる
+            PreparedStatement pstm = con.prepareStatement
+                (String.format("SELECT * WHERE s_id=%s;" , id)); //id,月指定で予定一式を取ってくる
+            result = pstm.executeQuery(); // 送信
+            
+            result.next();
+            if(result.getString("id") == null) code = -1; //多分nullにはならんけど一様
+            
+            
+        } catch (SQLException e) {
+
+            System.out.println(e);
+            code = e.getErrorCode(); // エラーコード取ってくる
+
+        } finally {
+
+            try { // 後処理
+                if (con != null) con.close();
+                if (result != null)result.close(); 
+            } catch (SQLException e) {
+                code = e.getErrorCode();
+            }
+
+        }
+
+        return code;
         
     }
 
