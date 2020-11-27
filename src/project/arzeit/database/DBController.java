@@ -45,6 +45,45 @@ public class DBController {
         } catch (SQLException e) { 
 
             code = e.getErrorCode(); // エラーコード取ってくる
+            System.out.println(e);
+
+        } finally {
+
+            try { // 後処理
+                if (con != null) con.close(); //nullになる時があるので
+            } catch (SQLException e) {
+                code = e.getErrorCode(); //エラーコード上書き
+            }
+
+        }
+
+        return code; 
+    }
+
+    /**
+     * INSERT,DELETE,UPDATEを複数文行う場合に使う
+     * @param messageList メッセージのリスト
+     * @return エラーコード
+     */
+    public int update(ArrayList<String> messageList) {
+
+        Connection con = null; // SQLのコネクタ
+        int code = 0; //エラーコード入る
+
+        try {
+
+            con = dataSource.getConnection(); // コネクションをプールから取ってくる
+
+            Statement stmt = con.createStatement();
+            for(String s : messageList) {
+                stmt.addBatch(s);
+            }
+            stmt.executeBatch();
+
+        } catch (SQLException e) { 
+
+            code = e.getErrorCode(); // エラーコード取ってくる
+            System.out.println(e);
 
         } finally {
 
@@ -90,7 +129,7 @@ public class DBController {
      * @return エラーコード
      */
     public int resetAutoincrement() {
-        String message = "CALL reset_schedule_autoincrement;//";
+        String message = "CALL reset_schedule_autoincrement()";
         int code = update(message);
         return code;
     }
@@ -106,7 +145,7 @@ public class DBController {
         StringBuilder sBuilder = new StringBuilder("INSERT INTO schedule VALUES");
 
         for (Entry<String, String> entry : time.entrySet()) {
-            sBuilder.append(String.format(" (%s, %s, %s, %d),",id ,entry.getKey() ,entry.getValue(), saraly)); //複数予定があればどんどん追加
+            sBuilder.append(String.format(" ('%s', NULL, '%s', '%s', %d),",id ,entry.getKey() ,entry.getValue(), saraly)); //複数予定があればどんどん追加
         }
 
         sBuilder.setLength(sBuilder.length() - 1); //最後にカンマを消す
@@ -131,6 +170,7 @@ public class DBController {
         }
 
         sBuilder.setLength(sBuilder.length() - 1); //最後にカンマを消す
+        sBuilder.append(");");
 
         int code = update(sBuilder.toString());//命令送る
         return code;
@@ -142,8 +182,13 @@ public class DBController {
      * @return エラーコード
      */
     public int deleteAccount(String id) {
+        ArrayList<String> messageList = new ArrayList<>();
 
-        int code = update("DELETE from login WHERE id='" + id + "'");//命令送る
+        messageList.add("DELETE from profile WHERE id='" + id + "'; ");
+        messageList.add("DELETE from schedule WHERE id='" + id + "'; ");
+        messageList.add("DELETE from login WHERE id='" + id + "'; ");
+
+        int code = update(messageList);//命令送る
         return code;
     }
 
@@ -243,7 +288,7 @@ public class DBController {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
             PreparedStatement pstm = con.prepareStatement
-                (String.format("SELECT s_id, start, end, saraly FROM schedule WHERE id='%s' AND start BETWEEN '%s' AND (SELECT LAST_DAY('%s'));" , id, month, month)); //id,月指定で予定一式を取ってくる
+                (String.format("SELECT s_id, start, end, saraly FROM schedule WHERE id='%s' AND start BETWEEN '%s' AND (SELECT LAST_DAY('%s')) ORDER BY start;" , id, month, month)); //id,月指定で予定一式を取ってくる
             result = pstm.executeQuery(); // 送信
             
             while(result.next()) {//複数行帰ってくる可能性があるのでぐるぐる回す
