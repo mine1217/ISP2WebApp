@@ -233,6 +233,47 @@ public class DBController {
         return code;
     }
     
+    
+    /**
+     * インデックス指定でスケジュールを更新する(複数)
+     * @param index 更新するindex
+     * @param updateTime 開始、終了時間のマップ
+     * @param updateSaraly 更新する給料
+     * @return
+     */
+    public int updateSchedule(ArrayList<String> indexList, ArrayList<String> start, ArrayList<String> end, ArrayList<Integer> saraly) {
+        StringBuilder sBuilder = new StringBuilder("UPDATE schedule SET start = CASE");
+
+        if(!(indexList.size() == start.size() &&  indexList.size() == saraly.size())) return -1; //sizeが違っていたら
+
+        for (int i = 0; i < indexList.size(); i++) { //開始時間の設定
+            sBuilder.append(" WHEN s_id = ").append(indexList.get(i))
+            .append(" THEN '").append(start.get(i)).append("'");
+        }
+
+        sBuilder.append(" END, end = CASE");
+
+        for (int i = 0; i < indexList.size(); i++) { //終了時間の設定
+            sBuilder.append(" WHEN s_id = ").append(indexList.get(i))
+            .append(" THEN '").append(end.get(i)).append("'");
+        }
+
+        sBuilder.append(" END, saraly = CASE");
+
+        for (int i = 0; i < indexList.size(); i++) { //給料の設定
+            sBuilder.append(" WHEN s_id = ").append(indexList.get(i))
+            .append(" THEN '").append(saraly.get(i)).append("'");
+        }
+
+        sBuilder.append(" END;");
+
+        System.out.println(sBuilder);
+
+        int code = update(sBuilder.toString());//命令送る
+        return code;
+    }
+    
+
     /**
      * パスワード取ってくる
      * @param id
