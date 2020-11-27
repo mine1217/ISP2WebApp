@@ -195,11 +195,38 @@ public class DBController {
         return code;
     }
 
+    /**
+     * ID指定してアカウント情報を更新する
+     * @param id 更新元id
+     * @param updateId 更新語id
+     * @param updatePass 更新後パス
+     * @return エラーコード
+     */
     public int updateAccount(String id, String updateId, String updatePass) {
         StringBuilder sBuilder = new StringBuilder("UPDATE login SET id = '");
         sBuilder.append(updateId)
         .append("', pass= '").append(updatePass)
         .append("' WHERE id = '").append(id)
+        .append("';");
+
+        int code = update(sBuilder.toString());//命令送る
+        return code;
+    }
+
+    /**
+     * インデックス指定でスケジュールを更新する(一個)
+     * @param index 更新するindex
+     * @param updateTime 開始、終了時間のマップ
+     * @param updateSaraly 更新する給料
+     * @return
+     */
+    public int updateSchedule(String index, SimpleEntry<String, String> updateTime,  int updateSaraly) {
+        StringBuilder sBuilder = new StringBuilder("UPDATE schedule SET start = '");
+
+        sBuilder.append(updateTime.getKey())
+        .append("', end= '").append(updateTime.getValue())
+        .append("', saraly= '").append(updateSaraly)
+        .append("' WHERE s_id = '").append(index)
         .append("';");
 
         int code = update(sBuilder.toString());//命令送る

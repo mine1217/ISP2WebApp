@@ -212,4 +212,51 @@ public class DBControllerTest {
         assertEquals(expectedPass, result.getKey());
     }
 
+    @Test
+    public void スケジュールアップデートテスト() throws Exception {
+
+        DataSource ds = new DataSource();
+        DBController  dcon = new DBController(ds);
+
+        //設定するアカウント
+        String id = "testAccount";
+        String pass = "testPass";
+        SimpleEntry<String, Integer> result;
+
+        //設定する予定
+        HashMap<String, String> time = new HashMap<>();
+        time.put("2020-11-24 00:00:00","2020-11-24 17:00:00");
+        int saraly = 1000;
+
+
+        //更新する予定
+        SimpleEntry<String, String> updateTime = new SimpleEntry<>("2020-11-24 12:00:00","2020-11-24 16:30:00");
+        int updateSaraly = 980;
+
+        //期待する文字列
+        String expected = "2020-11-24 12:00:00,2020-11-24 16:30:00,980";
+
+        System.out.println(dcon.setAccount(id, pass));
+        System.out.println(dcon.setSchedule(id, time, saraly));
+        SimpleEntry<ArrayList<String>, Integer> getSchdule;
+        getSchdule = dcon.getScheduleAtMonth(id, "2020-11-01");
+        System.out.println(getSchdule.getKey()); 
+        System.out.println(getSchdule.getValue()); 
+        String getScheduleIndex = getSchdule.getKey().get(0).split(",")[0];
+        System.out.println(dcon.updateSchedule(getScheduleIndex, updateTime, updateSaraly));
+
+
+        result = dcon.getScheduleAtIndex(getScheduleIndex);
+        System.out.println(result.getKey());
+        System.out.println(result.getValue());
+        expected = getScheduleIndex + "," + expected;
+        
+
+        System.out.println(dcon.deleteAccount(id));
+        System.out.println(dcon.resetAutoincrement());
+
+        //結果検証
+        assertEquals(expected, result.getKey());
+    }
+
 }
