@@ -114,6 +114,19 @@ public class DBController {
         int code = update(message);
         return code;
     }
+    
+    /**
+     * プロフィールを登録する
+     * 
+     * @param id
+     * @param name
+     * @return :int エラーコード
+     */
+    public int setProfile(String id, String name) {
+        String message = String.format("INSERT INTO profile VALUES ('%s', '%s')", id, name);
+        int code = update(message);
+        return code;
+    }
 
     /**
      * パスワードを変更する
@@ -233,13 +246,12 @@ public class DBController {
         return code;
     }
     
-    
     /**
      * インデックス指定でスケジュールを更新する(複数)
      * @param index 更新するindex
      * @param updateTime 開始、終了時間のマップ
      * @param updateSaraly 更新する給料
-     * @return
+     * @return エラーコード
      */
     public int updateSchedule(ArrayList<String> indexList, ArrayList<String> start, ArrayList<String> end, ArrayList<Integer> saraly) {
         StringBuilder sBuilder = new StringBuilder("UPDATE schedule SET start = CASE");
@@ -273,6 +285,21 @@ public class DBController {
         return code;
     }
     
+    /**
+     * プロフィールを更新する
+     * @param id
+     * @param name
+     * @return エラーコード
+     */
+    public int updateProfile(String id, String name) {
+        StringBuilder sBuilder = new StringBuilder("UPDATE profile SET name = '");
+        sBuilder.append(name)
+        .append("' WHERE id = '").append(id)
+        .append("';");
+
+        int code = update(sBuilder.toString());//命令送る
+        return code;
+    }
 
     /**
      * パスワード取ってくる

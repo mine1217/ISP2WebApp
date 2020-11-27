@@ -329,4 +329,39 @@ public class DBControllerTest {
         }
     }
 
+    @Test
+    public void プロフィールアップデートテスト() throws Exception {
+
+        DataSource ds = new DataSource();
+        DBController dcon = new DBController(ds);
+
+        // 設定するアカウント
+        String id = "testAccount";
+        String pass = "testPass";
+        String name = "namae";
+        SimpleEntry<String, Integer> result;
+
+        // 更新するアカウント
+        String expected = "namae2";
+
+
+        System.out.println(dcon.setAccount(id, pass));
+        System.out.println(dcon.setProfile(id, name));
+
+        result = dcon.getName(id);
+        System.out.println(result.getKey());
+        System.out.println(result.getValue());
+
+        System.out.println(dcon.updateProfile(id, expected));
+
+        result = dcon.getName(id);
+        System.out.println(result.getKey());
+        System.out.println(result.getValue());
+
+        System.out.println(dcon.deleteAccount(id));
+
+        // 結果検証
+        assertEquals(expected, result.getKey());
+    }
+
 }
