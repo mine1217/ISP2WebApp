@@ -180,5 +180,36 @@ public class DBControllerTest {
         }
     }
 
-    
+    @Test
+    public void アカウントアップデートテスト() throws Exception {
+
+        DataSource ds = new DataSource();
+        DBController  dcon = new DBController(ds);
+
+        //設定するアカウント
+        String id = "testAccount";
+        String pass = "testPass";
+        SimpleEntry<String, Integer> result;
+
+        //更新するアカウント
+        String updateId = "testAccount2";
+        String updatePass = "testPass2";
+
+        //期待する文字列
+        String expectedID = "testAccount2";
+        String expectedPass = "testPass2";
+
+        System.out.println(dcon.setAccount(id, pass));
+        System.out.println(dcon.updateAccount(id, updateId, updatePass));
+
+        result = dcon.getPass(expectedID);
+        System.out.println(result.getKey());
+        System.out.println(result.getValue());
+
+        System.out.println(dcon.deleteAccount(expectedID));
+
+        //結果検証
+        assertEquals(expectedPass, result.getKey());
+    }
+
 }

@@ -195,6 +195,17 @@ public class DBController {
         return code;
     }
 
+    public int updateAccount(String id, String updateId, String updatePass) {
+        StringBuilder sBuilder = new StringBuilder("UPDATE login SET id = '");
+        sBuilder.append(updateId)
+        .append("', pass= '").append(updatePass)
+        .append("' WHERE id = '").append(id)
+        .append("';");
+
+        int code = update(sBuilder.toString());//命令送る
+        return code;
+    }
+    
     /**
      * パスワード取ってくる
      * @param id
