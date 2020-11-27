@@ -200,9 +200,9 @@ public class DBController {
     public int deleteAccount(String id) {
         ArrayList<String> messageList = new ArrayList<>();
 
-        messageList.add("DELETE from profile WHERE id='" + id + "'; ");
+        messageList.add("DELETE from profile WHERE id='" + id + "'; "); //プロフィールとスケジュール消してから
         messageList.add("DELETE from schedule WHERE id='" + id + "'; ");
-        messageList.add("DELETE from login WHERE id='" + id + "'; ");
+        messageList.add("DELETE from login WHERE id='" + id + "'; "); //アカウントを消さないと外部キーのエラーが出る
 
         int code = update(messageList);//命令送る
         return code;
@@ -216,6 +216,7 @@ public class DBController {
      * @return エラーコード
      */
     public int updateAccount(String id, String updateId, String updatePass) {
+        
         StringBuilder sBuilder = new StringBuilder("UPDATE login SET id = '");
         sBuilder.append(updateId)
         .append("', pass= '").append(updatePass)
@@ -256,7 +257,7 @@ public class DBController {
     public int updateSchedule(ArrayList<String> indexList, ArrayList<String> start, ArrayList<String> end, ArrayList<Integer> saraly) {
         StringBuilder sBuilder = new StringBuilder("UPDATE schedule SET start = CASE");
 
-        if(!(indexList.size() == start.size() &&  indexList.size() == saraly.size())) return -1; //sizeが違っていたら
+        if(!(indexList.size() == start.size() &&  indexList.size() == saraly.size())) return -1; //sizeが違っていたら-1返して強制終了
 
         for (int i = 0; i < indexList.size(); i++) { //開始時間の設定
             sBuilder.append(" WHEN s_id = ").append(indexList.get(i))
@@ -292,6 +293,7 @@ public class DBController {
      * @return エラーコード
      */
     public int updateProfile(String id, String name) {
+        
         StringBuilder sBuilder = new StringBuilder("UPDATE profile SET name = '");
         sBuilder.append(name)
         .append("' WHERE id = '").append(id)
@@ -299,6 +301,7 @@ public class DBController {
 
         int code = update(sBuilder.toString());//命令送る
         return code;
+        
     }
 
     /**
