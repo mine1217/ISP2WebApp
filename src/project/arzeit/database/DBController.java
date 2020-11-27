@@ -33,13 +33,14 @@ public class DBController {
     public int update(String message) {
 
         Connection con = null; // SQLのコネクタ
+        PreparedStatement pstm = null;
         int code = 0; //エラーコード入る
 
         try {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
 
-            PreparedStatement pstm = con.prepareStatement(message); // 引数から命令のステートメント生成
+            pstm = con.prepareStatement(message); // 引数から命令のステートメント生成
             pstm.executeUpdate(); // 送信
 
         } catch (SQLException e) { 
@@ -50,6 +51,7 @@ public class DBController {
         } finally {
 
             try { // 後処理
+                pstm.close();
                 if (con != null) con.close(); //nullになる時があるので
             } catch (SQLException e) {
                 code = e.getErrorCode(); //エラーコード上書き
@@ -68,13 +70,14 @@ public class DBController {
     public int update(ArrayList<String> messageList) {
 
         Connection con = null; // SQLのコネクタ
+        Statement stmt = null;
         int code = 0; //エラーコード入る
 
         try {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
 
-            Statement stmt = con.createStatement();
+            stmt = con.createStatement();
             for(String s : messageList) {
                 stmt.addBatch(s);
             }
@@ -88,6 +91,7 @@ public class DBController {
         } finally {
 
             try { // 後処理
+                stmt.close();
                 if (con != null) con.close(); //nullになる時があるので
             } catch (SQLException e) {
                 code = e.getErrorCode(); //エラーコード上書き
@@ -125,16 +129,6 @@ public class DBController {
     }
 
     /**
-     * scheduleのs_idのAUTOINCREMENTを欠番を詰めて最大値にリセットする
-     * @return エラーコード
-     */
-    public int resetAutoincrement() {
-        String message = "CALL reset_schedule_autoincrement()";
-        int code = update(message);
-        return code;
-    }
-
-    /**
      * 予定の設定
      * @param id 
      * @param time :HashMap<開始時間: String, 終了時間: String> 一個でもいいし複数でもいい
@@ -154,6 +148,15 @@ public class DBController {
         return code;
     }
 
+    /**
+     * scheduleのs_idのAUTOINCREMENTを欠番を詰めて最大値にリセットする
+     * @return エラーコード
+     */
+    public int resetAutoincrement() {
+        String message = "CALL reset_schedule_autoincrement()";
+        int code = update(message);
+        return code;
+    }
 
     /**
      * indexで予定を消す
@@ -200,15 +203,15 @@ public class DBController {
     public SimpleEntry<String, Integer> getPass(String id) {
 
         Connection con = null; // SQLのコネクタ
-        ResultSet result = null;
+        PreparedStatement pstm = null;
         String pass = null;
         int code = 0;
 
         try {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
-            PreparedStatement pstm = con.prepareStatement(String.format("SELECT pass FROM login WHERE id='%s'", id)); //id指定でパスを取ってくる
-            result = pstm.executeQuery(); // 送信
+            pstm = con.prepareStatement(String.format("SELECT pass FROM login WHERE id='%s'", id)); //id指定でパスを取ってくる
+            ResultSet result = pstm.executeQuery(); // 送信
             if(result.next()) pass = result.getString("pass");
             else code = 1;
             
@@ -220,8 +223,8 @@ public class DBController {
         } finally {
 
             try { // 後処理
+                pstm.close();
                 if (con != null) con.close();
-                if (result != null)result.close();
             } catch (SQLException e) {
                 code = e.getErrorCode();
             }
@@ -240,15 +243,15 @@ public class DBController {
     public SimpleEntry<String, Integer> getName(String id) {
 
         Connection con = null; // SQLのコネクタ
-        ResultSet result = null;
+        PreparedStatement pstm = null;
         String name = null;
         int code = 0;
 
         try {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
-            PreparedStatement pstm = con.prepareStatement(String.format("SELECT name FROM profile WHERE id='%s'", id)); //id指定でパスを取ってくる
-            result = pstm.executeQuery(); // 送信
+            pstm = con.prepareStatement(String.format("SELECT name FROM profile WHERE id='%s'", id)); //id指定でパスを取ってくる
+            ResultSet result = pstm.executeQuery(); // 送信
             result.next();
             name = result.getString("name");
             
@@ -260,8 +263,8 @@ public class DBController {
         } finally {
 
             try { // 後処理
+                pstm.close();
                 if (con != null) con.close();
-                if (result != null)result.close();
             } catch (SQLException e) {
                 code = e.getErrorCode();
             }
@@ -280,16 +283,16 @@ public class DBController {
     public SimpleEntry<ArrayList<String>, Integer> getScheduleAtMonth(String id, String month) {
 
         Connection con = null; // SQLのコネクタ
-        ResultSet result = null;
+        PreparedStatement pstm = null;
         ArrayList<String> schedules = new ArrayList<>();
         int code = 0;
 
         try {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
-            PreparedStatement pstm = con.prepareStatement
+            pstm = con.prepareStatement
                 (String.format("SELECT s_id, start, end, saraly FROM schedule WHERE id='%s' AND start BETWEEN '%s' AND (SELECT LAST_DAY('%s')) ORDER BY start;" , id, month, month)); //id,月指定で予定一式を取ってくる
-            result = pstm.executeQuery(); // 送信
+            ResultSet result = pstm.executeQuery(); // 送信
             
             while(result.next()) {//複数行帰ってくる可能性があるのでぐるぐる回す
                 schedules.add(result.getString("s_id")+","+result.getString("start")+","+result.getString("end")+","+result.getString("saraly")); //今のところcsv形式でStringにして返す
@@ -303,8 +306,8 @@ public class DBController {
         } finally {
 
             try { // 後処理
+                pstm.close();
                 if (con != null) con.close();
-                if (result != null)result.close(); 
             } catch (SQLException e) {
                 code = e.getErrorCode();
             }
@@ -323,16 +326,16 @@ public class DBController {
     public SimpleEntry<String, Integer> getScheduleAtIndex(String index) {
 
         Connection con = null; // SQLのコネクタ
-        ResultSet result = null;
+        PreparedStatement pstm = null;
         String schedule = null;
         int code = 0;
 
         try {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
-            PreparedStatement pstm = con.prepareStatement
+            pstm = con.prepareStatement
                 (String.format("SELECT s_id, start, end, saraly FROM schedule WHERE s_id=%s;" , index)); //id,月指定で予定一式を取ってくる
-            result = pstm.executeQuery(); // 送信
+            ResultSet result = pstm.executeQuery(); // 送信
             
             result.next();
             schedule = result.getString("s_id")+","+result.getString("start")+","+result.getString("end")+","+result.getString("saraly"); //今のところcsv形式でStringにして返す
@@ -346,8 +349,8 @@ public class DBController {
         } finally {
 
             try { // 後処理
+                pstm.close();
                 if (con != null) con.close();
-                if (result != null)result.close(); 
             } catch (SQLException e) {
                 code = e.getErrorCode();
             }
@@ -366,30 +369,29 @@ public class DBController {
     public int checkDuplicate(String id) {
 
         Connection con = null; // SQLのコネクタ
-        ResultSet result = null;
+        PreparedStatement pstm = null;
         int code = 0;
 
         try {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
-            PreparedStatement pstm = con.prepareStatement
+            pstm = con.prepareStatement
                 (String.format("SELECT * WHERE s_id=%s;" , id)); //id,月指定で予定一式を取ってくる
-            result = pstm.executeQuery(); // 送信
+            ResultSet result = pstm.executeQuery(); // 送信
             
             result.next();
             if(result.getString("id") == null) code = -1; //多分nullにはならんけど一様
-            
-            
+
         } catch (SQLException e) {
 
             System.out.println(e);
             code = e.getErrorCode(); // エラーコード取ってくる
 
         } finally {
-
+            
             try { // 後処理
+                pstm.close();
                 if (con != null) con.close();
-                if (result != null)result.close(); 
             } catch (SQLException e) {
                 code = e.getErrorCode();
             }
