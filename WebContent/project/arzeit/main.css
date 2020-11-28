@@ -1,0 +1,250 @@
+body{
+    background-color: #48d1cc;
+    text-align: center;
+    font-family: Verdana, sans-serif;
+    margin: 0;
+    width: auto;
+    height: auto;
+}
+p{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+header{
+  color:block;
+  text-align: right;
+  padding: 10px;
+  padding-bottom: 60px;
+  /*background-image: url(./photo2.png);*/
+  height: 200px;
+  background-size: cover;
+  background-position: 50% 50%;
+  margin-bottom: 15px;
+}
+
+header ul{
+  margin: 0;
+  list-style-type: none;
+  padding-left: 0;
+  padding-top: 0;
+}
+
+header li{
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 15px;
+}
+
+header li > a{
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
+
+header li > a:hover{
+  color: royalblue;
+}
+.current{
+  border-bottom: 4px solid royalblue;
+}
+
+section{
+  text-align: center;
+  font-size: 28px;
+}
+
+form p{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+#calendar{
+  margin: 20px;
+  width: auto;
+}
+
+#lastMonth,#nextMonth{
+  margin-top: 15px;
+  text-align: right;
+  font-family: Arial;
+  color: #ffffff;
+  /*ボタンの大きさ*/
+  font-size: 18px;
+  padding-top: 10px;
+  padding-right: 14px;
+  padding-bottom: 10px;
+  padding-left: 14px;
+  /*影とか*/
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 8px 6px #488a9e;
+  -moz-box-shadow: 0px 8px 6px #488a9e;
+  box-shadow: 0px 8px 6px #488a9e;
+  border: solid #488a9e 2px;
+  background-color: royalblue
+}
+
+#lastMonth{
+  margin-right: 100px;
+}
+
+h3{
+  font-size: 28px;
+}
+
+table {
+  width: auto;
+  margin: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+
+}
+
+td {
+    border: 2px solid #000;
+    text-align: center;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 31px;
+    padding-right: 31px;
+}
+.calendar_td{
+  font-size:  26px;
+}
+
+td:first-child {
+    color: red;
+}
+
+td:last-child {
+    color: royalblue;
+}
+td.is-disabled {
+    color: #ccc;
+}
+
+.schedule {
+  list-style: none;
+  font-size: 0.1px;
+  font-weight: bold;
+}
+
+h2,h4,h5{
+  font-size: 23px;
+}
+
+.add_button{
+  margin-left: -24px;
+}
+.edit_button{
+  margin-left: 1px;
+  margin-right: 1px;
+}
+.deleat_button{
+  margin-right: -26px;
+}
+
+input[type = "button"]{
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 0.7px;
+  padding-left: 2px;
+  padding-right: 2px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0.6px 0.4px #488a9e;
+  -moz-box-shadow: 0px 0.6px 0.4px #488a9e;
+  box-shadow: 0px 0.6px 0.4px #488a9e;
+  border: solid #488a9e 0.1px;
+  background: royalblue
+}
+
+input[type = "button"]:hover{
+  background: #37a4bf;
+ }
+
+#errormessage{
+  font-size: 18px;
+  color: red;
+}
+
+#starthour,#startminitue,#endhour,#endminitue{
+  padding: 7px;
+}
+
+input[type = "income"]{
+  padding: 7px;
+}
+
+.monthsalary{
+  font-size: 20px;
+  color: red;
+}
+
+.submit{
+  margin-left: 20px;
+  text-align: right;
+}
+
+.submit input{
+  font-family: Arial;
+  color: #ffffff;
+  /*ボタンの大きさ*/
+  font-size: 15px;
+  padding-top: 10px;
+  padding-right: 14px;
+  padding-bottom: 10px;
+  padding-left: 14px;
+  /*影とか*/
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 8px 6px #488a9e;
+  -moz-box-shadow: 0px 8px 6px #488a9e;
+  box-shadow: 0px 8px 6px #488a9e;
+  border: solid #488a9e 2px;
+  background: royalblue
+  }
+
+/*押した時ボタンの色が変わる*/
+.submit input:hover{
+  background: #37a4bf;
+ }
+
+
+footer{
+ height: 100px;
+ width: 550px;
+ margin: 55px auto 60px;
+ border-top: 1px solid #555;
+}
+
+footer ul{
+ margin: 0;
+ margin-bottom: 20px;
+ list-style-type: none;
+ padding-left: 0;
+ float: left;
+ color: #000;
+}
+
+footer li{
+ padding-top: 20px;
+ font-size: 18px;
+ display: inline-block;
+}
+
+
+footer li>a:hover{
+ opacity: 0.6;
+}
+
+footer p{
+ color: lightgray;
+ font-size: 18px;
+ text-align: right;
+}
