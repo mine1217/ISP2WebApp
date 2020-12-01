@@ -4,6 +4,10 @@ import java.util.AbstractMap.SimpleEntry;
 
 import project.arzeit.database.DBController;
 
+/**
+ * 認証とか登録処理を行うプログラム モデル
+ * @author Minoru Makino
+ */
 public class AuthCModel {
 
     private DBController db;
@@ -22,7 +26,7 @@ public class AuthCModel {
         int code = db.checkDuplicate(id); //重複チェック　合わなかったら2帰ってくる
 
         if (code == 0) {
-            return (db.setAccount(id, pass));
+            return db.setAccount(id, pass);
         } else {
             return code;
         }
