@@ -122,10 +122,14 @@ public class DBControllerTest {
         // セットする予定
         String id = "testAccount";
         String pass = "testPass";
-        HashMap<String, String> times = new HashMap<>();
-        times.put("2020-11-24 00:00:00", "2020-11-24 17:00:00");
-        times.put("2020-11-25 12:30:00", "2020-11-25 16:00:00");
-        times.put("2020-11-26 12:30:00", "2020-11-26 17:00:00");
+        ArrayList<String> start = new ArrayList<>();
+        start.add("2020-11-24 00:00:00");
+        start.add("2020-11-25 12:30:00");
+        start.add("2020-11-26 12:30:00");
+        ArrayList<String> end = new ArrayList<>();
+        end.add("2020-11-24 17:00:00");
+        end.add("2020-11-25 16:00:00");
+        end.add("2020-11-26 17:00:00");
         int saraly = 1000;
 
         // 期待する文字列
@@ -142,7 +146,7 @@ public class DBControllerTest {
         SimpleEntry<ArrayList<String>, Integer> result2;
 
         System.out.println(dcon.setAccount(id, pass)); // アカウントを作成
-        System.out.println(dcon.setSchedule(id, times, saraly)); // 予定をセット
+        System.out.println(dcon.setSchedule(id, start, end, saraly)); // 予定をセット
 
         result1 = dcon.getScheduleAtMonth(id, "2020-11-01"); // 予定をゲット
         System.out.println(result1.getKey());
@@ -225,8 +229,10 @@ public class DBControllerTest {
         SimpleEntry<String, Integer> result;
 
         // 設定する予定
-        HashMap<String, String> time = new HashMap<>();
-        time.put("2020-11-24 00:00:00", "2020-11-24 17:00:00");
+        ArrayList<String> start = new ArrayList<>();
+        start.add("2020-11-24 00:00:00");
+        ArrayList<String> end = new ArrayList<>();
+        end.add("2020-11-24 17:00:00");
         int saraly = 1000;
 
         // 更新する予定
@@ -237,7 +243,7 @@ public class DBControllerTest {
         String expected = "2020-11-24 12:00:00,2020-11-24 16:30:00,980";
 
         System.out.println(dcon.setAccount(id, pass));
-        System.out.println(dcon.setSchedule(id, time, saraly));
+        System.out.println(dcon.setSchedule(id, start, end, saraly));
         SimpleEntry<ArrayList<String>, Integer> getSchdule;
         getSchdule = dcon.getScheduleAtMonth(id, "2020-11-01");
         System.out.println(getSchdule.getKey());
@@ -268,10 +274,14 @@ public class DBControllerTest {
         String pass = "testPass";
 
         // 設定する予定
-        HashMap<String, String> time = new HashMap<>();
-        time.put("2020-11-24 00:00:00", "2020-11-24 17:00:00");
-        time.put("2020-11-25 12:30:00", "2020-11-25 16:00:00");
-        time.put("2020-11-26 12:30:00", "2020-11-26 17:00:00");
+        ArrayList<String> start = new ArrayList<>();
+        start.add("2020-11-24 00:00:00");
+        start.add("2020-11-25 12:30:00");
+        start.add("2020-11-26 12:30:00");
+        ArrayList<String> end = new ArrayList<>();
+        end.add("2020-11-24 17:00:00");
+        end.add("2020-11-25 16:00:00");
+        end.add("2020-11-26 17:00:00");
         int saraly = 1000;
 
         // 更新する予定
@@ -296,7 +306,7 @@ public class DBControllerTest {
         expected.add("2020-11-27 12:30:00,2020-11-27 17:00:00,980");
 
         System.out.println(dcon.setAccount(id, pass));// アカウント作る
-        System.out.println(dcon.setSchedule(id, time, saraly));// スケジュール作る
+        System.out.println(dcon.setSchedule(id, start, end, saraly));// スケジュール作る
 
         SimpleEntry<ArrayList<String>, Integer> result;
         result = dcon.getScheduleAtMonth(id, "2020-11-01"); // 設定した予定取ってくる。
