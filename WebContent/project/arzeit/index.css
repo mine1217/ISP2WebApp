@@ -1,0 +1,208 @@
+/*index.html,mypage.html,main.html共通部分*/
+body{
+    background-color: #48d1cc;
+    text-align: center;
+    font-family: Verdana, sans-serif;
+    margin: 0;
+    width: auto;
+    height: auto;
+}
+
+header{
+  color:block;
+  text-align: right;
+  padding: 10px;
+  padding-bottom: 60px;
+  /*background-image: url(./photo2.png);*/
+  height: 150px;
+  background-size: cover;
+  background-position: 50% 50%;
+  margin-bottom: 15px;
+}
+
+header ul{
+  margin: 0;
+  list-style-type: none;
+  padding-left: 0;
+  padding-top: 0;
+}
+
+header li{
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 15px;
+}
+
+header li > a{
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
+
+header li > a:hover{
+  color: royalblue;
+}
+.current{
+  border-bottom: 4px solid royalblue;
+}
+
+section{
+  text-align: center;
+  font-size: 26px;
+}
+
+p{
+  font-size: 20px;
+}
+
+ footer{
+  height: 100px;
+  width: 550px;
+  margin: 55px auto 60px;
+  border-top: 1px solid #555;
+}
+
+footer ul{
+  margin: 0;
+  margin-bottom: 20px;
+  list-style-type: none;
+  padding-left: 0;
+  float: left;
+  color: #000;
+}
+
+footer li{
+  padding-top: 20px;
+  font-size: 18px;
+  display: inline-block;
+}
+
+
+footer li>a:hover{
+  opacity: 0.6;
+}
+
+footer p{
+  color: lightgray;
+  font-size: 18px;
+  text-align: right;
+}
+
+/*index.html部分*/
+.login_or_register{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.login_or_register p{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#login_button{
+  margin-bottom: 7px;
+  font-size: 1.0em;
+  font-weight: bold;
+  /* 縦方向に10px、
+  * 横方向に30pxの余白を指定 */
+  padding: 10px 30px;
+  background-color: #248;
+  color: white;
+  border-style: none;
+  /* ボタンの影の指定
+   * 影の横幅を2px
+   * 縦長を2px
+   * ぼかしを3px
+   * 広がりを1px
+   * 色を#666（グレー）に指定 */
+  box-shadow: 2px 2px 3px 1px #666;
+  -moz-box-shadow: 2px 2px 3px 1px #666;
+  -webkit-box-shadow: 2px 2px 3px 1px #666;
+
+}
+#register_button{
+  margin-bottom: 10px;
+  font-size: 1.0em;
+  font-weight: bold;
+  /* 縦方向に10px、
+  * 横方向に30pxの余白を指定 */
+  padding: 10px 30px;
+  background-color: #248;
+  color: white;
+  border-style: none;
+  box-shadow: 2px 2px 3px 1px #666;
+  -moz-box-shadow: 2px 2px 3px 1px #666;
+  -webkit-box-shadow: 2px 2px 3px 1px #666;
+}
+
+#register_button input:hover{
+  background: #37a4bf;
+ }
+
+/*mypage.html部分*/
+
+.mypage{
+  width: 750px;
+  height:auto;
+  margin: auto;
+  border: 2px solid #555;
+}
+
+.mypage li{
+  clear: both;
+  font-size: 24px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  list-style: none;
+  text-align: left;
+}
+img.profile{
+  float: left;
+  width: 150px;
+  height: 150px;
+  border: 1px solid #555;
+  margin-right: 10px;
+}
+.submit{
+  margin-left: 20px;
+  text-align: right;
+}
+
+.submit input{
+  font-family: Arial;
+  color: #ffffff;
+  /*ボタンの大きさ*/
+  font-size: 15px;
+  padding-top: 10px;
+  padding-right: 14px;
+  padding-bottom: 10px;
+  padding-left: 14px;
+  /*影とか*/
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 8px 6px #488a9e;
+  -moz-box-shadow: 0px 8px 6px #488a9e;
+  box-shadow: 0px 8px 6px #488a9e;
+  border: solid #488a9e 2px;
+  background: royalblue
+  }
+
+/*押した時ボタンの色が変わる*/
+.submit input:hover{
+  background: #37a4bf;
+ }
+
+ #username_profile{
+   font-size: 30px;
+   font-weight: bold;
+   border-bottom:1px solid #555;
+ }
+
+input[type="username_profile_data"],[type= "userid_profile_data"]{
+   background-color: #48d1cc;
+   border: #48d1cc;
+}
+
+input[type = "submit"]{
+
+}
