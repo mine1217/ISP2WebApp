@@ -475,7 +475,7 @@ public class DBController {
     /**
      * idの重複を見る
      * @param index
-     * @return 結果とエラーコードのマップ
+     * @return 0で無し　1で重複あり
      */
     public int checkDuplicate(String id) {
 
@@ -487,11 +487,10 @@ public class DBController {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
             pstm = con.prepareStatement
-                (String.format("SELECT * WHERE s_id=%s;" , id)); //id,月指定で予定一式を取ってくる
+                (String.format("SELECT * FROM login WHERE id='%s'" , id)); //id,月指定で予定一式を取ってくる
             ResultSet result = pstm.executeQuery(); // 送信
-            
-            result.next();
-            if(result.getString("id") == null) code = -1; //多分nullにはならんけど一様
+ 
+            if(result.next()) code = 1; //もし次があれば重複のステータスコードを返すようにする
 
         } catch (SQLException e) {
 
