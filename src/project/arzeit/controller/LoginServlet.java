@@ -10,7 +10,14 @@ import javax.servlet.http.*;
 import project.arzeit.database.DBController;
 import project.arzeit.database.DataSource;
 import project.arzeit.model.AuthCModel;
+import project.arzeit.model.User;
 
+/**
+ * project/arzeit/login.htmlに対応するサーブレット
+ * ログインボタン押すとここに飛ぶ
+ * 認証の結果を返したり 成功したらメインページに飛んだりする
+ * @author Minoru Makino
+ */
 @WebServlet("/project/arzeit/login")
 public class LoginServlet extends HttpServlet{
 
