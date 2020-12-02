@@ -11,6 +11,7 @@ function register(){
   }
   else {
     //エラー文表示
+    //document.write("idのフォーマットが合っていません");
   }
 
   if(pass1Elements===pass2Elements){
@@ -19,10 +20,12 @@ function register(){
     }
     else {
       //エラー文表示
+      //document.write("passwordのフォーマットが合っていません");
     }
   }
   else{
     //エラー文表示
+    //document.write("passwordが一致しません");
   }
 
   if(6<=nameElements.length<=24&&nameElements.match(/^[A-Za-z_0-9]+$/)){
@@ -54,21 +57,7 @@ function sendWithPostMethod(){
       + "&name=" + nameElements.value);
 }
 
-//
-// function sendWithGetMethod(){
-// //passを暗号化
-//   var CryptoJS =  require('crypto-js');
-//
-//   var pwd =  "erHt4Mb8s";
-//
-//   var encryptedPass = CryptoJS.AES.encrypt(pass1,pwd).toString();
-//
-//   var url = "echo?id=" + idElements.value + "&pass=" + encryptedPass
-//     + "&name=" + nameElements.value;
-//
-//   xmlHttpRequest = new xmlHttpRequest();
-//   xmlHttpRequest.onreadystatechange = receive;
-//   xmlHttpRequest.open("GET",url,true);
-//   xmlHttpRequest.send(null);
-//
-// }
+window.addEventListener("load", function() {
+	var submitElement = document.getElementById("submit");
+	submitElement.addEventListener("click", register, false);
+}, false);
