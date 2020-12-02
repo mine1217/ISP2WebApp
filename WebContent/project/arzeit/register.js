@@ -35,7 +35,7 @@ function register(){
     //エラー文表示
   }
 
-  sendWithGetMethod();
+  sendWithPostMethod();
 
 }
 
