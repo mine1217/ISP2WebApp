@@ -33,28 +33,44 @@ function createCalendar(year, month) {
     let calendarHtml = '' // HTMLを組み立てる変数
 
     calendarHtml += '<h3>' + year  + '/' + month + '</h3>'
-    calendarHtml += '<table>'
+    calendarHtml += '<table class="testTable">'
 
     // 曜日の行を作成
     for (let i = 0; i < weeks.length; i++) {
-        calendarHtml += '<td>' + weeks[i] + '</td>'
+        calendarHtml += '<td class="testTR">' + weeks[i] + '</td>'
     }
 
     for (let w = 0; w < 6; w++) {
-        calendarHtml += '<tr>'
+        calendarHtml += '<tr class="testTR">'
 
         for (let d = 0; d < 7; d++) {
             if (w == 0 && d < startDay) {
                 // 1行目で1日の曜日の前
                 let num = lastMonthendDayCount - startDay + d + 1
-                calendarHtml += '<td class="is-disabled" id = >' + num + '</td>'
+                calendarHtml += '<td class="is_disabled">' + num + '</td>'
             } else if (dayCount > endDayCount) {
                 // 末尾の日数を超えた
                 let num = dayCount - endDayCount
-                calendarHtml += '<td class="is-disabled">' + num + '</td>'
+                calendarHtml += '<td class="is_disabled">' + num + '</td>'
                 dayCount++
             } else {
-                calendarHtml += `<td class="calendar_td" data-date="${year}-${month}-${dayCount}" id = ${dayCount} onclick="PostId(this);" ><input type = "button" class = "add_button" name = "selectDay" value = 追加><input type = "button" class = "edit_button" name = "editDay" value = 編集><input type = "button" class = "deleat_button" name = "deleatDay" value = 消去><br>${dayCount}<br><li class = "schedule"id="${dayCount}plan"></li></td>`
+                calendarHtml +=
+                `<td class="testSELLTD">
+                    <table class="testTable">
+                        <tr class="testTD">
+                            <td class="testNUMTD"> ${dayCount} </td>
+                            <td class="testTD">
+                                <table class="testTable">
+                                <tr class="testTD"> <td class="scheduleTD" id = "index"> <p class="testFONT"></p> </td> </tr>
+                                <tr class="testTD"> <td class="scheduleTD"> <p class="testFONT"></p> </font></td> </tr>
+                                <tr class="testTD"> <td class="scheduleTD"> <p class="testFONT"> </p> </td> </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    </li>
+                </td>`
+                //calendarHtml += `<td class="calendar_td" data-date="${year}-${month}-${dayCount}" id = ${dayCount} onclick="PostId(this);" ><input type = "button" class = "add_button" name = "selectDay" value = 追加><input type = "button" class = "edit_button" name = "editDay" value = 編集><input type = "button" class = "deleat_button" name = "deleatDay" value = 消去><br>${dayCount}<br><li class = "schedule"id="${dayCount}plan"></li></td>`
                 dayCount++
             }
         }
@@ -89,12 +105,12 @@ function moveCalendar(e) {
     showCalendar(year, month)
 }
 
-function PostId(ele){
-    var id_value = ele.id; // eleのプロパティとしてidを取得
-    console.log(id_value); //「id01」
-    var plan = document.getElementById(id_value + 'plan');
-    plan.innerHTML = "17~21";
-}
+//function PostId(ele){
+//    var id_value = ele.id; // eleのプロパティとしてidを取得
+//    console.log(id_value); //「id01」
+//    var plan = document.getElementById(id_value + 'plan');
+//    plan.innerHTML = "17~21";
+//}
 
 document.querySelector('#lastMonth').addEventListener('click', moveCalendar)
 document.querySelector('#nextMonth').addEventListener('click', moveCalendar)
