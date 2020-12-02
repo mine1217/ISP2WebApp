@@ -47,27 +47,27 @@ function createCalendar(year, month) {
             if (w == 0 && d < startDay) {
                 // 1行目で1日の曜日の前
                 let num = lastMonthendDayCount - startDay + d + 1
-                calendarHtml += '<td class="testSELLTD">' + num + '</td>'
+                calendarHtml += '<td class="is_disabled">' + num + '</td>'
             } else if (dayCount > endDayCount) {
                 // 末尾の日数を超えた
                 let num = dayCount - endDayCount
-                calendarHtml += '<td class="testSELLTD">' + num + '</td>'
+                calendarHtml += '<td class="is_disabled">' + num + '</td>'
                 dayCount++
             } else {
-                calendarHtml += 
-                `<td class="testSELLTD"> 
-                    <table class="testTable"> 
-                        <tr class="testTD"> 
-                            <td class="testNUMTD"> ${dayCount} </td> 
+                calendarHtml +=
+                `<td class="testSELLTD">
+                    <table class="testTable">
+                        <tr class="testTD">
+                            <td class="testNUMTD"> ${dayCount} </td>
                             <td class="testTD">
                                 <table class="testTable">
-                                <tr class="testTD"> <td class="testTD"> <p class="testFONT"> 18:00-19:45 </p> </td> </tr> 
-                                <tr class="testTD"> <td class="testTD"> <p class="testFONT"> 18:90-19:45 </p> </font></td> </tr> 
-                                <tr class="testTD"> <td class="testTD"> <p class="testFONT"> </p> </td> </tr> 
-                                </table> 
-                            </td> 
-                        </tr> 
-                    </table> 
+                                <tr class="testTD"> <td class="scheduleTD" id = "index"> <p class="testFONT"></p> </td> </tr>
+                                <tr class="testTD"> <td class="scheduleTD"> <p class="testFONT"></p> </font></td> </tr>
+                                <tr class="testTD"> <td class="scheduleTD"> <p class="testFONT"> </p> </td> </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
                     </li>
                 </td>`
                 //calendarHtml += `<td class="calendar_td" data-date="${year}-${month}-${dayCount}" id = ${dayCount} onclick="PostId(this);" ><input type = "button" class = "add_button" name = "selectDay" value = 追加><input type = "button" class = "edit_button" name = "editDay" value = 編集><input type = "button" class = "deleat_button" name = "deleatDay" value = 消去><br>${dayCount}<br><li class = "schedule"id="${dayCount}plan"></li></td>`
@@ -105,12 +105,12 @@ function moveCalendar(e) {
     showCalendar(year, month)
 }
 
-function PostId(ele){
-    var id_value = ele.id; // eleのプロパティとしてidを取得
-    console.log(id_value); //「id01」
-    var plan = document.getElementById(id_value + 'plan');
-    plan.innerHTML = "17~21";
-}
+//function PostId(ele){
+//    var id_value = ele.id; // eleのプロパティとしてidを取得
+//    console.log(id_value); //「id01」
+//    var plan = document.getElementById(id_value + 'plan');
+//    plan.innerHTML = "17~21";
+//}
 
 document.querySelector('#lastMonth').addEventListener('click', moveCalendar)
 document.querySelector('#nextMonth').addEventListener('click', moveCalendar)
