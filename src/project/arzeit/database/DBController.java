@@ -148,11 +148,15 @@ public class DBController {
      * @param saraly 給料
      * @return エラーコード
      */
-    public int setSchedule(String id, HashMap<String, String> time, int saraly) {
+    public int setSchedule(String id, ArrayList<String> start, ArrayList<String> end, int saraly) {
         StringBuilder sBuilder = new StringBuilder("INSERT INTO schedule VALUES");
 
-        for (Entry<String, String> entry : time.entrySet()) {
-            sBuilder.append(String.format(" ('%s', NULL, '%s', '%s', %d),",id ,entry.getKey() ,entry.getValue(), saraly)); //複数予定があればどんどん追加
+        for (int i = 0; i < start.size(); i++) {
+            sBuilder.append(" ('").append(id).append("', ")
+            .append("NULL, '")
+            .append(start.get(i)).append("', '")
+            .append(end.get(i)).append("', ")
+            .append(saraly).append("),");
         }
 
         sBuilder.setLength(sBuilder.length() - 1); //最後にカンマを消す
@@ -279,8 +283,6 @@ public class DBController {
         }
 
         sBuilder.append(" END;");
-
-        System.out.println(sBuilder);
 
         int code = update(sBuilder.toString());//命令送る
         return code;
@@ -473,7 +475,7 @@ public class DBController {
     /**
      * idの重複を見る
      * @param index
-     * @return 結果とエラーコードのマップ
+     * @return 0で無し　1で重複あり
      */
     public int checkDuplicate(String id) {
 
@@ -485,11 +487,10 @@ public class DBController {
 
             con = dataSource.getConnection(); // コネクションをプールから取ってくる
             pstm = con.prepareStatement
-                (String.format("SELECT * WHERE s_id=%s;" , id)); //id,月指定で予定一式を取ってくる
+                (String.format("SELECT * FROM login WHERE id='%s'" , id)); //id,月指定で予定一式を取ってくる
             ResultSet result = pstm.executeQuery(); // 送信
-            
-            result.next();
-            if(result.getString("id") == null) code = -1; //多分nullにはならんけど一様
+ 
+            if(result.next()) code = 1; //もし次があれば重複のステータスコードを返すようにする
 
         } catch (SQLException e) {
 
