@@ -27,7 +27,7 @@
 <p>以下のフォームにユーザ名とパスワードを入力して初期登録してください</p>
 <div id="form">
     <p class="form-title">初期登録</p>
-    <form action="POST">
+    <form>
         <p>IDを入力してください</p>
         <p class="id"><input type="userid" name="id" maxlength = "12" /></p>
         <p>Passwordを入力してください</p>
@@ -39,7 +39,7 @@
         <!--<p class="check"><input type="checkbox" name="checkbox" />パスワードを保存</p>-->
 				<p><span id="errormessage"></span></p><br>
         <p id = "Register_noRegister">既に登録している方は<a href = "register.html">コチラ</a>でログインをしてください</p>
-        <p class="submit" id = "submit"><input type="submit" value="初期登録" /></p>
+        <p class="submit" id = "submit"><input type="button" id = "register_button" value="初期登録" /></p>
     </form>
 </div>
 
