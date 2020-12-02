@@ -135,10 +135,13 @@ input[type="username"] {
 }
 
 /*押した時ボタンの色が変わる*/
+input[type = "button"]:hover{
+  background: #37a4bf;
+}
+
 .submit input:hover{
   background: #37a4bf;
- }
-
+}
 
  footer{
   height: 100px;
@@ -171,4 +174,5 @@ footer p{
   color: lightgray;
   font-size: 18px;
   text-align: right;
+  font-weight: normal;
 }
