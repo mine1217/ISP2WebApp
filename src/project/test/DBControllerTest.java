@@ -236,7 +236,8 @@ public class DBControllerTest {
         int saraly = 1000;
 
         // 更新する予定
-        SimpleEntry<String, String> updateTime = new SimpleEntry<>("2020-11-24 12:00:00", "2020-11-24 16:30:00");
+        String updateStart = "2020-11-24 12:00:00";
+        String updateEnd = "2020-11-24 16:30:00";
         int updateSaraly = 980;
 
         // 期待する文字列
@@ -249,7 +250,7 @@ public class DBControllerTest {
         System.out.println(getSchdule.getKey());
         System.out.println(getSchdule.getValue());
         String getScheduleIndex = getSchdule.getKey().get(0).split(",")[0];
-        System.out.println(dcon.updateSchedule(getScheduleIndex, updateTime, updateSaraly));
+        System.out.println(dcon.updateSchedule(getScheduleIndex, updateStart, updateEnd, updateSaraly));
 
         result = dcon.getScheduleAtIndex(getScheduleIndex);
         System.out.println(result.getKey());
