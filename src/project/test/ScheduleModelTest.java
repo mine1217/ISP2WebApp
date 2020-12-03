@@ -9,6 +9,7 @@ import org.junit.*;
 import project.arzeit.database.DBController;
 import project.arzeit.database.DataSource;
 import project.arzeit.model.AuthCModel;
+import project.arzeit.model.ScheduleModel;
 
 /**
  * AuthCModel-認証処理をするプログラム の単体テスト

@@ -18,6 +18,7 @@ public class AuthCModelTest {
     public void ログイン処理テスト_非ハッシュ() throws Exception {
 
         DataSource ds = new DataSource();
+        DBController dc = new DBController(ds);
         AuthCModel model = new AuthCModel(ds);
 
         int expected1 = 0, 
@@ -45,6 +46,7 @@ public class AuthCModelTest {
     public void 登録処理テスト_非ハッシュ() throws Exception {
 
         DataSource ds = new DataSource();
+        DBController dc = new DBController(ds);
         AuthCModel model = new AuthCModel(ds);
 
         int expected1 = 0, //成功
