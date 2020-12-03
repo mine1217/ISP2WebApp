@@ -148,12 +148,12 @@ public class DBController {
      * @param saraly 給料
      * @return エラーコード
      */
-    public int setSchedule(String id, ArrayList<String> start, ArrayList<String> end, int saraly) {
+    public int setSchedule(String id, ArrayList<String> start, ArrayList<String> end, String saraly) {
         StringBuilder sBuilder = new StringBuilder("INSERT INTO schedule VALUES");
 
         for (int i = 0; i < start.size(); i++) {
             sBuilder.append(" ('").append(id).append("', ")
-            .append("NULL, '")
+            .append("NULL, '")  
             .append(start.get(i)).append("', '")
             .append(end.get(i)).append("', ")
             .append(saraly).append("),");
@@ -238,7 +238,7 @@ public class DBController {
      * @param updateSaraly 更新する給料
      * @return
      */
-    public int updateSchedule(String s_id, String start, String end,  int updateSaraly) {
+    public int updateSchedule(String s_id, String start, String end,  String updateSaraly) {
         StringBuilder sBuilder = new StringBuilder("UPDATE schedule SET start = '");
 
         sBuilder.append(start)
@@ -258,7 +258,7 @@ public class DBController {
      * @param updateSaraly 更新する給料
      * @return エラーコード
      */
-    public int updateSchedule(ArrayList<String> s_idList, ArrayList<String> start, ArrayList<String> end, ArrayList<Integer> saraly) {
+    public int updateSchedule(ArrayList<String> s_idList, ArrayList<String> start, ArrayList<String> end, ArrayList<String> saraly) {
         StringBuilder sBuilder = new StringBuilder("UPDATE schedule SET start = CASE");
 
         if(!(s_idList.size() == start.size() &&  s_idList.size() == saraly.size())) return -1; //sizeが違っていたら-1返して強制終了
