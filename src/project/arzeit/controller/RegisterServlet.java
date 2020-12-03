@@ -7,10 +7,10 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import project.arzeit.database.DBController;
+
 import project.arzeit.database.DataSource;
 import project.arzeit.model.AuthCModel;
-import project.arzeit.model.User;
+
 
 /**
  * project/arzeit/register.htmlに対応するサーブレット
@@ -26,10 +26,9 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
         
         ServletContext context = this.getServletContext();
-        DBController db = new DBController( (DataSource)context.getAttribute("dataSource") );
-        AuthCModel authC = new AuthCModel(db);
+        AuthCModel authC = new AuthCModel((DataSource)context.getAttribute("dataSource"));
 
-        int code = authC.register(request.getParameter("id"), request.getParameter("pass")); //登録してエラーコード返すだけ
+        int code = authC.register(request.getParameter("id"), request.getParameter("pass"), request.getParameter("name")); //登録してエラーコード返すだけ
 
         StringBuilder json = new StringBuilder("{ \"code\": \""); //コードをjsonデ返す
         json.append(code).append("\" }");

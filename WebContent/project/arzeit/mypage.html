@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>シフト管理アプリケーション</title>
+	<link rel="stylesheet" type="text/css" href="index.css"/>
+	<script type="text/javascript" src="mypage.js"></script>
+</head>
+
+<body>
+  <!--ヘッダー部分-->
+  <header>
+    <nav>
+    <ul>
+      <li>
+        <a href="main.html">シフト管理ページ</a>
+        </li>
+      <li class="current"><!--今どこのページにいるか cssの方でどこのページにいるか下線を引いている-->
+        <a href="mypage.html">マイページ</a>
+        </li>
+      <li>
+        <a href="index.html">ログアウト</a>
+      </li>
+    </ul>
+  </nav>
+  <section>
+  <H1>マイページ</H1>
+  </section>
+</header>
+<!--ヘッダー部分-->
+
+  <p>こちらでは登録した情報を確認,編集などできます.<p>
+
+    <div class = "mypage">
+      <p><img src="mypage_sample1.png" width="200" height="200" alt="プロフィール画像" class = "profile">
+          <a id = "username_profile">UserName</a><br><span id="username"><input type="username_profile_data" name="username" /></span>
+      </p>
+        <li>
+          <a>UserID:</a> <span id="userid"><input type="userid_profile_data" name="userid" /></span>
+        </li>
+        <!--新しく情報を追加するときはいかに適宜追加-->
+        <li>
+          <a>追加要素:</a> <span id=""></span>
+        </li>
+        <li>
+          <a>追加要素:</a> <span id=""></span>
+        </li>
+        <li>
+          <a>追加要素:</a> <span id=""></span>
+        </li>
+
+      <p class="submit"><input type="button" id = "update_button" value="Update"　/></p>
+    </div>
+
+    <footer>
+  		<nav>
+  			<ul>
+          <li>
+            <a href="main.html">シフト管理ページ</a>
+            </li>
+          <li class="current"><!--今どこのページにいるか cssの方でどこのページにいるか下線を引いている-->
+            <a href="mypage.html">マイページ</a>
+            </li>
+          <li>
+            <a href="index.html">ログアウト</a>
+          </li>
+  	    </ul>
+  			</nav>
+  		<p>ArZeit</p>
+  	</footer>
+
+</body>
+</html>

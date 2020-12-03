@@ -3,6 +3,7 @@ package project.arzeit.model;
 import java.util.AbstractMap.SimpleEntry;
 
 import project.arzeit.database.DBController;
+import project.arzeit.database.DataSource;
 
 /**
  * 認証とか登録処理を行うプログラム モデル
@@ -12,8 +13,8 @@ public class AuthCModel {
 
     private DBController db;
 
-    public AuthCModel(DBController db) {
-        this.db = db;
+    public AuthCModel(DataSource ds) {
+        db = new DBController(ds);
     }
 
     /**
@@ -22,14 +23,15 @@ public class AuthCModel {
      * @param pass
      * @return 今のところエラーは直で書いててそれ帰ってくる 2:id重複
      */
-    public int register(String id, String pass) {
-        int code = db.checkDuplicate(id); //重複チェック　合わなかったら2帰ってくる
+    public int register(String id, String pass, String name) {
+        int code = checkDuplicate(id); //重複チェック
 
         if (code == 0) {
-            return db.setAccount(id, pass);
-        } else {
-            return code;
-        }
+            if((code = db.setAccount(id, pass)) == 0) code = db.setProfile(id);
+            if(code == 0) code = db.updateProfile(id, name);
+        } 
+
+        return code;
     }
 
     /**
@@ -53,6 +55,39 @@ public class AuthCModel {
         } else {
             return result.getValue(); 
         }
+    }
+
+    /**
+     * idを更新する
+     * @param id
+     * @param updateId
+     * @return ステータスコード
+     */
+    public int setId(String id, String updateId) {
+        int code = checkDuplicate(id); //重複チェック
+        if(code == 0) code = db.updateId(id, updateId);
+        
+        return code;
+    }
+
+    /**
+     * id重複検査
+     * @param id
+     * @return エラーコード　被ってたら 2返す
+     */
+    public int checkDuplicate(String id) {
+        return db.checkDuplicate(id);
+    }
+
+    /**
+     * passを更新する
+     * 前のパスを認証してから実行するように修正必要
+     * @param id
+     * @param updateId
+     * @return ステータスコード
+     */
+    public int setPass(String id, String pass) {
+        return db.updatePass(id, pass);
     }
 
 }

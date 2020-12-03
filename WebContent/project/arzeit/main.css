@@ -1,0 +1,300 @@
+body{
+    background-color: #48d1cc;
+    text-align: center;
+    font-family: Verdana, sans-serif;
+    margin: 0;
+    width: auto;
+    height: auto;
+}
+body p{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+header{
+  color:block;
+  text-align: right;
+  padding: 10px;
+  padding-bottom: 60px;
+  /*background-image: url(./photo2.png);*/
+  height: 200px;
+  background-size: cover;
+  background-position: 50% 50%;
+  margin-bottom: 15px;
+}
+
+header ul{
+  margin: 0;
+  list-style-type: none;
+  padding-left: 0;
+  padding-top: 0;
+}
+
+header li{
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 15px;
+}
+
+header li > a{
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
+
+header li > a:hover{
+  color: royalblue;
+}
+.current{
+  border-bottom: 4px solid royalblue;
+}
+
+section{
+  text-align: center;
+  font-size: 28px;
+}
+
+form p{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+#calendar{
+  margin: 20px;
+  width: auto;
+}
+
+#lastMonth{
+  margin-right: 100px;
+}
+
+input[type = "button"]{
+  font-family: Arial;
+  color: #ffffff;
+  /*ボタンの大きさ*/
+  font-size: 15px;
+  padding-top: 10px;
+  padding-right: 14px;
+  padding-bottom: 10px;
+  padding-left: 14px;
+  /*影とか*/
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 8px 6px #488a9e;
+  -moz-box-shadow: 0px 8px 6px #488a9e;
+  box-shadow: 0px 8px 6px #488a9e;
+  border: solid #488a9e 2px;
+  background: royalblue
+}
+input[type = "button"]:hover{
+  background: #37a4bf;
+}
+
+h3{
+  font-size: 28px;
+}
+
+table {
+  width: auto;
+  margin: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+
+}
+
+td {
+    border: 2px solid #000;
+    text-align: center;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 31px;
+    padding-right: 31px;
+}
+
+.calendar_td{
+  font-size:  26px;
+}
+
+
+.schedule {
+  list-style: none;
+  font-size: 0.1px;
+  font-weight: bold;
+}
+
+h2,h4,h5{
+  font-size: 23px;
+}
+
+#errormessage{
+  font-size: 18px;
+  color: red;
+}
+
+#starthour,#startminitue,#endhour,#endminitue{
+  padding: 7px;
+}
+
+input[type = "income"]{
+  padding: 7px;
+}
+
+.monthsalary{
+  font-size: 20px;
+  color: red;
+}
+
+.submit{
+  margin-left: 20px;
+  text-align: right;
+}
+ .testTable{
+   border: 1;
+   border-collapse:collapse;
+   border-spacing: 0;
+ }
+
+ .testTD{
+   text-align: center;
+   height: 20px;
+   width: 60px;
+   white-space: nowrap;
+   padding: 0px;
+   border: 0px solid black;
+ }
+
+ .scheduleTD{
+   text-align: center;
+   height: 20px;
+   width: 60px;
+   white-space: nowrap;
+   padding: 0px;
+   border: 0px solid black;
+   border-bottom: 0.5px solid lightgray;
+ }
+
+ .scheduleTD:hover{
+   background: #37a4bf;
+ }
+
+ .testSELLTD{
+   vertical-align: top;
+   width: 110px;
+   height: 70px;
+   padding: 0px;
+   border: 1px solid black;
+ }
+
+ .testSELLTD:first-child{
+   color:red;
+ }
+ .testSELLTD:last-child{
+   color:royalblue;
+ }
+
+ .is_disabled{
+   font-size: 22px;
+   color: #ccc;
+ }
+
+ .testNUMTD{
+   width: 40px;
+   vertical-align: top;
+   white-space: nowrap;
+   padding: 0px;
+   border: 0px none;
+ }
+
+ .testTR{
+   padding: 0px;
+   border: 2px solid black;
+ }
+
+ .testFONT{
+   font-size: 1px;
+   margin: 0px;
+   padding: 0px;
+ }
+ .worktime_button{
+   background: #48d1cc;
+ }
+
+
+
+
+footer{
+ height: 100px;
+ width: 550px;
+ margin: 55px auto 60px;
+ border-top: 1px solid #555;
+}
+
+footer ul{
+ margin: 0;
+ margin-bottom: 20px;
+ list-style-type: none;
+ padding-left: 0;
+ float: left;
+ color: #000;
+}
+
+footer li{
+ padding-top: 20px;
+ font-size: 18px;
+ display: inline-block;
+}
+
+
+footer li>a:hover{
+ opacity: 0.6;
+}
+
+footer p{
+ color: lightgray;
+ font-size: 18px;
+ text-align: right;
+ font-weight: normal;
+}
+
+.testTable{
+  border: 1;
+  border-collapse:collapse;
+  border-spacing: 0;
+}
+
+.testTD{
+  text-align: center;
+  height: 20px;
+  width: 60px;
+  white-space: nowrap;
+  padding: 0px;
+  border: 1px solid black;
+}
+
+.testSELLTD{
+  width: 110px;
+  height: 70px;
+  padding: 0px;
+  border: 1px solid black;
+}
+
+.testNUMTD{
+  width: 40px;
+  vertical-align: top;
+  white-space: nowrap;
+  padding: 0px;
+  border: 0px none;
+}
+
+.testTR{
+  padding: 0px;
+  border: 2px solid black;
+}
+
+.testFONT{
+  font-size: 1px;
+  margin: 0px;
+  padding: 0px;
+}

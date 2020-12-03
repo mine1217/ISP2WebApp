@@ -1,0 +1,178 @@
+
+body{
+    background-color: #48d1cc;
+    text-align: center;
+    font-family: Verdana, sans-serif;
+    margin: 0;
+}
+
+header{
+  color:block;
+  text-align: right;
+  padding: 10px;
+  padding-bottom: 60px;
+  /*background-image: url(./photo2.png);*/
+  height: 100px;
+  background-size: cover;
+  background-position: 50% 50%;
+  margin-bottom: 15px;
+}
+
+header ul{
+  margin: 0;
+  list-style-type: none;
+  padding-left: 0;
+  padding-top: 0;
+}
+
+header li{
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 15px;
+}
+
+header li > a{
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
+
+header li > a:hover{
+  color: royalblue;
+}
+.current{
+  border-bottom: 4px solid royalblue;
+}
+p{
+  font-size: 18px;
+}
+
+body,p,form,input{
+  margin: 0
+}
+#form{
+    width: 420px;
+    margin: 30px auto;
+    padding: 12px;
+    border: 1.5px solid #555;
+    /*スキン*/
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0px 1px 10px #488a9e;
+    -moz-box-shadow: 0px 1px 10px #488a9e;
+    box-shadow: 0px 1px 10px #488a9e;
+    border: solid #4eb4c2 2px;
+    background: #royalblue;
+}
+
+form p{
+    font-size: 20px;
+    text-align: left;
+    padding-top:8px;
+}
+
+#Register_noRegister{
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+
+.form-title{
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    border-bottom: 1px solid #555;
+}
+
+.id,.pass,.name{
+    margin-bottom: 20px;
+}
+
+input[type="userid"]{
+  width: 300px;
+  padding: 4px;
+  font-size: 14px;
+}
+input[type="password"] {
+    width: 300px;
+    padding: 4px;
+    font-size: 14px;
+}
+input[type="username"] {
+    width: 300px;
+    padding: 4px;
+    font-size: 14px;
+}
+
+.submit{
+    font-size: 1.0em;
+    text-align: right;
+}
+
+.submit input{
+  font-family: Arial;
+  color: #ffffff;
+  /*ボタンの大きさ*/
+  font-size: 13px;
+  padding-top: 10px;
+  padding-right: 14px;
+  padding-bottom: 10px;
+  padding-left: 14px;
+  /*影とか*/
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 8px 6px #488a9e;
+  -moz-box-shadow: 0px 8px 6px #488a9e;
+  box-shadow: 0px 8px 6px #488a9e;
+  border: solid #488a9e 2px;
+  background: royalblue
+  }
+
+#errormessage{
+  font-size: 15px;
+  color: red;
+}
+
+/*押した時ボタンの色が変わる*/
+input[type = "button"]:hover{
+  background: #37a4bf;
+}
+
+.submit input:hover{
+  background: #37a4bf;
+}
+
+ footer{
+  height: 100px;
+  width: 550px;
+  margin: 55px auto 60px;
+  border-top: 1px solid #555;
+}
+
+footer ul{
+  margin: 0;
+  margin-bottom: 20px;
+  list-style-type: none;
+  padding-left: 0;
+  float: left;
+  color: #000;
+}
+
+footer li{
+  padding-top: 20px;
+  font-size: 18px;
+  display: inline-block;
+}
+
+
+footer li>a:hover{
+  opacity: 0.6;
+}
+
+footer p{
+  color: lightgray;
+  font-size: 18px;
+  text-align: right;
+  font-weight: normal;
+}
