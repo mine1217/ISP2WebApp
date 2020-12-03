@@ -19,7 +19,7 @@ public class AuthCModelTest {
 
         DataSource ds = new DataSource();
         DBController dc = new DBController(ds);
-        AuthCModel model = new AuthCModel(dc);
+        AuthCModel model = new AuthCModel(ds);
 
         int expected1 = 0, 
             expected2 = 3,  //id無いよ
@@ -47,7 +47,7 @@ public class AuthCModelTest {
 
         DataSource ds = new DataSource();
         DBController dc = new DBController(ds);
-        AuthCModel model = new AuthCModel(dc);
+        AuthCModel model = new AuthCModel(ds);
 
         int expected1 = 0, //成功
             expected2 = 1, //重複

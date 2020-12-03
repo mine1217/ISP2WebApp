@@ -3,6 +3,7 @@ package project.arzeit.model;
 import java.util.AbstractMap.SimpleEntry;
 
 import project.arzeit.database.DBController;
+import project.arzeit.database.DataSource;
 
 /**
  * 認証とか登録処理を行うプログラム モデル
@@ -12,8 +13,8 @@ public class AuthCModel {
 
     private DBController db;
 
-    public AuthCModel(DBController db) {
-        this.db = db;
+    public AuthCModel(DataSource ds) {
+        db = new DBController(ds);
     }
 
     /**

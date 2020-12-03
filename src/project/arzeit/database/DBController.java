@@ -148,12 +148,12 @@ public class DBController {
      * @param saraly 給料
      * @return エラーコード
      */
-    public int setSchedule(String id, ArrayList<String> start, ArrayList<String> end, int saraly) {
+    public int setSchedule(String id, ArrayList<String> start, ArrayList<String> end, String saraly) {
         StringBuilder sBuilder = new StringBuilder("INSERT INTO schedule VALUES");
 
         for (int i = 0; i < start.size(); i++) {
             sBuilder.append(" ('").append(id).append("', ")
-            .append("NULL, '")
+            .append("NULL, '")  
             .append(start.get(i)).append("', '")
             .append(end.get(i)).append("', ")
             .append(saraly).append("),");
@@ -177,13 +177,13 @@ public class DBController {
 
     /**
      * indexで予定を消す
-     * @param indexList indexのリスト
+     * @param s_idList indexのリスト
      * @return エラーコード
      */
-    public int deleteSchedule(ArrayList<String> indexList) {
+    public int deleteSchedule(ArrayList<String> s_idList) {
         StringBuilder sBuilder = new StringBuilder("DELETE FROM schedule WHERE s_id IN (");
 
-        for (String s : indexList) {
+        for (String s : s_idList) {
             sBuilder.append(" ");
             sBuilder.append(s); //複数予定があればどんどん追加
             sBuilder.append(",");
@@ -233,18 +233,18 @@ public class DBController {
 
     /**
      * インデックス指定でスケジュールを更新する(一個)
-     * @param index 更新するindex
+     * @param s_id 更新するindex
      * @param updateTime 開始、終了時間のマップ
      * @param updateSaraly 更新する給料
      * @return
      */
-    public int updateSchedule(String index, SimpleEntry<String, String> updateTime,  int updateSaraly) {
+    public int updateSchedule(String s_id, String start, String end,  String updateSaraly) {
         StringBuilder sBuilder = new StringBuilder("UPDATE schedule SET start = '");
 
-        sBuilder.append(updateTime.getKey())
-        .append("', end= '").append(updateTime.getValue())
+        sBuilder.append(start)
+        .append("', end= '").append(end)
         .append("', saraly= '").append(updateSaraly)
-        .append("' WHERE s_id = '").append(index)
+        .append("' WHERE s_id = '").append(s_id)
         .append("';");
 
         int code = update(sBuilder.toString());//命令送る
@@ -258,27 +258,27 @@ public class DBController {
      * @param updateSaraly 更新する給料
      * @return エラーコード
      */
-    public int updateSchedule(ArrayList<String> indexList, ArrayList<String> start, ArrayList<String> end, ArrayList<Integer> saraly) {
+    public int updateSchedule(ArrayList<String> s_idList, ArrayList<String> start, ArrayList<String> end, ArrayList<String> saraly) {
         StringBuilder sBuilder = new StringBuilder("UPDATE schedule SET start = CASE");
 
-        if(!(indexList.size() == start.size() &&  indexList.size() == saraly.size())) return -1; //sizeが違っていたら-1返して強制終了
+        if(!(s_idList.size() == start.size() &&  s_idList.size() == saraly.size())) return -1; //sizeが違っていたら-1返して強制終了
 
-        for (int i = 0; i < indexList.size(); i++) { //開始時間の設定
-            sBuilder.append(" WHEN s_id = ").append(indexList.get(i))
+        for (int i = 0; i < s_idList.size(); i++) { //開始時間の設定
+            sBuilder.append(" WHEN s_id = ").append(s_idList.get(i))
             .append(" THEN '").append(start.get(i)).append("'");
         }
 
         sBuilder.append(" END, end = CASE");
 
-        for (int i = 0; i < indexList.size(); i++) { //終了時間の設定
-            sBuilder.append(" WHEN s_id = ").append(indexList.get(i))
+        for (int i = 0; i < s_idList.size(); i++) { //終了時間の設定
+            sBuilder.append(" WHEN s_id = ").append(s_idList.get(i))
             .append(" THEN '").append(end.get(i)).append("'");
         }
 
         sBuilder.append(" END, saraly = CASE");
 
-        for (int i = 0; i < indexList.size(); i++) { //給料の設定
-            sBuilder.append(" WHEN s_id = ").append(indexList.get(i))
+        for (int i = 0; i < s_idList.size(); i++) { //給料の設定
+            sBuilder.append(" WHEN s_id = ").append(s_idList.get(i))
             .append(" THEN '").append(saraly.get(i)).append("'");
         }
 
