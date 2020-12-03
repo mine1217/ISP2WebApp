@@ -28,7 +28,7 @@ public class RegisterServlet extends HttpServlet {
         ServletContext context = this.getServletContext();
         AuthCModel authC = new AuthCModel((DataSource)context.getAttribute("dataSource"));
 
-        int code = authC.register(request.getParameter("id"), request.getParameter("pass")); //登録してエラーコード返すだけ
+        int code = authC.register(request.getParameter("id"), request.getParameter("pass"), request.getParameter("name")); //登録してエラーコード返すだけ
 
         StringBuilder json = new StringBuilder("{ \"code\": \""); //コードをjsonデ返す
         json.append(code).append("\" }");

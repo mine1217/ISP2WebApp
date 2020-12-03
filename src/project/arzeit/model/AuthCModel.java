@@ -23,11 +23,12 @@ public class AuthCModel {
      * @param pass
      * @return 今のところエラーは直で書いててそれ帰ってくる 2:id重複
      */
-    public int register(String id, String pass) {
+    public int register(String id, String pass, String name) {
         int code = checkDuplicate(id); //重複チェック
 
         if (code == 0) {
             if((code = db.setAccount(id, pass)) == 0) code = db.setProfile(id);
+            if(code == 0) code = db.updateProfile(id, name);
         } 
 
         return code;
