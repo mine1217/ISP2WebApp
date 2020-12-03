@@ -257,3 +257,7 @@ footer p{
  text-align: right;
  font-weight: normal;
 }
+
+.set_form{
+  display: none;
+}
