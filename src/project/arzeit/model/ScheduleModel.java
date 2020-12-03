@@ -47,7 +47,19 @@ public class ScheduleModel {
      * @return　ステータスコード
      */
     public int updateSchedule (String s_id, String start, String end, String saraly) {
-        return db.updateSchedule(s_id, start, end, Integer.parseInt(saraly));
+        return db.updateSchedule(s_id, start, end, saraly);
+    }
+
+        /**
+     * スケジュール複数をアップデートする
+     * @param s_id
+     * @param start
+     * @param end
+     * @param saraly
+     * @return　ステータスコード
+     */
+    public int updateSchedule (ArrayList<String> s_id, ArrayList<String> start, ArrayList<String> end, ArrayList<String> saraly) {
+        return db.updateSchedule(s_id, start, end, saraly);
     }
 
     /**
@@ -69,7 +81,7 @@ public class ScheduleModel {
      * @return エラーコード
      */
     public int setSchedule (String id, ArrayList<String> start, ArrayList<String> end, String saraly) {
-        return db.setSchedule(id, start, end, Integer.parseInt(saraly));
+        return db.setSchedule(id, start, end, saraly);
     }
 
 

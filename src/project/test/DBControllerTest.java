@@ -130,7 +130,7 @@ public class DBControllerTest {
         end.add("2020-11-24 17:00:00");
         end.add("2020-11-25 16:00:00");
         end.add("2020-11-26 17:00:00");
-        int saraly = 1000;
+        String saraly = "1000";
 
         // 期待する文字列
         ArrayList<String> expected1 = new ArrayList<>();
@@ -233,12 +233,12 @@ public class DBControllerTest {
         start.add("2020-11-24 00:00:00");
         ArrayList<String> end = new ArrayList<>();
         end.add("2020-11-24 17:00:00");
-        int saraly = 1000;
+        String saraly = "1000";
 
         // 更新する予定
         String updateStart = "2020-11-24 12:00:00";
         String updateEnd = "2020-11-24 16:30:00";
-        int updateSaraly = 980;
+        String updateSaraly = "980";
 
         // 期待する文字列
         String expected = "2020-11-24 12:00:00,2020-11-24 16:30:00,980";
@@ -283,7 +283,7 @@ public class DBControllerTest {
         end.add("2020-11-24 17:00:00");
         end.add("2020-11-25 16:00:00");
         end.add("2020-11-26 17:00:00");
-        int saraly = 1000;
+        String saraly = "1000";
 
         // 更新する予定
         ArrayList<String> indexList = new ArrayList<>();
@@ -295,10 +295,10 @@ public class DBControllerTest {
         updateEnd.add("2020-11-25 17:00:00");
         updateEnd.add("2020-11-26 16:00:00");
         updateEnd.add("2020-11-27 17:00:00");
-        ArrayList<Integer> updateSaraly = new ArrayList<>();
-        updateSaraly.add(980);
-        updateSaraly.add(980);
-        updateSaraly.add(980);
+        ArrayList<String> updateSaraly = new ArrayList<>();
+        updateSaraly.add("980");
+        updateSaraly.add("980");
+        updateSaraly.add("980");
 
         // 期待する文字列
         ArrayList<String> expected = new ArrayList<>();
