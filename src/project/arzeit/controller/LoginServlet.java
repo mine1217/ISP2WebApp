@@ -7,7 +7,6 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import project.arzeit.database.DBController;
 import project.arzeit.database.DataSource;
 import project.arzeit.model.AuthCModel;
 import project.arzeit.model.User;
@@ -25,8 +24,7 @@ public class LoginServlet extends HttpServlet{
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
         ServletContext context = this.getServletContext();
-        DBController db = new DBController( (DataSource)context.getAttribute("dataSource") );
-        AuthCModel authC = new AuthCModel(db);
+        AuthCModel authC = new AuthCModel( (DataSource)context.getAttribute("dataSource") );
         String id = request.getParameter("id");
 
         int code = authC.login(id,request.getParameter("pass"));

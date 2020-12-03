@@ -19,7 +19,7 @@ public class AuthCModelTest {
 
         DataSource ds = new DataSource();
         DBController dc = new DBController(ds);
-        AuthCModel model = new AuthCModel(dc);
+        AuthCModel model = new AuthCModel(ds);
 
         int expected1 = 0, 
             expected2 = 3,  //id無いよ
@@ -47,7 +47,7 @@ public class AuthCModelTest {
 
         DataSource ds = new DataSource();
         DBController dc = new DBController(ds);
-        AuthCModel model = new AuthCModel(dc);
+        AuthCModel model = new AuthCModel(ds);
 
         int expected1 = 0, //成功
             expected2 = 1, //重複
@@ -55,8 +55,8 @@ public class AuthCModelTest {
 
         dc.setAccount("test3", "pass3"); //重複させるために余分にアカウント作る
 
-        result1 = model.register("test2", "pass2");
-        result2 = model.register("test3", "pass3");
+        result1 = model.register("test2", "pass2", "namae");
+        result2 = model.register("test3", "pass3", "namae2");
 
         dc.deleteAccount("test2");
         dc.deleteAccount("test3");

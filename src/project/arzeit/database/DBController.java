@@ -2,9 +2,8 @@ package project.arzeit.database;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.Map.Entry;
+
 
 /**
  * HikariCPを使ったデータプールのソース DB接続の根っこ
@@ -114,29 +113,15 @@ public class DBController {
         int code = update(message);
         return code;
     }
-    
-    /**
-     * プロフィールを登録する
-     * 
-     * @param id
-     * @param name
-     * @return :int エラーコード
-     */
-    public int setProfile(String id, String name) {
-        String message = String.format("INSERT INTO profile VALUES ('%s', '%s')", id, name);
-        int code = update(message);
-        return code;
-    }
 
     /**
-     * パスワードを変更する
-     * 
+     * プロフィールを初期化するだけ
      * @param id
      * @param pass
      * @return :int エラーコード
      */
-    public int setPass(String id, String pass) {
-        String message = String.format("UPDATE login set pass='%s' WHERE id='%s'", pass, id);
+    public int setProfile(String id) {
+        String message = String.format("INSERT INTO profile VALUES ('%s', 'NULL')", id);
         int code = update(message);
         return code;
     }
@@ -148,12 +133,12 @@ public class DBController {
      * @param saraly 給料
      * @return エラーコード
      */
-    public int setSchedule(String id, ArrayList<String> start, ArrayList<String> end, int saraly) {
+    public int setSchedule(String id, ArrayList<String> start, ArrayList<String> end, String saraly) {
         StringBuilder sBuilder = new StringBuilder("INSERT INTO schedule VALUES");
 
         for (int i = 0; i < start.size(); i++) {
             sBuilder.append(" ('").append(id).append("', ")
-            .append("NULL, '")
+            .append("NULL, '")  
             .append(start.get(i)).append("', '")
             .append(end.get(i)).append("', ")
             .append(saraly).append("),");
@@ -177,13 +162,13 @@ public class DBController {
 
     /**
      * indexで予定を消す
-     * @param indexList indexのリスト
+     * @param s_idList indexのリスト
      * @return エラーコード
      */
-    public int deleteSchedule(ArrayList<String> indexList) {
+    public int deleteSchedule(ArrayList<String> s_idList) {
         StringBuilder sBuilder = new StringBuilder("DELETE FROM schedule WHERE s_id IN (");
 
-        for (String s : indexList) {
+        for (String s : s_idList) {
             sBuilder.append(" ");
             sBuilder.append(s); //複数予定があればどんどん追加
             sBuilder.append(",");
@@ -213,44 +198,25 @@ public class DBController {
     }
 
     /**
-     * ID指定してアカウント情報を更新する
-     * @param id 更新元id
-     * @param updateId 更新語id
-     * @param updatePass 更新後パス
-     * @return エラーコード
-     */
-    public int updateAccount(String id, String updateId, String updatePass) {
-        
-        StringBuilder sBuilder = new StringBuilder("UPDATE login SET id = '");
-        sBuilder.append(updateId)
-        .append("', pass= '").append(updatePass)
-        .append("' WHERE id = '").append(id)
-        .append("';");
-
-        int code = update(sBuilder.toString());//命令送る
-        return code;
-    }
-
-    /**
      * インデックス指定でスケジュールを更新する(一個)
-     * @param index 更新するindex
+     * @param s_id 更新するindex
      * @param updateTime 開始、終了時間のマップ
      * @param updateSaraly 更新する給料
      * @return
      */
-    public int updateSchedule(String index, SimpleEntry<String, String> updateTime,  int updateSaraly) {
+    public int updateSchedule(String s_id, String start, String end,  String updateSaraly) {
         StringBuilder sBuilder = new StringBuilder("UPDATE schedule SET start = '");
 
-        sBuilder.append(updateTime.getKey())
-        .append("', end= '").append(updateTime.getValue())
+        sBuilder.append(start)
+        .append("', end= '").append(end)
         .append("', saraly= '").append(updateSaraly)
-        .append("' WHERE s_id = '").append(index)
+        .append("' WHERE s_id = '").append(s_id)
         .append("';");
 
         int code = update(sBuilder.toString());//命令送る
         return code;
     }
-    
+
     /**
      * インデックス指定でスケジュールを更新する(複数)
      * @param index 更新するindex
@@ -258,27 +224,27 @@ public class DBController {
      * @param updateSaraly 更新する給料
      * @return エラーコード
      */
-    public int updateSchedule(ArrayList<String> indexList, ArrayList<String> start, ArrayList<String> end, ArrayList<Integer> saraly) {
+    public int updateSchedule(ArrayList<String> s_idList, ArrayList<String> start, ArrayList<String> end, ArrayList<String> saraly) {
         StringBuilder sBuilder = new StringBuilder("UPDATE schedule SET start = CASE");
 
-        if(!(indexList.size() == start.size() &&  indexList.size() == saraly.size())) return -1; //sizeが違っていたら-1返して強制終了
+        if(!(s_idList.size() == start.size() &&  s_idList.size() == saraly.size())) return -1; //sizeが違っていたら-1返して強制終了
 
-        for (int i = 0; i < indexList.size(); i++) { //開始時間の設定
-            sBuilder.append(" WHEN s_id = ").append(indexList.get(i))
+        for (int i = 0; i < s_idList.size(); i++) { //開始時間の設定
+            sBuilder.append(" WHEN s_id = ").append(s_idList.get(i))
             .append(" THEN '").append(start.get(i)).append("'");
         }
 
         sBuilder.append(" END, end = CASE");
 
-        for (int i = 0; i < indexList.size(); i++) { //終了時間の設定
-            sBuilder.append(" WHEN s_id = ").append(indexList.get(i))
+        for (int i = 0; i < s_idList.size(); i++) { //終了時間の設定
+            sBuilder.append(" WHEN s_id = ").append(s_idList.get(i))
             .append(" THEN '").append(end.get(i)).append("'");
         }
 
         sBuilder.append(" END, saraly = CASE");
 
-        for (int i = 0; i < indexList.size(); i++) { //給料の設定
-            sBuilder.append(" WHEN s_id = ").append(indexList.get(i))
+        for (int i = 0; i < s_idList.size(); i++) { //給料の設定
+            sBuilder.append(" WHEN s_id = ").append(s_idList.get(i))
             .append(" THEN '").append(saraly.get(i)).append("'");
         }
 
@@ -307,6 +273,43 @@ public class DBController {
     }
 
     /**
+     * idを更新する
+     * @param id
+     * @param updateId
+     * @return エラーコード
+     */
+    public int updateId(String id, String updateId) {
+        
+        StringBuilder sBuilder = new StringBuilder("UPDATE login SET id = '");
+        sBuilder.append(updateId)
+        .append("' WHERE id = '").append(id)
+        .append("';");
+
+        int code = update(sBuilder.toString());//命令送る
+        return code;
+        
+    }
+
+    /**
+     * passを更新する
+     * @param id
+     * @param updateId
+     * @return エラーコード
+     */
+    public int updatePass(String id, String pass) {
+        
+        StringBuilder sBuilder = new StringBuilder("UPDATE login SET pass = '");
+        sBuilder.append(pass)
+        .append("' WHERE id = '").append(id)
+        .append("';");
+
+        int code = update(sBuilder.toString());//命令送る
+        return code;
+        
+    }
+
+
+    /**
      * パスワード取ってくる
      * @param id
      * @return 結果とエラーコードのマップ
@@ -324,7 +327,7 @@ public class DBController {
             pstm = con.prepareStatement(String.format("SELECT pass FROM login WHERE id='%s'", id)); //id指定でパスを取ってくる
             ResultSet result = pstm.executeQuery(); // 送信
             if(result.next()) pass = result.getString("pass");
-            else code = 1;
+            else code = 3;
             
         } catch (SQLException e) {
 
