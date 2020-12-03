@@ -1,40 +1,38 @@
 var xmlHttpRequest;
-var idElements = document.getElementsByClassName("id");
-var pass1Elements = document.getElementsByClassName("pass1");
-var pass2Elements = document.getElementsByClassName("pass2");
-var nameElements = document.getElementsByClassName("name");
+var idElements;
+var pass1Elements;
+var pass2Elements;
+var nameElements;
+var submitElement;
 
 
 function register(){
-  if(0<idElements.length<=12){
 
+  if(6<=idElements.value.length<=24&&idElements.value.match(/^[A-Za-z_0-9]+$/)){
+
+    if(pass1Elements.value===pass2Elements.value){
+
+      if(6<=pass1Elements.value.length<=24&&pass1Elements.value.match(/^[A-Za-z_0-9]+$/)){
+        document.getElementById("errormessage").innerHTML = "";
+      }
+      else {
+        
+        //エラー文表示
+        document.getElementById("errormessage").innerHTML = "passwordのフォーマットが合っていません";
+        console.log("passwordのフォーマットが合っていません");
+        
+      }
+
+    }else {
+      document.getElementById("errormessage").innerHTML = "passwordが一致しません";
+      console.log("passwordが一致しません");
+    }
   }
   else {
     //エラー文表示
-    //document.write("idのフォーマットが合っていません");
+    document.getElementById("errormessage").innerHTML = "idのフォーマットが合っていません";
+    console.log("idのフォーマットが合っていません");
   }
-
-  if(pass1Elements===pass2Elements){
-    if(6<=pass1Elements.length<=24&&pass1Elements.match(/^[A-Za-z_0-9]+$/)){
-
-    }
-    else {
-      //エラー文表示
-      //document.write("passwordのフォーマットが合っていません");
-    }
-  }
-  else{
-    //エラー文表示
-    //document.write("passwordが一致しません");
-  }
-
-  if(6<=nameElements.length<=24&&nameElements.match(/^[A-Za-z_0-9]+$/)){
-
-  }
-  else{
-    //エラー文表示
-  }
-
   sendWithPostMethod();
 
 }
@@ -48,7 +46,7 @@ function sendWithPostMethod(){
     var encryptedPass = CryptoJS.AES.encrypt(pass1Elements,pwd).toString();
 
     var url = "echo";
-    xmlHttpRequest = new xmlHttpRequest();
+    xmlHttpRequest = new XMLHttpRequest();
     xmlHttpRequest.onreadystatechange = receive;
     xmlHttpRequest.open("POST",url,true);
     xmlHttpRequest.setRequestHeader("Content-Type",
@@ -58,6 +56,10 @@ function sendWithPostMethod(){
 }
 
 window.addEventListener("load", function() {
-	var submitElement = document.getElementById("submit");
+  idElements = document.getElementById("id");
+  pass1Elements = document.getElementById("pass1");
+  pass2Elements = document.getElementById("pass2");
+  nameElements = document.getElementById("name");
+  submitElement = document.getElementById("submit")
 	submitElement.addEventListener("click", register, false);
 }, false);

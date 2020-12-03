@@ -55,10 +55,10 @@ function createCalendar(year, month) {
                 dayCount++
             } else {
                 calendarHtml +=
-                `<td class="testSELLTD">
+                `<td class="testSELLTD" id="${year}-${month}-${dayCount}">
                     <table class="testTable">
                         <tr class="testTD">
-                            <td class="testNUMTD"> ${dayCount} </td>
+                            <td class="testNUMTD" onclick="getDate(this)"> ${dayCount} </td>
                             <td class="testTD">
                                 <table class="testTable">
                                 <tr class="testTD"> <td class="scheduleTD" id = "index"> <p class="testFONT"></p> </td> </tr>

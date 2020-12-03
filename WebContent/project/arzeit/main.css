@@ -206,6 +206,7 @@ input[type = "income"]{
  }
 
  .scheduleTD{
+  z-index: 4;
    text-align: center;
    height: 20px;
    width: 60px;
@@ -316,6 +317,7 @@ footer p{
   height: 70px;
   padding: 0px;
   border: 1px solid black;
+  z-index: 1;
 }
 
 .testNUMTD{
@@ -335,4 +337,8 @@ footer p{
   font-size: 1px;
   margin: 0px;
   padding: 0px;
+}
+
+#set_form{
+  display: none;
 }
