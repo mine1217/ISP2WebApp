@@ -2,6 +2,8 @@ package project.arzeit.model;
 
 import java.util.AbstractMap.SimpleEntry;
 
+import javax.sql.DataSource;
+
 import project.arzeit.database.DBController;
 
 /**
@@ -12,8 +14,8 @@ public class AuthCModel {
 
     private DBController db;
 
-    public AuthCModel(DBController db) {
-        this.db = db;
+    public AuthCModel(DataSource ds) {
+        db = new DBController(ds);
     }
 
     /**

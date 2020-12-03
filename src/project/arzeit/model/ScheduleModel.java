@@ -3,6 +3,8 @@ package project.arzeit.model;
 import java.util.ArrayList;
 import java.util.AbstractMap.SimpleEntry;
 
+import javax.sql.DataSource;
+
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
 import project.arzeit.database.DBController;
@@ -15,8 +17,8 @@ public class ScheduleModel {
 
     private DBController db;
 
-    public ScheduleModel(DBController db) {
-        this.db = db;
+    public ScheduleModel(DataSource ds) {
+        db = new DBController(ds);
     }
 
     /**

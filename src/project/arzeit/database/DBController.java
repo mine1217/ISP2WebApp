@@ -20,7 +20,7 @@ public class DBController {
      * 
      * @param ds SQLのコネクタ(DataSource)
      */
-    public DBController(DataSource ds) {
+    public DBController(javax.sql.DataSource ds) {
         this.dataSource = ds;
     }
 
