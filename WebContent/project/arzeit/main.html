@@ -4,7 +4,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>シフト管理アプリケーション</title>
 	<link rel="stylesheet" type="text/css" href="main.css"/>
-	<script type="text/javascript" src="main.js"></script>
 </head>
 
 <body>
@@ -33,17 +32,19 @@
 
   <h2>カレンダーから月と日を選択してそこから時間を設定してください.</h2>
 
-  <button id="lastMonth" type="button">前の月</button>
-　<button id="nextMonth" type="button">次の月</button>
+  <!--<button id="lastMonth">前の月</button>
+　<button id="nextMonth">次の月</button>-->
+<input type="button" id = "lastMonth"value="前の月"/>
+<input type="button" id = "nextMonth"value="次の月"/>
 
   <div id = "calendar"></div>
   <script type="text/javascript" src="calendar.js"></script>
-
+	<script type="text/javascript" src="main.js"></script>
 
   <form>
   <h4>次に勤務時間を設定してください.</h4>
 	<p><span id="errormessage"></span></p><br>
-  <p>勤務時間</p>
+  <p><span id="selectdate"></span>日:勤務時間</p>
   <select id = "starthour">
     <option value = "1">1</option>
     <option value = "2">2</option>
@@ -116,7 +117,7 @@
     <p>日,勤務時間,時給を設定できたらボタンを押してください→→</p>
     <p class="submit"><input type="button" id = "apply_button"value="Apply"/></p>
   </form>
-
+	   <input type="button" id = "checkoff_button"value="選択解除"/>
     <footer>
   		<nav>
   			<ul>
