@@ -18,8 +18,7 @@ public class AuthCModelTest {
     public void ログイン処理テスト_非ハッシュ() throws Exception {
 
         DataSource ds = new DataSource();
-        DBController dc = new DBController(ds);
-        AuthCModel model = new AuthCModel(dc);
+        AuthCModel model = new AuthCModel(ds);
 
         int expected1 = 0, 
             expected2 = 3,  //id無いよ
@@ -46,8 +45,7 @@ public class AuthCModelTest {
     public void 登録処理テスト_非ハッシュ() throws Exception {
 
         DataSource ds = new DataSource();
-        DBController dc = new DBController(ds);
-        AuthCModel model = new AuthCModel(dc);
+        AuthCModel model = new AuthCModel(ds);
 
         int expected1 = 0, //成功
             expected2 = 1, //重複

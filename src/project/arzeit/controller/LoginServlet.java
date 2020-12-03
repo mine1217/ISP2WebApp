@@ -25,8 +25,7 @@ public class LoginServlet extends HttpServlet{
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
         ServletContext context = this.getServletContext();
-        DBController db = new DBController( (DataSource)context.getAttribute("dataSource") );
-        AuthCModel authC = new AuthCModel(db);
+        AuthCModel authC = new AuthCModel( (DataSource)context.getAttribute("dataSource") );
         String id = request.getParameter("id");
 
         int code = authC.login(id,request.getParameter("pass"));
