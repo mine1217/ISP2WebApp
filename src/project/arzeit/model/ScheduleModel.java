@@ -15,6 +15,8 @@ import project.arzeit.database.DataSource;
 public class ScheduleModel {
 
     private DBController db;
+    public final String update = "update",
+                        delete = "delete";
 
     public ScheduleModel(DataSource ds) {
         db = new DBController(ds);
@@ -91,7 +93,7 @@ public class ScheduleModel {
      * @param scheduleList
      * @return jsonに整形した文字列リスト
      */
-    public ArrayList<String> scheduleJSONParser(ArrayList<String> scheduleList) {
+    public ArrayList<String> scheduleToJSON(ArrayList<String> scheduleList) {
         ArrayList<String> jsonList = new ArrayList<>();
         StringBuilder sb = new StringBuilder("");
 
@@ -109,7 +111,5 @@ public class ScheduleModel {
 
         return jsonList;
     }
-
-
 
 }
