@@ -205,7 +205,8 @@ public class DBControllerTest {
         String expectedPass = "testPass2";
 
         System.out.println(dcon.setAccount(id, pass));
-        System.out.println(dcon.updateAccount(id, updateId, updatePass));
+        System.out.println(dcon.updateId(id, updateId));
+        System.out.println(dcon.updatePass(updateId, updatePass));
 
         result = dcon.getPass(expectedID);
         System.out.println(result.getKey());
@@ -357,7 +358,7 @@ public class DBControllerTest {
 
 
         System.out.println(dcon.setAccount(id, pass));
-        System.out.println(dcon.setProfile(id, name));
+        System.out.println(dcon.setProfile(id));
 
         result = dcon.getName(id);
         System.out.println(result.getKey());

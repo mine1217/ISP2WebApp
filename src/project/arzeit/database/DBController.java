@@ -114,20 +114,19 @@ public class DBController {
         int code = update(message);
         return code;
     }
-    
+
     /**
-     * プロフィールを登録する
-     * 
+     * プロフィールを初期化するだけ
      * @param id
-     * @param name
+     * @param pass
      * @return :int エラーコード
      */
-    public int setProfile(String id, String name) {
-        String message = String.format("INSERT INTO profile VALUES ('%s', '%s')", id, name);
+    public int setProfile(String id) {
+        String message = String.format("INSERT INTO profile VALUES ('%s', 'NULL')", id);
         int code = update(message);
         return code;
     }
-
+    
     /**
      * パスワードを変更する
      * 
@@ -213,25 +212,6 @@ public class DBController {
     }
 
     /**
-     * ID指定してアカウント情報を更新する
-     * @param id 更新元id
-     * @param updateId 更新語id
-     * @param updatePass 更新後パス
-     * @return エラーコード
-     */
-    public int updateAccount(String id, String updateId, String updatePass) {
-        
-        StringBuilder sBuilder = new StringBuilder("UPDATE login SET id = '");
-        sBuilder.append(updateId)
-        .append("', pass= '").append(updatePass)
-        .append("' WHERE id = '").append(id)
-        .append("';");
-
-        int code = update(sBuilder.toString());//命令送る
-        return code;
-    }
-
-    /**
      * インデックス指定でスケジュールを更新する(一個)
      * @param s_id 更新するindex
      * @param updateTime 開始、終了時間のマップ
@@ -250,7 +230,7 @@ public class DBController {
         int code = update(sBuilder.toString());//命令送る
         return code;
     }
-    
+
     /**
      * インデックス指定でスケジュールを更新する(複数)
      * @param index 更新するindex
@@ -305,6 +285,43 @@ public class DBController {
         return code;
         
     }
+
+    /**
+     * idを更新する
+     * @param id
+     * @param updateId
+     * @return エラーコード
+     */
+    public int updateId(String id, String updateId) {
+        
+        StringBuilder sBuilder = new StringBuilder("UPDATE login SET id = '");
+        sBuilder.append(updateId)
+        .append("' WHERE id = '").append(id)
+        .append("';");
+
+        int code = update(sBuilder.toString());//命令送る
+        return code;
+        
+    }
+
+    /**
+     * passを更新する
+     * @param id
+     * @param updateId
+     * @return エラーコード
+     */
+    public int updatePass(String id, String pass) {
+        
+        StringBuilder sBuilder = new StringBuilder("UPDATE login SET pass = '");
+        sBuilder.append(pass)
+        .append("' WHERE id = '").append(id)
+        .append("';");
+
+        int code = update(sBuilder.toString());//命令送る
+        return code;
+        
+    }
+
 
     /**
      * パスワード取ってくる
