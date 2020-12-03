@@ -63,7 +63,7 @@ body,p,form,input{
     -moz-box-shadow: 0px 1px 10px #488a9e;
     box-shadow: 0px 1px 10px #488a9e;
     border: solid #4eb4c2 2px;
-    background: #royalblue;
+    background: royalblue;
 }
 
 form p{
