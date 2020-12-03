@@ -3,8 +3,6 @@ package project.arzeit.model;
 import java.util.ArrayList;
 import java.util.AbstractMap.SimpleEntry;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
-
 import project.arzeit.database.DBController;
 import project.arzeit.database.DataSource;
 

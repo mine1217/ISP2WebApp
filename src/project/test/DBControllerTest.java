@@ -3,7 +3,6 @@ package project.test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.AbstractMap.SimpleEntry;
 
 import org.junit.*;
@@ -350,7 +349,6 @@ public class DBControllerTest {
         // 設定するアカウント
         String id = "testAccount";
         String pass = "testPass";
-        String name = "namae";
         SimpleEntry<String, Integer> result;
 
         // 更新するアカウント

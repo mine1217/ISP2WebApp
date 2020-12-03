@@ -5,16 +5,12 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.AbstractMap.SimpleEntry;
 
-import com.mysql.cj.xdevapi.JsonArray;
-import com.mysql.cj.xdevapi.JsonParser;
-
 import org.junit.*;
-import org.eclipse.jetty.util.ajax.JSON;
 import org.json.*;
 
 import project.arzeit.database.DBController;
 import project.arzeit.database.DataSource;
-import project.arzeit.model.AuthCModel;
+
 import project.arzeit.model.ScheduleModel;
 
 

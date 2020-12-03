@@ -26,7 +26,9 @@ public class AuthCModel {
     public int register(String id, String pass) {
         int code = checkDuplicate(id); //重複チェック
 
-        if (code == 0) return db.setAccount(id, pass);
+        if (code == 0) {
+            if((code = db.setAccount(id, pass)) == 0) code = db.setProfile(id);
+        } 
 
         return code;
     }

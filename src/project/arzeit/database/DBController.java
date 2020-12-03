@@ -2,9 +2,8 @@ package project.arzeit.database;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.Map.Entry;
+
 
 /**
  * HikariCPを使ったデータプールのソース DB接続の根っこ
@@ -328,7 +327,7 @@ public class DBController {
             pstm = con.prepareStatement(String.format("SELECT pass FROM login WHERE id='%s'", id)); //id指定でパスを取ってくる
             ResultSet result = pstm.executeQuery(); // 送信
             if(result.next()) pass = result.getString("pass");
-            else code = 1;
+            else code = 3;
             
         } catch (SQLException e) {
 
