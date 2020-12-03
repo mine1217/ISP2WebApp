@@ -126,19 +126,6 @@ public class DBController {
         int code = update(message);
         return code;
     }
-    
-    /**
-     * パスワードを変更する
-     * 
-     * @param id
-     * @param pass
-     * @return :int エラーコード
-     */
-    public int setPass(String id, String pass) {
-        String message = String.format("UPDATE login set pass='%s' WHERE id='%s'", pass, id);
-        int code = update(message);
-        return code;
-    }
 
     /**
      * 予定の設定

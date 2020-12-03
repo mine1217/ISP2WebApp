@@ -84,7 +84,7 @@ public class AuthCModel {
      * @return ステータスコード
      */
     public int setPass(String id, String pass) {
-        return db.setPass(id, pass);
+        return db.updatePass(id, pass);
     }
 
 }
