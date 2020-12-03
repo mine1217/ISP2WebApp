@@ -7,7 +7,6 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import project.arzeit.database.DBController;
 import project.arzeit.database.DataSource;
 import project.arzeit.model.AuthCModel;
 import project.arzeit.model.User;

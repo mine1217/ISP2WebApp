@@ -3,7 +3,6 @@ package project.test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.AbstractMap.SimpleEntry;
 
 import org.junit.*;
@@ -205,7 +204,8 @@ public class DBControllerTest {
         String expectedPass = "testPass2";
 
         System.out.println(dcon.setAccount(id, pass));
-        System.out.println(dcon.updateAccount(id, updateId, updatePass));
+        System.out.println(dcon.updateId(id, updateId));
+        System.out.println(dcon.updatePass(updateId, updatePass));
 
         result = dcon.getPass(expectedID);
         System.out.println(result.getKey());
@@ -349,7 +349,6 @@ public class DBControllerTest {
         // 設定するアカウント
         String id = "testAccount";
         String pass = "testPass";
-        String name = "namae";
         SimpleEntry<String, Integer> result;
 
         // 更新するアカウント
@@ -357,7 +356,7 @@ public class DBControllerTest {
 
 
         System.out.println(dcon.setAccount(id, pass));
-        System.out.println(dcon.setProfile(id, name));
+        System.out.println(dcon.setProfile(id));
 
         result = dcon.getName(id);
         System.out.println(result.getKey());

@@ -55,8 +55,8 @@ public class AuthCModelTest {
 
         dc.setAccount("test3", "pass3"); //重複させるために余分にアカウント作る
 
-        result1 = model.register("test2", "pass2");
-        result2 = model.register("test3", "pass3");
+        result1 = model.register("test2", "pass2", "namae");
+        result2 = model.register("test3", "pass3", "namae2");
 
         dc.deleteAccount("test2");
         dc.deleteAccount("test3");
