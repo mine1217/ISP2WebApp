@@ -124,16 +124,16 @@ td {
   font-weight: bold;
 }
 
-h2,h4,h5{
+h2,h4,h5,h6{
   font-size: 23px;
 }
 
-#errormessage{
+.errormessage{
   font-size: 18px;
   color: red;
 }
 
-#starthour,#startminitue,#endhour,#endminitue{
+.starthour,.startminitue,.endhour,.endminitue{
   padding: 7px;
 }
 
@@ -257,4 +257,3 @@ footer p{
  text-align: right;
  font-weight: normal;
 }
-
