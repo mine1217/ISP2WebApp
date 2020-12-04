@@ -27,7 +27,7 @@ function login(){
 
 function sendWithPostMethod(){
 
-var url = "http://localhost:8080/arzeit/project/controller/LoginServlet.java";
+var url = "login";
 xmlHttpRequest = new XMLHttpRequest();
 xmlHttpRequest.onreadystatechange = receive;
 xmlHttpRequest.open("POST",url,true);
