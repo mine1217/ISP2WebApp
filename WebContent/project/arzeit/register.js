@@ -65,9 +65,11 @@ function sendWithPostMethod() {
 function receive() {
   if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
     var response = JSON.parse(xmlHttpRequest.responseText);
-
-    var echoMessageElement = document.getElementById("echo_id");
-    echoMessageElement.innerHTML = response.id + response.pass + response.name;
+    if(response.code == 0) {
+      document.getElementById("errormessage").innerHTML = "<font color=green>登録完了</font>";
+    }else {
+      document.getElementById("errormessage").innerHTML = getErrorMessage(response.code);
+    }
   }
 }
 
@@ -76,6 +78,6 @@ window.addEventListener("load", function () {
   pass1Elements = document.getElementById("pass1");
   pass2Elements = document.getElementById("pass2");
   nameElements = document.getElementById("name");
-  submitElement = document.getElementById("submit")
+  submitElement = document.getElementById("register_button")
   submitElement.addEventListener("click", register, false);
 }, false);
