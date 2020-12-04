@@ -42,7 +42,7 @@ function sendWithPostMethod(){
 //     xmlHttpRequest.send("id=" + idElements.value + "&pass=" + encryptedPass
 //       + "&name=" + nameElements.value);
 
-var url = "echo";
+var url = "../../../src/project/arzeit/controller/RegisterServlet.java";
 xmlHttpRequest = new XMLHttpRequest();
 xmlHttpRequest.onreadystatechange = receive;
 xmlHttpRequest.open("POST",url,true);
