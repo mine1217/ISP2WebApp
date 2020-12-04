@@ -12,6 +12,7 @@ function postMethod() {
 
 function receive() {
 	if(xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+		console.log(xmlHttpRequest.responseText);
 		var response = JSON.parse(xmlHttpRequest.responseText);
 
 		var showElement = document.getElementById("username");
