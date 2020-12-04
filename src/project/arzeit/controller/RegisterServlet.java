@@ -38,5 +38,6 @@ public class RegisterServlet extends HttpServlet {
         writer.append(json.toString());
         writer.flush();
 
-	}
+    }
+    
 }
