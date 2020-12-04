@@ -46,7 +46,7 @@ function getDate(sell) {
  */
 function toggleDate(dateId) {
   var isInclude = false;
-  var sellElement = document.getElementById(dateId);
+  var sellElement = document.getElementById("SELL_"+dateId);
 
   var count = 0;
   dateList.forEach(element => {
@@ -123,8 +123,10 @@ function sendShowRequest() {
 	xmlHttpRequest.send("message=" + encodeURIComponent(messageElement.value));
 }
 
+
+
 window.addEventListener("load", function () {
-  document.getElementById(apply_button).addEventListener("click", sendSendRequest, false);
+  //document.getElementById("apply_button").addEventListener("click", sendSendRequest, false);
 }, false);
 
 
