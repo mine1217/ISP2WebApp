@@ -55,8 +55,8 @@ section{
 }
 
 form p{
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 4px;
+  margin-bottom: 4px;
   display: inline-block;
 }
 
@@ -124,16 +124,16 @@ td {
   font-weight: bold;
 }
 
-h2,h4,h5{
-  font-size: 23px;
+h2,h4,h5,h6{
+  font-size: 22px;
 }
 
-#errormessage{
+.errormessage{
   font-size: 18px;
   color: red;
 }
 
-#starthour,#startminitue,#endhour,#endminitue{
+.starthour,.startminitue,.endhour,.endminitue{
   padding: 7px;
 }
 
@@ -221,9 +221,6 @@ input[type = "income"]{
    background: #48d1cc;
  }
 
-
-
-
 footer{
  height: 100px;
  width: 550px;
@@ -257,4 +254,3 @@ footer p{
  text-align: right;
  font-weight: normal;
 }
-
