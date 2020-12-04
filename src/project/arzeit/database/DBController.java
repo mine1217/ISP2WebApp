@@ -503,7 +503,7 @@ public class DBController {
         } finally {
             
             try { // 後処理
-                pstm.close();
+                if (pstm != null) pstm.close();
                 if (con != null) con.close();
             } catch (SQLException e) {
                 code = e.getErrorCode();

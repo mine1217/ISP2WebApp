@@ -4,7 +4,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>ArZeit初期登録</title>
 	<link rel="stylesheet" type="text/css" href="login_register.css"/>
-	<script type="text/javascript" src="register.js"></script>
+  <script type="text/javascript" src="register.js"></script>
+  <script src="statuscode.js"></script>
 </head>
 
 <body>
@@ -29,12 +30,12 @@
     <p class="form-title">初期登録</p>
     <form>
         <p>IDを入力してください</p>
-        <p class="id"><input type="userid" name="id" maxlength = "12" id="id"/></p>
+        <p class="id"><input type="userid" name="id" maxlength = "12" id="id"/> <br> <font size=2 color="brown">半角英数字 記号(<b>"_"のみ</b>) 含め <b>6</b>文字以上 <b>20</b>文字以下</font></p>
         <p>Passwordを入力してください</p>
         <p class="pass1"><input type="password" name="pass1" maxlength = "24" id="pass1" /></p>
         <p>誤入力防止のためもう一度Passwordを入力してください</p>
-        <p class="pass2"><input type="password" name="pass2" maxlength = "24" id="pass2"/></p>
-				<p>Usernameを入力してください</p>
+        <p class="pass2"><input type="password" name="pass2" maxlength = "24" id="pass2"/><br> <font size=2 color="brown">半角英大文字小文字数字各<b>一文字以上</b> 記号(<b>"_"のみ</b>)含め <b>8</b>文字以上 <b>20</b>文字以下</font></p>
+				<br><p>Usernameを入力してください</p>
 				<p class="name"><input type="username" name="name" maxlength = "12" id="name"/></p>
         <!--<p class="check"><input type="checkbox" name="checkbox" />パスワードを保存</p>-->
 				<p><span id="errormessage"></span></p><br>
