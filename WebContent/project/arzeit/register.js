@@ -5,7 +5,6 @@ var pass2Elements;
 var nameElements;
 var submitElement;
 
-
 function register(){
 
   if(6<=idElements.value.length<=24&&idElements.value.match(/^[A-Za-z_0-9]+$/)){
@@ -16,11 +15,11 @@ function register(){
         document.getElementById("errormessage").innerHTML = "";
       }
       else {
-        
+
         //エラー文表示
         document.getElementById("errormessage").innerHTML = "passwordのフォーマットが合っていません";
         console.log("passwordのフォーマットが合っていません");
-        
+
       }
 
     }else {
@@ -39,20 +38,39 @@ function register(){
 
 function sendWithPostMethod(){
   //passを暗号化
-    var CryptoJS =  require('crypto-js');
+//     var CryptoJS =  require('crypto-js');
+//
+//     var pwd =  "erHt4Mb8s";
+//
+//     var encryptedPass = CryptoJS.AES.encrypt(pass1Elements,pwd).toString();
+//
+//     var url = "echo";
+//     xmlHttpRequest = new XMLHttpRequest();
+//     xmlHttpRequest.onreadystatechange = receive;
+//     xmlHttpRequest.open("POST",url,true);
+//     xmlHttpRequest.setRequestHeader("Content-Type",
+//     "application/x-www-form-urlencoded");
+//     xmlHttpRequest.send("id=" + idElements.value + "&pass=" + encryptedPass
+//       + "&name=" + nameElements.value);
 
-    var pwd =  "erHt4Mb8s";
+var url = "register";
+xmlHttpRequest = new XMLHttpRequest();
+xmlHttpRequest.onreadystatechange = receive;
+xmlHttpRequest.open("POST",url,true);
+xmlHttpRequest.setRequestHeader("Content-Type",
+"application/x-www-form-urlencoded");
+xmlHttpRequest.send("id=" + idElements.value + "&pass=" + pass1Elements.value
+  + "&name=" + nameElements.value);
 
-    var encryptedPass = CryptoJS.AES.encrypt(pass1Elements,pwd).toString();
+}
 
-    var url = "echo";
-    xmlHttpRequest = new XMLHttpRequest();
-    xmlHttpRequest.onreadystatechange = receive;
-    xmlHttpRequest.open("POST",url,true);
-    xmlHttpRequest.setRequestHeader("Content-Type",
-    "application/x-www-form-urlencoded");
-    xmlHttpRequest.send("id=" + idElements.value + "&pass=" + encryptedPass
-      + "&name=" + nameElements.value);
+function receive(){
+  if(xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200){
+    var response = JSON.parse(xmlHttpRequest.responseText);
+
+    var echoMessageElement = document.getElementById("echo_id");
+    echoMessageElement.innerHTML = response.id + response.pass +response.name;
+  }
 }
 
 window.addEventListener("load", function() {
