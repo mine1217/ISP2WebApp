@@ -1,3 +1,8 @@
+/**
+ * @author Uenobo
+ * registerページにて登録機能を実装
+ */
+
 var xmlHttpRequest;
 var idElements;
 var pass1Elements;
@@ -9,29 +14,26 @@ const idRegulex = /^[A-Za-z0-9_]{6,100}$/i;
 const passRegulex = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[A-Za-z0-9_\d]{8,100}$/; //正規表現
 
 function register() {
-
+  var code = 0//
   if (idRegulex.test(idElements.value)) {
     if (pass1Elements.value == pass2Elements.value) {
       if (passRegulex.test(pass1Elements.value)) {
-        document.getElementById("errormessage").innerHTML = "";
+        document.getElementById("errormessage").innerHTML = "<fonr color=yellow>登録処理実行中...</font>";
         sendWithPostMethod();
       }
       else {
-        //エラー文表示
-        document.getElementById("errormessage").innerHTML = "passwordのフォーマットが合っていません";
-        console.log("passwordのフォーマットが合っていません");
+        code = 11;
       }
     } else {
-      document.getElementById("errormessage").innerHTML = "passwordが一致しません";
-      console.log("passwordが一致しません");
+      code = 12;
     }
   }
   else {
-    //エラー文表示
-    document.getElementById("errormessage").innerHTML = "idのフォーマットが合っていません";
-    console.log("idのフォーマットが合っていません");
+    code = 2;
   }
-
+  if (code != 0) {
+    document.getElementById("errormessage").innerHTML = getErrorMessage(code);
+  }
 
 }
 
@@ -58,7 +60,7 @@ function sendWithPostMethod() {
   xmlHttpRequest.open("POST", url, true);
   xmlHttpRequest.setRequestHeader("Content-Type",
     "application/x-www-form-urlencoded");
-  xmlHttpRequest.send(null);
+  xmlHttpRequest.send("id=" + idElements.value + "&pass=" + pass1Elements.value+ "&name=" + nameElements.value);
 
 }
 
@@ -67,6 +69,16 @@ function receive() {
     var response = JSON.parse(xmlHttpRequest.responseText);
     if(response.code == 0) {
       document.getElementById("errormessage").innerHTML = "<font color=green>登録完了</font>";
+
+      alert("登録成功しました！ アカウント登録ありがとうございます!");
+
+      var redirect_url = "login.html" + location.search; //loginページへ遷移
+      if (document.referrer) {
+        var referrer = "referrer=" + encodeURIComponent(document.referrer);
+        redirect_url = redirect_url + (location.search ? '&' : '?') + referrer;
+      }
+      location.href = redirect_url; //リダイレクトする
+
     }else {
       document.getElementById("errormessage").innerHTML = getErrorMessage(response.code);
     }
