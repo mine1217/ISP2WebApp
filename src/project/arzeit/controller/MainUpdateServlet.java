@@ -44,8 +44,6 @@ public class MainUpdateServlet extends HttpServlet {
         String jsonText = br.readLine();
         jsonText = URLDecoder.decode(jsonText, "UTF-8");
 
-        System.out.println(jsonText);
-
         // . JSON オブジェクトに変換
         JSONObject jsonObj = new JSONObject(jsonText);
 
@@ -101,18 +99,13 @@ public class MainUpdateServlet extends HttpServlet {
                 saralyList.add(saraly); // いまのところ一種類の給料をみんなに割り当てるので変更の数だけ複製してる
             }
 
-            System.out.println(saralyList);
-
             code = model.updateSchedule(s_idList, start, end, saralyList);
         }
-
-        System.out.println(code);
 
         // 送信するJSON作成
         StringBuilder json = new StringBuilder("{ \"code\": \""); // json作る
         json.append(code).append("\""); // ステータスコード
         json.append("}");
-        System.out.println(json.toString());
         // JSON終わり
 
         response.setContentType("application/json");

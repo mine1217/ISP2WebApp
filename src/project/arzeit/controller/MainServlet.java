@@ -64,7 +64,6 @@ public class MainServlet extends HttpServlet {
                     .append(scheduleList); //スケジュールのリスト
         }
         json.append("}");
-        System.out.println(json.toString());
         //JSON終わり
 
         response.setContentType("application/json");
