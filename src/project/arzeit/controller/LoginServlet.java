@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
             SimpleEntry<String, Integer> result = prof.getName(id);
             code = result.getValue();
             user.setName(result.getKey());  //名前をとってきて保管する
-            request.getSession().setAttribute("user", new User(id)); // ユーザーインスタンスをセッションに保存する
+            request.getSession().setAttribute("user", user); // ユーザーインスタンスをセッションに保存する
         }
         
 

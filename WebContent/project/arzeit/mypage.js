@@ -14,7 +14,7 @@ function receive() {
 	if(xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
 		var response = JSON.parse(xmlHttpRequest.responseText);
 
-		var showElement = document.getElementById("name");
+		var showElement = document.getElementById("username");
 		showElement.innerHTML = response.name;
     var showElement = document.getElementById("userid");
     showElement.innerHTML = response.id;
