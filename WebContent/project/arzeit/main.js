@@ -117,7 +117,7 @@ function toggleSchedule(dateId) {
 function sendShowRequest() {
   var url = "main";
 	xmlHttpRequest = new XMLHttpRequest();
-	xmlHttpRequest.onreadystatechange = checkSendRequest;
+	xmlHttpRequest.onreadystatechange = checkShowRequest;
 	xmlHttpRequest.open("POST", url, true);
 	xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xmlHttpRequest.send(null);
@@ -194,7 +194,7 @@ function updateSchedule() {
 }
 
 window.addEventListener("load", function () {
-  //document.getElementById("apply_button").addEventListener("click", sendSendRequest, false);
+    sendShowRequest();
 }, false);
 
 
