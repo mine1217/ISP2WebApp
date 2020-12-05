@@ -59,7 +59,7 @@ function createCalendar(year, month) {
                 `<td class="testSELLTD" id="SELL_${paddingID}">
                     <table class="testInlineTable">
                         <tr class="testTD">
-                            <td class="testNUMTD" id="${paddingID}" onclick="getDate(this);"> ${dayCount} </td>
+                            <td class="testNUMTD" id="${paddingID}" onclick="getDate(this);"> ${dayCount}<a id=UNUM_${paddingID}><a></td>
                             <td class="testTD">
                                 <table class="testTable" id="SCH_${paddingID}">
                                 </table>

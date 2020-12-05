@@ -134,15 +134,6 @@ function toggleSchedule(s_Id) {
   return s_idList.length;
 }
 
-function sendShowRequest() {
-  var url = "main";
-  xmlHttpRequest = new XMLHttpRequest();
-  xmlHttpRequest.onreadystatechange = checkShowRequest;
-  xmlHttpRequest.open("POST", url, true);
-  xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xmlHttpRequest.send(`day=${year}-${month}-1`);
-}
-
 function addSchedule() {
   var startH = document.getElementById("apply_starthour");
   var startM = document.getElementById("apply_startmin");
@@ -234,6 +225,22 @@ function checkTimeFormat(startH, startM, endH, endM) {
   return code;
 }
 
+/**
+ * スケジュールを読み込むときに送る
+ */
+function sendShowRequest() {
+  var url = "main";
+  xmlHttpRequest = new XMLHttpRequest();
+  xmlHttpRequest.onreadystatechange = checkShowRequest;
+  xmlHttpRequest.open("POST", url, true);
+  xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xmlHttpRequest.send(`day=${year}-${month}-1`);
+}
+
+/**
+ * スケジュールを更新するときに送る
+ * @param {}} message 送るメッセージ
+ */
 function sendUpdateRequest(message) {
   var url = "mainUpdate";
   xmlHttpRequest = new XMLHttpRequest();
@@ -244,6 +251,9 @@ function sendUpdateRequest(message) {
 }
 
 
+/**
+ * sednShowRequestに対するレスポンス対応メソッド
+ */
 function checkShowRequest() {
   if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
 
@@ -265,30 +275,41 @@ function checkShowRequest() {
   }
 }
 
+/**
+ * sendUpdateRequestに対するレスポンス対応メソッド
+ */
 function checkUpdateRequest() {
   if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
 
     console.log(xmlHttpRequest.responseText);
     var response = JSON.parse(xmlHttpRequest.responseText);
     if (response.code == 0) {
-      sendShowRequest(); //更新が成功したらまたスケジュールを取ってくる
+      sendShowRequest(); //更新が成功したらまたスケジュールを取ってきて更新する
     } else {
       alert(getErrorMessage(response.code));
     }
   }
 }
 
+/**
+ * 月収を表示する
+ */
 function showMonthlyIncome() {
   var sum = 0;
   var workMin = 0;
   scheduleList.forEach(element => {
-    workMin = calcWorkTime(element.start.split(" ")[1].slice(0,5), element.end.split(" ")[1].slice(0,5));
+    workMin = calcWorkTime(element.start.split(" ")[1].slice(0, 5), element.end.split(" ")[1].slice(0, 5));
     new Date(month)
-    sum += Number(element.saraly)*workMin;
+    sum += Number(element.saraly) * workMin;
   })
   document.getElementById("income").innerHTML = sum;
 }
 
+/**
+ * 時間差を計算して返す
+ * @param {*} from 開始時間
+ * @param {*} to 終了時間
+ */
 function calcWorkTime(from, to) {
 
   var Y = new Date().getFullYear()
@@ -309,16 +330,21 @@ function calcWorkTime(from, to) {
   return h + m;
 }
 
-
+/**
+ * カレンダーを更新する
+ */
 function updateView() {
+  //日付やスケジュールの選択状況をリセットする
   isSelectDate = false;
   isSelectSchedule = false;
   dateList = [];
   s_idList = [];
   document.getElementById("update_form").style.display = 'none';
   document.getElementById("set_form").style.display = 'none';
+  //月収表示
   showMonthlyIncome();
 
+  //こっからスケジュール表示
   let str;
   let ele;
   let start, end;
@@ -330,18 +356,29 @@ function updateView() {
     if (schedule.saraly != "null") message = `<font color=tomato>${schedule.saraly}/h</font>`
 
     ele = document.getElementById("SCH_" + start[0]); //スタート時間の日付のえれめんと取ってくる
-    if (ele.childElementCount <= MAX_SCHEDULE_VIEW) { //スケジュールの最大数を越えるとはみ出すので条件分岐
-      ele.innerHTML += `
-      <tr class="testTD"  id = "${schedule.s_id}" onclick="getSchedule(this);" style="background-color:rgba(0,0,0,0);"> 
-        <td class="scheduleTD"> 
-          <p class="testFONT">
-            ${start[1].slice(0, 5)}-${end[1].slice(0, 5)}
-            <br>
-            ${message}
-          </p> 
-        </td> 
-      </tr>
-      `;
+
+    var html = `
+    <tr class="testTD"  id = "${schedule.s_id}" onclick="getSchedule(this);" style="background-color:rgba(0,0,0,0);"> 
+      <td class="scheduleTD"> 
+        <p class="testFONT">
+          ${start[1].slice(0, 5)}-${end[1].slice(0, 5)}
+          <br>
+          ${message}
+        </p> 
+      </td> 
+    </tr>
+    `; //スケジュールのボタンhtml
+
+    if (ele.childElementCount != 0) { //スケジュールの最大数を越えるとはみ出すので条件分岐
+      if (ele.childElementCount >= MAX_SCHEDULE_VIEW) {
+        document.getElementById("UNUM_"+start[0]).innerHTML = `<font size=1 color=black><br>+more</font>`;
+      } else {
+        ele.innerHTML += html;
+        document.getElementById("UNUM_"+start[0]).innerHTML = "";
+      }
+    } else {
+      ele.innerHTML += html;
+      document.getElementById("UNUM_"+start[0]).innerHTML = "";
     }
   });
 }

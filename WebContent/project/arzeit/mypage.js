@@ -1,5 +1,6 @@
 var xmlHttpRequest;
 
+
 function postMethod() {
 	var url = "mypage";
 

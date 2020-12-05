@@ -1,8 +1,3 @@
-/**
- * @author Uenobo
- * registerページにて登録機能を実装
- */
-
 var xmlHttpRequest;
 var idElements;
 var pass1Elements;
