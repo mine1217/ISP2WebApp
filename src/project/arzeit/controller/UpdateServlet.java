@@ -9,8 +9,6 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import org.eclipse.jetty.io.ssl.ALPNProcessor.Server;
-
 import project.arzeit.database.DataSource;
 import project.arzeit.model.ScheduleModel;
 import project.arzeit.model.User;
