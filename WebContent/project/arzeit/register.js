@@ -58,7 +58,7 @@ function sendWithPostMethod() {
   xmlHttpRequest.open("POST", url, true);
   xmlHttpRequest.setRequestHeader("Content-Type",
     "application/x-www-form-urlencoded");
-  xmlHttpRequest.send(null);
+  xmlHttpRequest.send("id=" + idElements.value + "&pass=" + pass1Elements.value+ "&name=" + nameElements.value);
 
 }
 
