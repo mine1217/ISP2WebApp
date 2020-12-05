@@ -22,7 +22,7 @@ public class ProfileModel {
         return db.updateProfile(id, name);
     }
 
-    public SimpleEntry<String, Integer> getName(String id, String name) {
+    public SimpleEntry<String, Integer> getName(String id) {
         return db.getName(id);
     }
 

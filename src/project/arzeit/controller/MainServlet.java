@@ -9,19 +9,18 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import org.eclipse.jetty.io.ssl.ALPNProcessor.Server;
-
 import project.arzeit.database.DataSource;
 import project.arzeit.model.ScheduleModel;
 import project.arzeit.model.User;
 
 /**
- * project/arzeit/mypage.htmlに対応するサーブレット プロフィール出すだけ
+ * project/arzeit/main.htmlに対応するサーブレット
+ * データベースからidと月に対応するスケジュールを取ってきてレスポンスにぶん投げる
  * 
  * @author Minoru Makino
  */
 @WebServlet("/project/arzeit/main")
-public class MainServerl extends HttpServlet {
+public class MainServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,18 +43,16 @@ public class MainServerl extends HttpServlet {
             result = schedule.getScheduleAtMonth(user.getId(), request.getParameter("day"));
             code = result.getValue();
             if (!result.getKey().isEmpty() && code == 0) {
-                ArrayList<String> scheduleJson = schedule.scheduleToJSON(result.getKey());
+                ArrayList<String> scheduleJson = schedule.scheduleToJSON(result.getKey()); //ここでc sv -> スケジュールオブジェクト(JSON) に変換
 
                 for (String s : scheduleJson) {
-                    scheduleList.append(s).append(", ");
+                    scheduleList.append(s).append(", "); //カンマで繋げて配列にする
                 }
-                scheduleList.setLength(scheduleList.length() - 2);
+                scheduleList.setLength(scheduleList.length() - 2); //最後はカンマとスペースいらんから二文字消す
             }
         }
 
         scheduleList.append("]");
-
-        System.out.println(scheduleList.toString());
         //スケジュールのリスト終わり
 
 
@@ -67,13 +64,12 @@ public class MainServerl extends HttpServlet {
                     .append(scheduleList); //スケジュールのリスト
         }
         json.append("}");
-        System.out.println(json.toString());
         //JSON終わり
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
         writer.append(json.toString());
-        writer.flush();
+        writer.flush(); //フラッシュ！
     }
 }

@@ -54,23 +54,20 @@ function createCalendar(year, month) {
                 calendarHtml += '<td class="is_disabled">' + num + '</td>'
                 dayCount++
             } else {
+                let paddingID = `${( '0000' + year ).slice( -4 )}-${( '00' + month ).slice( -2 )}-${( '00' + dayCount ).slice( -2 )}`
                 calendarHtml +=
-                `<td class="testSELLTD" id="SELL_${year}-${month}-${dayCount}">
-                    <table class="testTable">
+                `<td class="testSELLTD" id="SELL_${paddingID}">
+                    <table class="testInlineTable">
                         <tr class="testTD">
-                            <td class="testNUMTD" id="${year}-${month}-${dayCount}" onclick="getDate(this);"> ${dayCount} </td>
+                            <td class="testNUMTD" id="${paddingID}" onclick="getDate(this);"> ${dayCount}<a id=UNUM_${paddingID}><a></td>
                             <td class="testTD">
-                                <table class="testTable">
-                                <tr class="testTD"> <td class="scheduleTD" id = "index"> <p class="testFONT"></p> </td> </tr>
-                                <tr class="testTD"> <td class="scheduleTD"> <p class="testFONT"></p> </font></td> </tr>
-                                <tr class="testTD"> <td class="scheduleTD"> <p class="testFONT"> </p> </td> </tr>
+                                <table class="testTable" id="SCH_${paddingID}">
                                 </table>
                             </td>
                         </tr>
                     </table>
                     </li>
                 </td>`
-                //calendarHtml += `<td class="calendar_td" data-date="${year}-${month}-${dayCount}" id = ${dayCount} onclick="PostId(this);" ><input type = "button" class = "add_button" name = "selectDay" value = 追加><input type = "button" class = "edit_button" name = "editDay" value = 編集><input type = "button" class = "deleat_button" name = "deleatDay" value = 消去><br>${dayCount}<br><li class = "schedule"id="${dayCount}plan"></li></td>`
                 dayCount++
             }
         }
@@ -102,30 +99,16 @@ function moveCalendar(e) {
         }
     }
 
-    showCalendar(year, month)
+    showCalendar(year, month);
+    sendShowRequest();
 }
 
-//function PostId(ele){
-//    var id_value = ele.id; // eleのプロパティとしてidを取得
-//    console.log(id_value); //「id01」
-//    var plan = document.getElementById(id_value + 'plan');
-//    plan.innerHTML = "17~21";
-//}
+function reloadCalender() {
+    document.querySelector('#calendar').innerHTML = '';
+    showCalendar(year, month);
+}
 
 document.querySelector('#lastMonth').addEventListener('click', moveCalendar)
 document.querySelector('#nextMonth').addEventListener('click', moveCalendar)
-
-//document.addEventListener("click", function(e) {
-//    if(e.target.classList.contains("calendar_td")) {
-//        alert('クリックした日付は' + e.target.dataset.date + 'です')
-//    }
-//})
-
-//document.addEventListener("click",function(){
-//  PostId()
-//  console.log(clickDay.textContent);
-//  var day = document.getElementById(3);
-//    alert("クリックしたのは" + day.textContent);
-//})
 
 showCalendar(year, month)

@@ -14,7 +14,8 @@ public class ScheduleModel {
 
     private DBController db;
     public final String update = "update",
-                        delete = "delete";
+                        delete = "delete",
+                        add = "add";
 
     public ScheduleModel(DataSource ds) {
         db = new DBController(ds);

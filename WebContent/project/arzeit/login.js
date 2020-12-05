@@ -30,12 +30,7 @@ function receive(){
 
       alert("ログイン完了しました。 Arzeitへようこそ！");
 
-      var redirect_url = "main.html" + location.search;
-      if (document.referrer) {
-        var referrer = "referrer=" + encodeURIComponent(document.referrer);
-        redirect_url = redirect_url + (location.search ? '&' : '?') + referrer;
-      }
-      location.href = redirect_url; //リダイレクトする
+      location.href = "main.html"; //リダイレクトする
 
     }else {//違ったらエラーメッセージ出す
       document.getElementById("errormessage").innerHTML = getErrorMessage(response.code);

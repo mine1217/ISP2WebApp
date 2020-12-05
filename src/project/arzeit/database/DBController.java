@@ -248,7 +248,14 @@ public class DBController {
             .append(" THEN '").append(saraly.get(i)).append("'");
         }
 
-        sBuilder.append(" END;");
+        sBuilder.append(" END WHERE s_id IN (");
+        for (String s: s_idList) {
+            sBuilder.append(" '").append(s).append("',");
+        }
+        sBuilder.setLength(sBuilder.length()-1);
+        sBuilder.append(");");
+
+        System.out.println(sBuilder.toString());
 
         int code = update(sBuilder.toString());//命令送る
         return code;

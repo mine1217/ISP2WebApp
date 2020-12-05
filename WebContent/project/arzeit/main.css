@@ -150,14 +150,16 @@ input[type = "income"]{
   margin-left: 20px;
   text-align: right;
 }
- .testTable{
-   border: 1;
-   border-collapse:collapse;
-   border-spacing: 0;
+
+ .testInlineTable{
+  margin-left: 0px;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: auto;
  }
 
  .testTD{
-   text-align: center;
+   vertical-align: top;
    height: 20px;
    width: 60px;
    white-space: nowrap;
@@ -166,13 +168,14 @@ input[type = "income"]{
  }
 
  .scheduleTD{
-   text-align: center;
-   height: 20px;
+   height: 28px;
    width: 60px;
    white-space: nowrap;
    padding: 0px;
    border: 0px solid black;
    border-bottom: 0.5px solid lightgray;
+   vertical-align: bottom;
+   padding-bottom: 1px;
  }
 
  .scheduleTD:hover{
@@ -182,9 +185,9 @@ input[type = "income"]{
  .testSELLTD{
    vertical-align: top;
    width: 110px;
-   height: 70px;
-   padding: 0px;
-   border: 1px solid black;
+   height: 90px;
+   padding: 5px;
+   border: 2px solid black;
  }
 
  .testSELLTD:first-child{
@@ -197,10 +200,14 @@ input[type = "income"]{
  .is_disabled{
    font-size: 22px;
    color: #ccc;
+   height: 90px;
+   padding: 5px;
  }
 
  .testNUMTD{
+   height: 35px;
    width: 40px;
+   text-align: center;
    vertical-align: top;
    white-space: nowrap;
    padding: 0px;
@@ -213,9 +220,10 @@ input[type = "income"]{
  }
 
  .testFONT{
+   vertical-align: center;
+   text-align: right;
    font-size: 1px;
-   margin: 0px;
-   padding: 0px;
+   color: brown;
  }
  .worktime_button{
    background: #48d1cc;

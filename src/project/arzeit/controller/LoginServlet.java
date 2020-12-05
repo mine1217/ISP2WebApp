@@ -2,6 +2,7 @@ package project.arzeit.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.AbstractMap.SimpleEntry;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.*;
 
 import project.arzeit.database.DataSource;
 import project.arzeit.model.AuthCModel;
+import project.arzeit.model.ProfileModel;
 import project.arzeit.model.User;
 
 /**
@@ -22,6 +24,7 @@ public class LoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ServletContext context = this.getServletContext();
@@ -30,7 +33,14 @@ public class LoginServlet extends HttpServlet {
 
         int code = authC.login(id, request.getParameter("pass"));
 
-        if (code == 0) request.getSession().setAttribute("user", new User(id)); // userインスタンスをセッションに保存する
+        if (code == 0) {
+            ProfileModel prof = new ProfileModel((DataSource) context.getAttribute("dataSource")); //プロフィールモデル作成
+            User user = new User(id); //ユーザー作成して
+            SimpleEntry<String, Integer> result = prof.getName(id);
+            code = result.getValue();
+            user.setName(result.getKey());  //名前をとってきて保管する
+            request.getSession().setAttribute("user", user); // ユーザーインスタンスをセッションに保存する
+        }
         
 
         StringBuilder json = new StringBuilder("{ \"code\": \"");
@@ -40,5 +50,16 @@ public class LoginServlet extends HttpServlet {
         writer.append(json.toString());
         writer.flush();
 
+    }
+
+    /**
+     * ログアウトした時に呼ぶ
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
+        session.invalidate(); //セッション破棄するだけ
+        response.sendRedirect("index.html");
     }
 }
