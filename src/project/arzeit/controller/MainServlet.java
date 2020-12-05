@@ -14,7 +14,8 @@ import project.arzeit.model.ScheduleModel;
 import project.arzeit.model.User;
 
 /**
- * project/arzeit/mypage.htmlに対応するサーブレット プロフィール出すだけ
+ * project/arzeit/main.htmlに対応するサーブレット
+ * データベースからidと月に対応するスケジュールを取ってきてレスポンスにぶん投げる
  * 
  * @author Minoru Makino
  */
@@ -42,18 +43,16 @@ public class MainServlet extends HttpServlet {
             result = schedule.getScheduleAtMonth(user.getId(), request.getParameter("day"));
             code = result.getValue();
             if (!result.getKey().isEmpty() && code == 0) {
-                ArrayList<String> scheduleJson = schedule.scheduleToJSON(result.getKey());
+                ArrayList<String> scheduleJson = schedule.scheduleToJSON(result.getKey()); //ここでc sv -> スケジュールオブジェクト(JSON) に変換
 
                 for (String s : scheduleJson) {
-                    scheduleList.append(s).append(", ");
+                    scheduleList.append(s).append(", "); //カンマで繋げて配列にする
                 }
-                scheduleList.setLength(scheduleList.length() - 2);
+                scheduleList.setLength(scheduleList.length() - 2); //最後はカンマとスペースいらんから二文字消す
             }
         }
 
         scheduleList.append("]");
-
-        System.out.println(scheduleList.toString());
         //スケジュールのリスト終わり
 
 
@@ -72,6 +71,6 @@ public class MainServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
         writer.append(json.toString());
-        writer.flush();
+        writer.flush(); //フラッシュ！
     }
 }

@@ -18,7 +18,8 @@ import project.arzeit.model.ScheduleModel;
 import project.arzeit.model.User;
 
 /**
- * project/arzeit/mypage.htmlに対応するサーブレット プロフィール出すだけ
+ * project/arzeit/main.html　に対応するサーブレット
+ * スケジュールの追加、更新、削除を行う
  * 
  * @author Minoru Makino
  */
@@ -35,6 +36,7 @@ public class MainUpdateServlet extends HttpServlet {
 
         int code = 0; // エラーコード
 
+        //エンコード　いるかわからん
         request.setCharacterEncoding("UTF-8");
 
         // . JSON テキストを全部取り出す
@@ -60,7 +62,9 @@ public class MainUpdateServlet extends HttpServlet {
         System.out.println(end);
 
         // 命令ごとにモデルに処理してもらう
-        String saraly = jsonObj.getString("saraly");
+        String saraly = jsonObj.getString("saraly"); //お給料
+
+        //追加処理
         if (jsonObj.getString("operation").equals(model.add)) {
             code = model.setSchedule(user.getId(), start, end, saraly);
 
@@ -70,6 +74,7 @@ public class MainUpdateServlet extends HttpServlet {
 
             System.out.println(s_idList);
 
+            //更新処理
             if (jsonObj.getString("operation").equals(model.update)) {
                 ArrayList<String> saralyList = new ArrayList<>();
                 for (int i = 0; i < s_idJSON.length(); i++) {
@@ -80,7 +85,8 @@ public class MainUpdateServlet extends HttpServlet {
                 System.out.println(saralyList);
 
                 code = model.updateSchedule(s_idList, start, end, saralyList);
-
+                
+            //削除処理
             } else if (jsonObj.getString("operation").equals(model.delete)) {
                 code = model.deleteSchedule(s_idList);
             } else {
