@@ -72,12 +72,7 @@ function receive() {
 
       alert("登録成功しました！ アカウント登録ありがとうございます!");
 
-      var redirect_url = "login.html" + location.search; //loginページへ遷移
-      if (document.referrer) {
-        var referrer = "referrer=" + encodeURIComponent(document.referrer);
-        redirect_url = redirect_url + (location.search ? '&' : '?') + referrer;
-      }
-      location.href = redirect_url; //リダイレクトする
+      location.href = "login.html"; //リダイレクトする
 
     }else {
       document.getElementById("errormessage").innerHTML = getErrorMessage(response.code);

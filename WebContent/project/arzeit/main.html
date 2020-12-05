@@ -117,8 +117,8 @@
     <p>時給:</p>
     <p class="salary"><input type="income" name="salary" id="apply_saraly"/>円/時</p><br>
     <p>日,勤務時間,時給を設定できたらボタンを押してください→→</p>
-    <p class="submit"><input type="button" id="apply_button" value="Apply" onclick="sendAddRequest()"/></p>
-    <div><input type="button" class = "checkoff_button"value="選択解除"/></div>
+    <p class="submit"><input type="button" id="apply_button" value="Apply" onclick="addSchedule()"/></p>
+    <div><input type="button" class = "checkoff_button"value="選択解除" onclick="updateView()"/></div>
   </form>
 
   <form id="update_form" style="display: none;">
@@ -193,12 +193,12 @@
     <h5>時給の設定をしてください.</h5>
     <p>時給:</p>
     <p class="salary"><input type="income" name="salary" id="edit_saraly"/>円/時</p><br>
-    <input type="button" class = "edit_button"value="編集"/>
-    <input type="button" class = "delete_button"value="削除"/>
-    <input type="button" class = "checkoff_button"value="選択解除"/>
+    <input type="button" class = "edit_button"value="編集" onclick="updateSchedule();"/>
+    <input type="button" class = "delete_button"value="削除" onclick="deleteSchedule();"/>
+    <input type="button" class = "checkoff_button"value="選択解除" onclick="updateView();"/>
   </form>
 
-  <div>月収見込み:<span class="monthsalary"></span>円/月</div>
+  <div>月収見込み:<span class="monthsalary" id="income"></span>円/月</div>
 
   <footer>
     <nav>

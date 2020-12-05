@@ -103,6 +103,11 @@ function moveCalendar(e) {
     sendShowRequest();
 }
 
+function reloadCalender() {
+    document.querySelector('#calendar').innerHTML = '';
+    showCalendar(year, month);
+}
+
 document.querySelector('#lastMonth').addEventListener('click', moveCalendar)
 document.querySelector('#nextMonth').addEventListener('click', moveCalendar)
 

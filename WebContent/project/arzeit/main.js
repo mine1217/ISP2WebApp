@@ -49,7 +49,7 @@ function getDate(sell) {
  */
 function toggleDate(dateId) {
   var isInclude = false;
-  var sellElement = document.getElementById("SELL_"+dateId);
+  var sellElement = document.getElementById("SELL_" + dateId);
 
   var count = 0;
   dateList.forEach(element => {
@@ -76,7 +76,7 @@ function toggleDate(dateId) {
  */
 function getSchedule(sell) {
   var sell_id = sell.id;
-  
+
   if (!isSelectDate) {
 
     var count = toggleSchedule(sell.id)
@@ -91,7 +91,7 @@ function getSchedule(sell) {
       var endH = document.getElementById("edit_endhour");
       var endM = document.getElementById("edit_endmin");
 
-      if(count = 1) { //複数選択では時間設定できないようにする
+      if (count = 1) { //複数選択では時間設定できないようにする
         startH.disabled = false;
         startM.disabled = false;
         endH.disabled = false;
@@ -136,58 +136,85 @@ function toggleSchedule(s_Id) {
 
 function sendShowRequest() {
   var url = "main";
-	xmlHttpRequest = new XMLHttpRequest();
-	xmlHttpRequest.onreadystatechange = checkShowRequest;
-	xmlHttpRequest.open("POST", url, true);
-	xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlHttpRequest.send(`day=${year}-${month}-1`);
+  xmlHttpRequest = new XMLHttpRequest();
+  xmlHttpRequest.onreadystatechange = checkShowRequest;
+  xmlHttpRequest.open("POST", url, true);
+  xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xmlHttpRequest.send(`day=${year}-${month}-1`);
 }
 
-function sendAddRequest() {
+function addSchedule() {
   var startH = document.getElementById("apply_starthour");
   var startM = document.getElementById("apply_startmin");
   var endH = document.getElementById("apply_endhour");
   var endM = document.getElementById("apply_endmin");
-  var saraly = document.getElementById("apply_saraly");
+  var saralyValue = document.getElementById("apply_saraly").value;
+
+  if (saralyValue == "") {
+    saralyValue = "0";
+  }
 
   var code = checkTimeFormat(startH, startM, endH, endM);
-  if(code == 0) {
-    
+  if (code == 0) {
+
     let message = {
-      operator: "add",
+      operation: "add",
       dateList: dateList,
-      start: `${( '00' + startH.value ).slice( -2 )}:${( '00' + startM.value ).slice( -2 )}:00`,
-      end: `${( '00' + endH.value ).slice( -2 )}:${( '00' + endM.value ).slice( -2 )}:00`,
-      saraly: saraly.value
+      start: `${('00' + startH.value).slice(-2)}:${('00' + startM.value).slice(-2)}:00`,
+      end: `${('00' + endH.value).slice(-2)}:${('00' + endM.value).slice(-2)}:00`,
+      saraly: saralyValue
     };
 
-    console.log(message);
+    sendUpdateRequest(message);
 
   } else {
     alert(getErrorMessage(code));
   }
 
-  var url = "main";
-	xmlHttpRequest = new XMLHttpRequest();
-	xmlHttpRequest.onreadystatechange = checkShowRequest;
-	xmlHttpRequest.open("POST", url, true);
-	xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
-	xmlHttpRequest.send(JSON.stringify(message));
 }
 
-function sendUpdateRequest() {
+function updateSchedule() {
   var startH = document.getElementById("edit_starthour");
   var startM = document.getElementById("edit_startmin");
   var endH = document.getElementById("edit_endhour");
   var endM = document.getElementById("edit_endmin");
-  var saraly = document.getElementById("edit_saraly");
+  var saralyValue = document.getElementById("edit_saraly").value;
+
+  if (saralyValue == "") {
+    saralyValue = "0";
+  }
 
   var code = checkTimeFormat(startH, startM, endH, endM);
-  if(code == 0) {
+  if (code == 0) {
+    var dateList = [];
 
+    s_idList.forEach(id => {
+      dateList.push(document.getElementById(id).parentElement.parentElement.id.slice(4));
+    }
+    );
+
+    let message = {
+      operation: "update",
+      s_idList: s_idList,
+      dateList: dateList,
+      start: `${('00' + startH.value).slice(-2)}:${('00' + startM.value).slice(-2)}:00`,
+      end: `${('00' + endH.value).slice(-2)}:${('00' + endM.value).slice(-2)}:00`,
+      saraly: saralyValue
+    };
+
+    sendUpdateRequest(message);
   } else {
     alert(getErrorMessage(code));
   }
+}
+
+function deleteSchedule() {
+  let message = {
+    operation: "delete",
+    s_idList: s_idList
+  };
+
+  sendUpdateRequest(message);
 }
 
 /**
@@ -199,58 +226,116 @@ function sendUpdateRequest() {
  */
 function checkTimeFormat(startH, startM, endH, endM) {
   code = 0;
-  if(startH.value < endH.value) {
-    if(startM.value < endM.value) {
-     code = 21;
+  if (Number(startH.value) > Number(endH.value)) {
+    if (Number(startM.value) > Number(endM.value)) {
+      code = 21;
     }
   }
   return code;
+}
+
+function sendUpdateRequest(message) {
+  var url = "mainUpdate";
+  xmlHttpRequest = new XMLHttpRequest();
+  xmlHttpRequest.onreadystatechange = checkUpdateRequest;
+  xmlHttpRequest.open("POST", url, true);
+  xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
+  xmlHttpRequest.send(JSON.stringify(message));
 }
 
 
 function checkShowRequest() {
   if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
 
-		console.log(xmlHttpRequest.responseText);
-		var response = JSON.parse(xmlHttpRequest.responseText);
-		if (response.code == 0) {
+    console.log(xmlHttpRequest.responseText);
+    var response = JSON.parse(xmlHttpRequest.responseText);
+    if (response.code == 0) {
       scheduleList = response.schedule;
       updateView();
 
-		} else {
+    } else {
 
       alert(getErrorMessage(response.code));
-      if(response.code = 30) {//ユーザーデータが無い旨のコード
+      if (response.code = 30) {//ユーザーデータが無い旨のコード
 
-        var redirect_url = "login.html" + location.search; //loginページへ遷移 loginし直してもらう
-        if (document.referrer) {
-          var referrer = "referrer=" + encodeURIComponent(document.referrer);
-          redirect_url = redirect_url + (location.search ? '&' : '?') + referrer;
-        }
-        location.href = redirect_url; //リダイレクトする
+        location.href = "login.html"; //リダイレクトしてログインからやり直してもらう
 
       }
     }
-	}
+  }
 }
 
+function checkUpdateRequest() {
+  if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+
+    console.log(xmlHttpRequest.responseText);
+    var response = JSON.parse(xmlHttpRequest.responseText);
+    if (response.code == 0) {
+      sendShowRequest(); //更新が成功したらまたスケジュールを取ってくる
+    } else {
+      alert(getErrorMessage(response.code));
+    }
+  }
+}
+
+function showMonthlyIncome() {
+  var sum = 0;
+  var workMin = 0;
+  scheduleList.forEach(element => {
+    workMin = calcWorkTime(element.start.split(" ")[1].slice(0,5), element.end.split(" ")[1].slice(0,5));
+    new Date(month)
+    sum += Number(element.saraly)*workMin;
+  })
+  document.getElementById("income").innerHTML = sum;
+}
+
+function calcWorkTime(from, to) {
+
+  var Y = new Date().getFullYear()
+  var M = new Date().getMonth() + 1
+  var D = new Date().getDate()
+
+  var ymd = Y + "/" + M + "/" + D + "/"
+
+  var fromTime = new Date(ymd + " " + from).getTime()
+  var toTime = new Date(ymd + ' ' + to).getTime()
+  var Ms = toTime - fromTime
+
+  var h = ''
+  var m = ''
+
+  h = Ms / 3600000
+  m = (Ms - h * 3600000) / 6000
+  return h + m;
+}
+
+
 function updateView() {
+  isSelectDate = false;
+  isSelectSchedule = false;
+  dateList = [];
+  s_idList = [];
+  document.getElementById("update_form").style.display = 'none';
+  document.getElementById("set_form").style.display = 'none';
+  showMonthlyIncome();
+
   let str;
   let ele;
   let start, end;
   let message = "予定";
+  reloadCalender();
   scheduleList.forEach((schedule) => {
     start = schedule.start.split(' '); //スタート時間を日付と時間で分ける
     end = schedule.end.split(' ');　//終了時間を日付と時間で分ける
-    if(schedule.saraly != "null") message = `<font color=tomato>${schedule.saraly}/h</font>`
+    if (schedule.saraly != "null") message = `<font color=tomato>${schedule.saraly}/h</font>`
 
-    ele = document.getElementById("SCH_"+start[0]); //スタート時間の日付のえれめんと取ってくる
-    if(ele.childElementCount <= MAX_SCHEDULE_VIEW) { //スケジュールの最大数を越えるとはみ出すので条件分岐
+    ele = document.getElementById("SCH_" + start[0]); //スタート時間の日付のえれめんと取ってくる
+    if (ele.childElementCount <= MAX_SCHEDULE_VIEW) { //スケジュールの最大数を越えるとはみ出すので条件分岐
       ele.innerHTML += `
       <tr class="testTD"  id = "${schedule.s_id}" onclick="getSchedule(this);" style="background-color:rgba(0,0,0,0);"> 
         <td class="scheduleTD"> 
           <p class="testFONT">
-            ${start[1].slice(0,5)}-${end[1].slice(0,5)}
+            ${start[1].slice(0, 5)}-${end[1].slice(0, 5)}
             <br>
             ${message}
           </p> 
@@ -261,20 +346,8 @@ function updateView() {
   });
 }
 
-function addSchedule() {
-  sendAddRequest();
-}
-
-function deleteSchedule() {
-  sendDeleteRequest();
-}
-
-function updateSchedule() {
-  sendDeleteRequest();
-}
-
 window.addEventListener("load", function () {
-    sendShowRequest();
+  sendShowRequest();
 }, false);
 
 

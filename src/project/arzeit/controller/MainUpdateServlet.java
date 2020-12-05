@@ -18,25 +18,25 @@ import project.arzeit.model.ScheduleModel;
 import project.arzeit.model.User;
 
 /**
- * project/arzeit/main.html　に対応するサーブレット
- * スケジュールの追加、更新、削除を行う
+ * project/arzeit/main.html に対応するサーブレット スケジュールの追加、更新、削除を行う
  * 
  * @author Minoru Makino
  */
-@WebServlet("/project/arzeit/main")
+@WebServlet("/project/arzeit/mainUpdate")
 public class MainUpdateServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         User user = (User) request.getSession().getAttribute("user");
         ServletContext context = this.getServletContext();
         ScheduleModel model = new ScheduleModel((DataSource) context.getAttribute("dataSource"));
 
-        int code = 0; // エラーコード
+        int code = 30; // エラーコード
 
-        //エンコード　いるかわからん
+        // エンコード いるかわからん
         request.setCharacterEncoding("UTF-8");
 
         // . JSON テキストを全部取り出す
@@ -48,50 +48,62 @@ public class MainUpdateServlet extends HttpServlet {
 
         // . JSON オブジェクトに変換
         JSONObject jsonObj = new JSONObject(jsonText);
-        JSONArray dateList = jsonObj.getJSONArray("date");
-
-        // 開始、終了日時を 日付+時間に変換
-        ArrayList<String> start = new ArrayList<>();
-        ArrayList<String> end = new ArrayList<>();
-        for (int i = 0; i < dateList.length(); i++) {
-            start.add(dateList.getString(i) + " " + jsonObj.getString("start"));
-            end.add(dateList.getString(i) + " " + jsonObj.getString("end"));
-        }
-
-        System.out.println(start);
-        System.out.println(end);
 
         // 命令ごとにモデルに処理してもらう
-        String saraly = jsonObj.getString("saraly"); //お給料
+
+        // 削除処理
+        if (jsonObj.getString("operation").equals(model.delete)) {
+            JSONArray s_idJSON = jsonObj.getJSONArray("s_idList");
+            ArrayList<String> s_idList = new ArrayList<>();
+
+            for (int i = 0; i < s_idJSON.length(); i++) {
+                s_idList.add(s_idJSON.getString(i));
+            }
+
+            code = model.deleteSchedule(s_idList);
+        }
 
         //追加処理
         if (jsonObj.getString("operation").equals(model.add)) {
-            code = model.setSchedule(user.getId(), start, end, saraly);
+            JSONArray dateList = jsonObj.getJSONArray("dateList");
 
-        } else {
-            JSONArray s_idJSON = jsonObj.getJSONArray("s_idList");
-            ArrayList<String> s_idList = new ArrayList<>(); 
-
-            System.out.println(s_idList);
-
-            //更新処理
-            if (jsonObj.getString("operation").equals(model.update)) {
-                ArrayList<String> saralyList = new ArrayList<>();
-                for (int i = 0; i < s_idJSON.length(); i++) {
-                    s_idList.add(s_idJSON.getString(i));
-                    saralyList.add(saraly); //いまのところ一種類の給料をみんなに割り当てるので変更の数だけ複製してる
-                }
-
-                System.out.println(saralyList);
-
-                code = model.updateSchedule(s_idList, start, end, saralyList);
-                
-            //削除処理
-            } else if (jsonObj.getString("operation").equals(model.delete)) {
-                code = model.deleteSchedule(s_idList);
-            } else {
-                code = 30; //命令が分からんときエラーコード
+            // 開始、終了日時を 日付+時間に変換
+            ArrayList<String> start = new ArrayList<>();
+            ArrayList<String> end = new ArrayList<>();
+            for (int i = 0; i < dateList.length(); i++) {
+                start.add(dateList.getString(i) + " " + jsonObj.getString("start"));
+                end.add(dateList.getString(i) + " " + jsonObj.getString("end"));
             }
+
+            String saraly = jsonObj.getString("saraly"); // お給料
+
+            code = model.setSchedule(user.getId(), start, end, saraly);
+        }
+
+        // 更新処理
+        if (jsonObj.getString("operation").equals(model.update)) {
+            JSONArray dateList = jsonObj.getJSONArray("dateList");
+
+            // 開始、終了日時を 日付+時間に変換
+            ArrayList<String> start = new ArrayList<>();
+            ArrayList<String> end = new ArrayList<>();
+            for (int i = 0; i < dateList.length(); i++) {
+                start.add(dateList.getString(i) + " " + jsonObj.getString("start"));
+                end.add(dateList.getString(i) + " " + jsonObj.getString("end"));
+            }
+
+            JSONArray s_idJSON = jsonObj.getJSONArray("s_idList");
+            ArrayList<String> s_idList = new ArrayList<>();
+            String saraly = jsonObj.getString("saraly"); // お給料
+            ArrayList<String> saralyList = new ArrayList<>();
+            for (int i = 0; i < s_idJSON.length(); i++) {
+                s_idList.add(s_idJSON.getString(i));
+                saralyList.add(saraly); // いまのところ一種類の給料をみんなに割り当てるので変更の数だけ複製してる
+            }
+
+            System.out.println(saralyList);
+
+            code = model.updateSchedule(s_idList, start, end, saralyList);
         }
 
         System.out.println(code);
