@@ -120,10 +120,78 @@ function sendShowRequest() {
 	xmlHttpRequest.onreadystatechange = checkSendRequest;
 	xmlHttpRequest.open("POST", url, true);
 	xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xmlHttpRequest.send("message=" + encodeURIComponent(messageElement.value));
+	xmlHttpRequest.send(null);
+}
+
+function sendAddRequest() {
+
+}
+
+function sendDeleteRequest() {
+
 }
 
 
+function checkShowRequest() {
+  if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+
+		console.log(xmlHttpRequest.responseText);
+		var response = JSON.parse(xmlHttpRequest.responseText);
+		if (response.code == 0) {
+      scheduleList = response.scheduleList;
+      updateView();
+
+		} else {
+
+      alert(getErrorMessage(response.code));
+      if(response.code = 30) {//ユーザーデータが無い旨のコード
+
+        var redirect_url = "login.html" + location.search; //loginページへ遷移 loginし直してもらう
+        if (document.referrer) {
+          var referrer = "referrer=" + encodeURIComponent(document.referrer);
+          redirect_url = redirect_url + (location.search ? '&' : '?') + referrer;
+        }
+        location.href = redirect_url; //リダイレクトする
+
+      }
+    }
+	}
+}
+
+function updateView() {
+  let str;
+  let ele;
+  let start, end;
+  scheduleList.forEach(schedule => {
+    start = schedule.start.split(' '); //スタート時間を日付と時間で分ける
+    end = schedule.end.split(' ');　//終了時間を日付と時間で分ける
+
+    ele = document.getElementById(start[0]); //スタート時間の日付のえれめんと取ってくる
+    if(ele.childElementCount >= maxScheduleView) { //スケジュールの最大数を越えるとはみ出すので条件分岐
+      ele.innerHTML = `
+      <tr class="testTD" onclick="toggleSchedule();"> 
+        <td class="scheduleTD" id = "index"> 
+          <p class="testFONT">
+            ${start[1]}-${end[1]}　
+          </p> 
+        </td> 
+      </tr>
+      `
+    }
+  });
+}
+
+function addSchedule() {
+  sendAddRequest();
+}
+
+function deleteSchedule() {
+  sendDeleteRequest();
+}
+
+function updateSchedule() {
+  sendDeleteRequest();
+}
 
 window.addEventListener("load", function () {
   //document.getElementById("apply_button").addEventListener("click", sendSendRequest, false);

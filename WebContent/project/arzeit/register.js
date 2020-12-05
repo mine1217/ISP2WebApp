@@ -1,3 +1,8 @@
+/**
+ * @author Uenobo
+ * registerページにて登録機能を実装
+ */
+
 var xmlHttpRequest;
 var idElements;
 var pass1Elements;
@@ -5,79 +10,86 @@ var pass2Elements;
 var nameElements;
 var submitElement;
 
-function register(){
+const idRegulex = /^[A-Za-z0-9_]{6,100}$/i;
+const passRegulex = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[A-Za-z0-9_\d]{8,100}$/; //正規表現
 
-  if(6<=idElements.value.length<=24&&idElements.value.match(/^[A-Za-z_0-9]+$/)){
-
-    if(pass1Elements.value===pass2Elements.value){
-
-      if(6<=pass1Elements.value.length<=24&&pass1Elements.value.match(/^[A-Za-z_0-9]+$/)){
-        document.getElementById("errormessage").innerHTML = "";
+function register() {
+  var code = 0//
+  if (idRegulex.test(idElements.value)) {
+    if (pass1Elements.value == pass2Elements.value) {
+      if (passRegulex.test(pass1Elements.value)) {
+        document.getElementById("errormessage").innerHTML = "<fonr color=yellow>登録処理実行中...</font>";
+        sendWithPostMethod();
       }
       else {
-
-        //エラー文表示
-        document.getElementById("errormessage").innerHTML = "passwordのフォーマットが合っていません";
-        console.log("passwordのフォーマットが合っていません");
-
+        code = 11;
       }
-
-    }else {
-      document.getElementById("errormessage").innerHTML = "passwordが一致しません";
-      console.log("passwordが一致しません");
+    } else {
+      code = 12;
     }
   }
   else {
-    //エラー文表示
-    document.getElementById("errormessage").innerHTML = "idのフォーマットが合っていません";
-    console.log("idのフォーマットが合っていません");
+    code = 2;
   }
-  sendWithPostMethod();
+  if (code != 0) {
+    document.getElementById("errormessage").innerHTML = getErrorMessage(code);
+  }
 
 }
 
-function sendWithPostMethod(){
+function sendWithPostMethod() {
   //passを暗号化
-//     var CryptoJS =  require('crypto-js');
-//
-//     var pwd =  "erHt4Mb8s";
-//
-//     var encryptedPass = CryptoJS.AES.encrypt(pass1Elements,pwd).toString();
-//
-//     var url = "echo";
-//     xmlHttpRequest = new XMLHttpRequest();
-//     xmlHttpRequest.onreadystatechange = receive;
-//     xmlHttpRequest.open("POST",url,true);
-//     xmlHttpRequest.setRequestHeader("Content-Type",
-//     "application/x-www-form-urlencoded");
-//     xmlHttpRequest.send("id=" + idElements.value + "&pass=" + encryptedPass
-//       + "&name=" + nameElements.value);
+  //     var CryptoJS =  require('crypto-js');
+  //
+  //     var pwd =  "erHt4Mb8s";
+  //
+  //     var encryptedPass = CryptoJS.AES.encrypt(pass1Elements,pwd).toString();
+  //
+  //     var url = "echo";
+  //     xmlHttpRequest = new XMLHttpRequest();
+  //     xmlHttpRequest.onreadystatechange = receive;
+  //     xmlHttpRequest.open("POST",url,true);
+  //     xmlHttpRequest.setRequestHeader("Content-Type",
+  //     "application/x-www-form-urlencoded");
+  //     xmlHttpRequest.send("id=" + idElements.value + "&pass=" + encryptedPass
+  //       + "&name=" + nameElements.value);
 
-var url = "register";
-xmlHttpRequest = new XMLHttpRequest();
-xmlHttpRequest.onreadystatechange = receive;
-xmlHttpRequest.open("POST",url,true);
-xmlHttpRequest.setRequestHeader("Content-Type",
-"application/x-www-form-urlencoded");
-xmlHttpRequest.send("id=" + idElements.value + "&pass=" + pass1Elements.value
-  + "&name=" + nameElements.value);
+  var url = "register";
+  xmlHttpRequest = new XMLHttpRequest();
+  xmlHttpRequest.onreadystatechange = receive;
+  xmlHttpRequest.open("POST", url, true);
+  xmlHttpRequest.setRequestHeader("Content-Type",
+    "application/x-www-form-urlencoded");
+  xmlHttpRequest.send("id=" + idElements.value + "&pass=" + pass1Elements.value+ "&name=" + nameElements.value);
 
 }
 
-function receive(){
-  if(xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200){
+function receive() {
+  if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
     var response = JSON.parse(xmlHttpRequest.responseText);
+    if(response.code == 0) {
+      document.getElementById("errormessage").innerHTML = "<font color=green>登録完了</font>";
 
-    var echoMessageElement = document.getElementById("echo_id");
-    echoMessageElement.innerHTML = response.id + response.pass +response.name;
+      alert("登録成功しました！ アカウント登録ありがとうございます!");
+
+      var redirect_url = "login.html" + location.search; //loginページへ遷移
+      if (document.referrer) {
+        var referrer = "referrer=" + encodeURIComponent(document.referrer);
+        redirect_url = redirect_url + (location.search ? '&' : '?') + referrer;
+      }
+      location.href = redirect_url; //リダイレクトする
+
+    }else {
+      document.getElementById("errormessage").innerHTML = getErrorMessage(response.code);
+    }
   }
 }
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
   idElements = document.getElementById("id");
   pass1Elements = document.getElementById("pass1");
   pass2Elements = document.getElementById("pass2");
   nameElements = document.getElementById("name");
-  submitElement = document.getElementById("submit")
-	submitElement.addEventListener("click", register, false);
+  submitElement = document.getElementById("register_button")
+  submitElement.addEventListener("click", register, false);
 }, false);
