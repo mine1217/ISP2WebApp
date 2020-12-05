@@ -60,6 +60,6 @@ public class LoginServlet extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         session.invalidate(); //セッション破棄するだけ
-        response.getWriter().flush();
+        response.sendRedirect("index.html");
     }
 }
