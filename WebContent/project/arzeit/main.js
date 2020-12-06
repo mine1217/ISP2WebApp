@@ -25,7 +25,7 @@ function schedule(s_id, start, end, saraly) {
 
 /**
  * 日付クリックしたときに呼び出される
- * @param {*} sell 
+ * @param {*} sell
  */
 function getDate(sell) {
   var sell_id = sell.id;
@@ -45,7 +45,7 @@ function getDate(sell) {
 
 /**
  * 日付クリック処理
- * @param {*} dateId 
+ * @param {*} dateId
  */
 function toggleDate(dateId) {
   var isInclude = false;
@@ -72,7 +72,7 @@ function toggleDate(dateId) {
 
 /**
  * スケジュール押したときに呼び出される
- * @param {*}} sell 
+ * @param {*}} sell
  */
 function getSchedule(sell) {
   var sell_id = sell.id;
@@ -109,7 +109,7 @@ function getSchedule(sell) {
 
 /**
  * スケジュールクリック処理
- * @param {*} dateId 
+ * @param {*} dateId
  */
 function toggleSchedule(s_Id) {
   var isInclude = false;
@@ -210,18 +210,23 @@ function deleteSchedule() {
 
 /**
  * 時間設定が不正でないかチェック
- * @param {*} startH 
- * @param {*} startM 
- * @param {*} endH 
- * @param {*} endM 
+ * @param {*} startH
+ * @param {*} startM
+ * @param {*} endH
+ * @param {*} endM
  */
 function checkTimeFormat(startH, startM, endH, endM) {
   code = 0;
-  if (Number(startH.value) > Number(endH.value)) {
-    if (Number(startM.value) > Number(endM.value)) {
-      code = 21;
-    }
+  if (Number(startH.value) > Number(endH.value)) {//start:6:00,end:2:00
+    code = 21;
   }
+  else if (Number(startH.value) == Number(endH.value) && Number(startM.value) > Number(endM.value)) {//start:6:30,end:6:00
+    code = 21;
+  }
+  else if (Number(startH.value) == Number(endH.value) && Number(startM.value) == Number(endM.value)) {//start:6:00,end:6:00
+    code = 21;
+  }
+  
   return code;
 }
 
@@ -358,14 +363,14 @@ function updateView() {
     ele = document.getElementById("SCH_" + start[0]); //スタート時間の日付のえれめんと取ってくる
 
     var html = `
-    <tr class="testTD"  id = "${schedule.s_id}" onclick="getSchedule(this);" style="background-color:rgba(0,0,0,0);"> 
-      <td class="scheduleTD"> 
+    <tr class="testTD"  id = "${schedule.s_id}" onclick="getSchedule(this);" style="background-color:rgba(0,0,0,0);">
+      <td class="scheduleTD">
         <p class="testFONT">
           ${start[1].slice(0, 5)}-${end[1].slice(0, 5)}
           <br>
           ${message}
-        </p> 
-      </td> 
+        </p>
+      </td>
     </tr>
     `; //スケジュールのボタンhtml
 
@@ -386,5 +391,3 @@ function updateView() {
 window.addEventListener("load", function () {
   sendShowRequest();
 }, false);
-
-
