@@ -124,7 +124,7 @@ input[type = "button"]:hover{
 /*mypage.html部分*/
 
 .mypage{
-  width: 700px;
+  width: 750px;
   height:auto;
   margin: auto;
   border: 2px solid #555;
@@ -154,7 +154,11 @@ img.profile{
    font-size: 30px;
    font-weight: bold;
    border-bottom:1px solid #555;
- }
+}
+.mypage p{
+  font-size: 24px;
+  font-weight: bold;
+}
 
 input[type="username_profile_data"],[type= "userid_profile_data"]{
    background-color: #48d1cc;
