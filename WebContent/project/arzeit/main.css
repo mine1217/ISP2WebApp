@@ -6,6 +6,7 @@ body{
     width: auto;
     height: auto;
 }
+
 body p{
   font-size: 18px;
   font-weight: bold;
@@ -60,6 +61,17 @@ form p{
   display: inline-block;
 }
 
+#manual{
+  width: 55vw;
+  height: auto;
+  margin: auto;
+  border: 1px solid #555;
+}
+div li{
+  margin-left: 10px;
+  text-align: left;
+}
+
 #calendar{
   margin: 20px;
   width: auto;
@@ -78,6 +90,7 @@ input[type = "button"]{
   padding-right: 14px;
   padding-bottom: 10px;
   padding-left: 14px;
+  margin: 12px;
   /*影とか*/
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -88,12 +101,13 @@ input[type = "button"]{
   border: solid #488a9e 2px;
   background: royalblue
 }
+
 input[type = "button"]:hover{
   background: #37a4bf;
 }
 
 h3{
-  font-size: 28px;
+  font-size: 26px;
 }
 
 table {
@@ -125,7 +139,8 @@ td {
 }
 
 h2,h4,h5,h6{
-  font-size: 22px;
+  font-size: 24px;
+  margin: 22px;
 }
 
 .errormessage{
@@ -139,6 +154,7 @@ h2,h4,h5,h6{
 
 input[type = "income"]{
   padding: 7px;
+  margin: auto;
 }
 
 .monthsalary{
