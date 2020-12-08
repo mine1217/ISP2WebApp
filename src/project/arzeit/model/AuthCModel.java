@@ -64,7 +64,7 @@ public class AuthCModel {
      * @return ステータスコード
      */
     public int setId(String id, String updateId) {
-        int code = checkDuplicate(id); //重複チェック
+        int code = checkDuplicate(updateId); //重複チェック
         if(code == 0) code = db.updateId(id, updateId);
         
         return code;

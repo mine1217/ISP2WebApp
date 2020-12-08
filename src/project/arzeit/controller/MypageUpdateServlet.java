@@ -37,13 +37,13 @@ public class MypageUpdateServlet extends HttpServlet {
         String updateId = (String) request.getParameter("updateId");
         String id = user.getId();
         String name = user.getName();
-
+        
         if (code == 0 && !name.equals(updateName)) code = profile.setName(id, updateName); //違いがあったときだけ変更する
         if (code == 0 && !id.equals(updateId)) code = authC.setId(id, updateId); //idは重複チェックがあるので最後に変更する
 
         if (code == 0) { //変更成功したらuserオブジェクトも変える
-            user.setId(request.getParameter(updateId));
-            user.setName(request.getParameter(updateName));
+            user.setId(updateId);
+            user.setName(updateName);
         }
 
         StringBuilder json = new StringBuilder("{ \"code\": \""); // json作る

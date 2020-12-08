@@ -34,10 +34,10 @@
 
     <div class = "mypage">
       <p><img src="mypage_sample1.png" width="200" height="200" alt="プロフィール画像" class = "profile">
-          <a id = "username_profile">UserName:</a><span id="username"><input type="username_profile_data" name="username" /></span>
+          <a id = "username_profile">UserName:</a><span ><input type="username_profile_data" name="username" id="username" onfocus="enableFocus(this);"  onblur="unableFocus(this);"/></span>
       </p>
         <li>
-          <a>UserID:</a> <span id="userid"><input type="userid_profile_data" name="userid" /></span>
+          <a>UserID:</a> <span><input type="userid_profile_data" name="userid" id="userid" onfocus="enableFocus(this);" onblur="unableFocus(this);"/></span>
         </li>
         <!--新しく情報を追加するときはいかに適宜追加-->
         <li>
