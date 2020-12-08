@@ -39,7 +39,6 @@ function sendWithPostMethod() {
   shaObj.update(pass1Elements.value);
   shaObj.update(hashSeed);
   var pass = shaObj.getHash("HEX");
-  alert(pass);
 
   var url = "register";
   xmlHttpRequest = new XMLHttpRequest();
