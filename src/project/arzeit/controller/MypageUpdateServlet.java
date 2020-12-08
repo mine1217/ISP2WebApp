@@ -17,7 +17,7 @@ import project.arzeit.model.User;
  * 
  * @author Minoru Makino
  */
-@WebServlet("/project/arzeit/mypage")
+@WebServlet("/project/arzeit/mypageUpdate")
 public class MypageUpdateServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -31,14 +31,16 @@ public class MypageUpdateServlet extends HttpServlet {
 
         int code = 0; // エラーコード
 
-        if (user == null)
-            code = 30; // ユーザー無かったら30出す
+        if (user == null) code = 30; // ユーザー無かったら30出す
 
         String updateName = (String) request.getParameter("updateName");
         String updateId = (String) request.getParameter("updateId");
+        String id = user.getId();
+        String name = user.getName();
 
-        if (code == 0) code = profile.setName(user.getId(), updateName);
-        if (code == 0) code = authC.setId(user.getId(), request.getParameter(updateId));
+        if (code == 0 && !name.equals(updateName)) code = profile.setName(id, updateName); //違いがあったときだけ変更する
+        if (code == 0 && !id.equals(updateId)) code = authC.setId(id, updateId); //idは重複チェックがあるので最後に変更する
+
         if (code == 0) { //変更成功したらuserオブジェクトも変える
             user.setId(request.getParameter(updateId));
             user.setName(request.getParameter(updateName));
