@@ -1,5 +1,7 @@
 package project.arzeit.model;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.AbstractMap.SimpleEntry;
 
 import project.arzeit.database.DBController;
@@ -27,7 +29,7 @@ public class AuthCModel {
         int code = checkDuplicate(id); //重複チェック
 
         if (code == 0) {
-            if((code = db.setAccount(id, pass)) == 0) code = db.setProfile(id);
+            if((code = db.setAccount(id, toEncryptedHashValue(pass))) == 0) code = db.setProfile(id);
             if(code == 0) code = db.updateProfile(id, name);
         } 
 
@@ -42,8 +44,8 @@ public class AuthCModel {
      */
     public int login(String id, String pass) {
         SimpleEntry<String, Integer> result = db.getPass(id);
-        String expected = result.getKey(); // 後でハッシュ化する予定なのでそれを入れる変数
-        String actual = pass;
+        String expected = result.getKey(); 
+        String actual = toEncryptedHashValue(pass);
 
         if (result.getValue() == 0) { //エラーコードが0だったら成功
             if (expected != null) { //EmptySetが帰ってきた場合はnullが入ってる
@@ -87,7 +89,30 @@ public class AuthCModel {
      * @return ステータスコード
      */
     public int setPass(String id, String pass) {
-        return db.updatePass(id, pass);
+        return db.updatePass(id, toEncryptedHashValue(pass));
+    }
+
+    /**
+     * ソルトを実装する SHA-256
+     * @param pass
+     * @return ハッシュ値
+     */
+    private String toEncryptedHashValue(String pass) {
+        MessageDigest md = null;
+        StringBuilder sb = null;
+        String value = "unnnunnkannnunnnanntokakanntoka" + pass;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        md.update(value.getBytes());
+        sb = new StringBuilder();
+        for (byte b : md.digest()) {
+            String hex = String.format("%02x", b);
+            sb.append(hex);
+        }
+        return sb.toString();
     }
 
 }

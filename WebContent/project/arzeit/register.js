@@ -8,6 +8,8 @@ var submitElement;
 const idRegulex = /^[A-Za-z0-9_]{6,100}$/i;
 const passRegulex = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[A-Za-z0-9_\d]{8,100}$/; //正規表現
 
+const hashSeed = "nanntoka kantoka unnunn kannunn";
+
 function register() {
   var code = 0//
   if (idRegulex.test(idElements.value)) {
@@ -33,21 +35,10 @@ function register() {
 }
 
 function sendWithPostMethod() {
-  //passを暗号化
-  //     var CryptoJS =  require('crypto-js');
-  //
-  //     var pwd =  "erHt4Mb8s";
-  //
-  //     var encryptedPass = CryptoJS.AES.encrypt(pass1Elements,pwd).toString();
-  //
-  //     var url = "echo";
-  //     xmlHttpRequest = new XMLHttpRequest();
-  //     xmlHttpRequest.onreadystatechange = receive;
-  //     xmlHttpRequest.open("POST",url,true);
-  //     xmlHttpRequest.setRequestHeader("Content-Type",
-  //     "application/x-www-form-urlencoded");
-  //     xmlHttpRequest.send("id=" + idElements.value + "&pass=" + encryptedPass
-  //       + "&name=" + nameElements.value);
+  const shaObj = new jsSHA("SHA-256", "TEXT", { encoding: "UTF8" });
+  shaObj.update(pass1Elements.value);
+  shaObj.update(hashSeed);
+  var pass = shaObj.getHash("HEX");
 
   var url = "register";
   xmlHttpRequest = new XMLHttpRequest();
@@ -55,7 +46,7 @@ function sendWithPostMethod() {
   xmlHttpRequest.open("POST", url, true);
   xmlHttpRequest.setRequestHeader("Content-Type",
     "application/x-www-form-urlencoded");
-  xmlHttpRequest.send("id=" + idElements.value + "&pass=" + pass1Elements.value+ "&name=" + nameElements.value);
+  xmlHttpRequest.send("id=" + idElements.value + "&pass=" + pass+ "&name=" + nameElements.value);
 
 }
 
