@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>ArZeitログイン</title>
+	<link rel="stylesheet" type="text/css" href="login_register.css"/>
+  <script type="text/javascript" src="login.js"></script>
+  <script src="statuscode.js"></script>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <a href="index.html">TOPページ</a>
+          </li>
+        <li class="current">
+          <a href="login.html">ログイン</a>
+          </li>
+        <li>
+          <a href="register.html">初期登録</a>
+        </li>
+      </ul>
+  </nav>
+</header>
+<h1>ArZeitログイン</h1>
+<p>以下のフォームにIDとパスワードを入力してログインしてください</p>
+<div id="form">
+    <p class="form-title">ログイン</p>
+    <form>
+        <p>ID</p>
+        <p class="id"><input type="userid" name="id" minlength = "6" maxlength = "20" id="id"/></p>
+        <p>Password</p>
+        <p class="pass"><input type="password" name="pass" minlength = "8" maxlength = "20" id="pass"/></p>
+        <!--<p class="check"><input type="checkbox" name="checkbox" />パスワードを保存</p>-->
+        <p id = "Register_noRegister">登録してない方は<a href = "register.html">コチラ</a>で初期登録をしてください</p>
+				<p><span id="errormessage"></span></p><br>
+        <p class="submit" id = "submit"><input type="button" id = "login_button"  value="ログイン"　/></p>
+    </form>
+</div>
+
+<footer>
+	<nav>
+		<ul>
+			<li class="current"><!--今どこのページにいるか cssの方でどこのページにいるか下線を引いている-->
+				<a href="index.html">TOPページ</a>
+				</li>
+			<li>
+				<a href="login.html">ログイン</a>
+				</li>
+			<li>
+				<a href="register.html">初期登録</a>
+			</li>
+		</ul>
+		</nav>
+	<p>ArZeit</p>
+</footer>
+
+</body>

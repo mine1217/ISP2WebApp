@@ -6,3 +6,7 @@ lib
 classes
 *.war
 doc
+server
+.classpath
+src/project/arzeit/database/DataSource.java
+README.md
