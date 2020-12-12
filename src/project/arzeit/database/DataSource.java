@@ -33,6 +33,7 @@ public class DataSource {
         config.addDataSourceProperty("cachePrepStmts", "true");       //ステートメント(SQLの命令)をキャッシュするか
         config.addDataSourceProperty("prepStmtCacheSize", "250");     //キャッシュの確保数
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");//最大文字数
+        config.addDataSourceProperty("maxLifetime","590000");
 
         ds = new HikariDataSource(config);
     }
