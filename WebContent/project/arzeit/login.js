@@ -12,6 +12,7 @@ const hashSeed = "nanntoka kantoka unnunn kannunn";
 
 
 function sendLoginMethod() {
+  document.getElementById("errormessage").innerHTML = "<font color=brown>ログインしています...</font>";
   const shaObj = new jsSHA("SHA-256", "TEXT", { encoding: "UTF8" });
   shaObj.update(passElements.value);
   shaObj.update(hashSeed);
@@ -29,20 +30,24 @@ function sendLoginMethod() {
 
 
 function receive() {
-  if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
-    var response = JSON.parse(xmlHttpRequest.responseText);
+  if (xmlHttpRequest.readyState == 4) {
+    if (xmlHttpRequest.status == 200) {
+      var response = JSON.parse(xmlHttpRequest.responseText);
 
-    if (response.code == 0) {//成功コードが帰ってきたら　
+      if (response.code == 0) {//成功コードが帰ってきたら　
 
-      alert("ログイン完了しました。 Arzeitへようこそ！");
+        alert("ログイン完了しました。 Arzeitへようこそ！");
 
-      location.href = "main.html"; //リダイレクトする
+        location.href = "main.html"; //リダイレクトする
 
-    } else {//違ったらエラーメッセージ出す
-      document.getElementById("errormessage").innerHTML = getErrorMessage(response.code);
+      } else {//違ったらエラーメッセージ出す
+        document.getElementById("errormessage").innerHTML = getErrorMessage(response.code);
+      }
+    } else {
+      document.getElementById("errormessage").innerHTML = getErrorMessage(50);
     }
+  } 
 
-  }
 }
 
 window.addEventListener("load", function () {
