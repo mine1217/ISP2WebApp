@@ -161,6 +161,11 @@ img.profile{
 }
 
 input[type="username_profile_data"],[type= "userid_profile_data"]{
+   margin-left: 20px;
+   height: 30px;
+   font-size: 100%;
+   font-weight: bold;
+   color: midnightblue;
    background-color: #48d1cc;
    border: #48d1cc;
 }

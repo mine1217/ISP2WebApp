@@ -30,9 +30,9 @@ public class DataSource {
         config.setUsername("online"); //ユーザ　変えない
         config.setPassword("password"); //パス　変えない
 
-        config.addDataSourceProperty("cachePrepStmts", "true");       //ステートメント(SQLの命令)をキャッシュするか
-        config.addDataSourceProperty("prepStmtCacheSize", "250");     //キャッシュの確保数
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");//最大文字数
+        config.setMaximumPoolSize(10); //最大プールサイズ
+        config.setMinimumIdle(1); //最小プールサイズ
+        config.setMaxLifetime(580000); //プールにおいておく接続のライフタイム
 
         ds = new HikariDataSource(config);
     }

@@ -120,14 +120,12 @@ function toggleSchedule(s_Id) {
     if (element == s_Id) {
       s_idList.splice(count, 1);
       sellElement.style.backgroundColor = "rgba(0,0,0,0)";
-      console.log("削除");
       isInclude = true;
     };
     count++;
   })
 
   if (!isInclude) {
-    console.log("追加");
     s_idList.push(s_Id);
     sellElement.style.backgroundColor = "#37a4bf";
   }
@@ -262,7 +260,7 @@ function sendUpdateRequest(message) {
 function checkShowRequest() {
   if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
 
-    console.log(xmlHttpRequest.responseText);
+    //console.log(xmlHttpRequest.responseText);
     var response = JSON.parse(xmlHttpRequest.responseText);
     if (response.code == 0) {
       scheduleList = response.schedule;
