@@ -258,8 +258,6 @@ public class DBController {
         sBuilder.setLength(sBuilder.length() - 1);
         sBuilder.append(");");
 
-        System.out.println(sBuilder.toString());
-
         int code = update(sBuilder.toString());// 命令送る
         return code;
     }
